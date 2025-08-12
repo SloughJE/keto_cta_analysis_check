@@ -18,7 +18,6 @@ df <- df %>%
     V1_PAV_pct = V1_Percent_Atheroma_Volume * 100
   )
 
-
 ##########
 
 # function for main chart
