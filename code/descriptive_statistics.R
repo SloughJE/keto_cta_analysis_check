@@ -15,6 +15,7 @@ colSums(is.na(df))                  # count per column
 # Summary statistics
 summary(df)
 
+# columns
 colnames(df)
 
 # create change scores for each Plaque metric
@@ -117,94 +118,6 @@ print_change("Δ PAV (%)",              obs$delta_PAV$q,  exp$delta_PAV$q,  tol)
 
 
 #############################################
-
-
-# fit model and print summary (and CIs)
-m <- MASS::rlm(delta_NCPV ~ V1_CAC, data = df)
-m <- lm(delta_NCPV ~ V1_CAC, data = df)
-
-summary(m)
-confint(m)
-
-## 1) Visual diagnostics (residuals, QQ, scale–location, Cook's)
-# Base R:
-par(mfrow=c(2,2)); plot(m); par(mfrow=c(1,1))
-# or ggplot-based:
-# ggfortify::autoplot(m, which = 1:4)
-
-## 2) Formal tests
-library(lmtest); library(car); library(strucchange)
-bptest(m)                 # Breusch–Pagan: heteroskedasticity
-ncvTest(m)                # alternative variance test
-shapiro.test(resid(m))    # residual normality (sensitive with n~100)
-resettest(m, power=2:3)   # Ramsey RESET: nonlinearity/omitted terms
-sctest(m, type="rainbow") # Rainbow test: linearity
-
-## 3) Influence / leverage
-cooks <- cooks.distance(m)
-lev   <- hatvalues(m)
-p   <- length(coef(m))        # number of parameters incl. intercept
-cut <- 4 / (nobs(m) - p)      # Cook's D rule of thumb (≈ 4/(n - p))
-
-which(cooks > cut)                               # influential rows
-head(sort(cooks, decreasing = TRUE), 10)         # largest Cook's D
-head(sort(lev,   decreasing = TRUE), 10)         # highest leverage
-
-
-## 4) Robust SE if heteroskedastic
-library(sandwich)
-lmtest::coeftest(m, vcov = vcovHC(m, type = "HC3"))
-
-library(performance)
-check_model(m)
-
-check_heteroscedasticity(m)
-check_normality(m)
-check_outliers(m)
-
-###########
-# 0) One-shot diagnostic panel (linearity, normality, homogeneity, outliers, etc.)
-check_model(m)
-
-# 1) Homoscedasticity (constant variance)
-check_heteroscedasticity(m)   # Breusch–Pagan-type check; look at the p-value
-
-# 2) Autocorrelation of residuals (independence, esp. for time series)
-check_autocorrelation(m)      # Durbin–Watson-style test
-
-# 3) Normality of residuals (for small-sample inference)
-check_normality(m)            # Shapiro/QQ-based check; also see the QQ plot in check_model
-
-# 4) Multicollinearity / full rank
-check_collinearity(m)         # With one predictor, VIF should be ~1
-
-# 5) Influential points / outliers
-check_outliers(m)             # Flags high-influence observations (Cook’s D, hat values)
-
-# (Optional) Basic fit metrics
-model_performance(m)
-
-lmtest::coeftest(m, vcov = sandwich::vcovHC(m, type = "HC3"))
-
-#####################
-
-
-
-
-# fit model and print summary (and CIs)
-m <- lm(delta_NCPV ~ V1_Non_Calcified_Plaque_Volume, data = df)
-summary(m)
-confint(m)
-
-# fit model and print summary (and CIs)
-m <- lm(delta_NCPV ~ V1_Percent_Atheroma_Volume, data = df)
-summary(m)
-confint(m)
-
-# fit model and print summary (and CIs)
-m <- lm(delta_NCPV ~ V1_Total_Plaque_Score, data = df)
-summary(m)
-confint(m)
 
 library(BayesFactor)
 rscale_input = 0.2
