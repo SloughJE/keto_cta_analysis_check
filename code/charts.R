@@ -5,6 +5,7 @@ library(tidyverse)
 library(ragg)
 library(ggplot2)
 library(plotly)
+library(ggtext)
 
 df <- read_csv("data/keto-cta-quant-and-semi-quant.csv")
 
@@ -80,7 +81,9 @@ plot_two_timepoints <- function(df,
     geom_segment(data = segment_df,
                  aes(x = x, xend = xend, y = y, yend = yend),
                  inherit.aes = FALSE, colour = "red", linewidth = 1.2) +
-    scale_x_continuous(breaks = c(1, 2), labels = c(label1, label2)) +
+    scale_x_continuous(breaks = c(1, 2), labels = c(label1, label2),
+       expand = expansion(mult = 0.45)   # try 0.3–0.5
+    ) +
     scale_y_continuous(limits = c(0, y_top), minor_breaks = minor_y) +
     labs(x = NULL, y = y_lab, title = title) +
     theme_classic(base_size = 18) +
@@ -135,7 +138,12 @@ figure_2F = ggplot(df, aes(x = V1_CAC, y = delta_TPS)) +
   labs(x = "Baseline CAC", y = "ΔTotal Plaque Score") +
   scale_y_continuous(breaks = -1:6, minor_breaks = NULL) +
   coord_cartesian(ylim = c(-1, 6)) +   # keeps points & fit intact
-  theme_classic(base_size = 14)
+  theme_classic(base_size = 16) +
+  theme(
+    
+  axis.text.y = element_text(face = "bold"),
+  axis.text.x  = element_text(face = "bold"),
+  )
 
 figure_2F
 
@@ -146,9 +154,9 @@ save_png <- function(p, file, width = 6, height = 4, dpi = 600, bg = "white") {
          dpi = dpi, bg = bg)
 }
 
-save_png(figure_1A, "figures/Figure1A.png", width = 6, height = 12, dpi = 600)
-save_png(figure_1B, "figures/Figure1B.png", width = 6, height = 12, dpi = 600)
-save_png(figure_2F, "figures/Figure2F.png", width = 6, height = 6, dpi = 600)
+save_png(figure_1A, "figures/Figure1A.png", width = 6, height = 5.86, dpi = 800)
+save_png(figure_1B, "figures/Figure1B.png", width = 6, height = 6.23, dpi = 800)
+save_png(figure_2F, "figures/Figure2F.png", width = 6, height = 6.26, dpi = 800)
 
 #ggsave("figures/Figure1A.pdf", plot = figure_1A, device = "pdf",
 #       width = 6, height = 12, units = "in")

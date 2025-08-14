@@ -1,0 +1,430 @@
+---
+title: "Keto-CTA Study"
+subtitle: "An Analysis of the Available Data"
+author: "John (The John & Calvin Podcast)"
+format:
+  revealjs:
+    self-contained: true
+    theme: [night]
+    slide-number: true
+    css: styles.css
+---
+
+
+
+
+## Incorrect Y-Axis Tick Labels
+
+::: {.columns}
+
+::: {.column width="45%"}
+
+
+::: {.smaller_table}
+
+**Figure 1B from Study**
+:::
+
+::: {.fragment}
+
+![](assets/Figure1B.jpg){width=90% fig-link="https://www.jacc.org/doi/10.1016/j.jacadv.2025.101686"}
+
+:::
+:::
+
+::: {.column width="10%"}
+
+:::
+::: {.column width="45%"}
+
+::: {.smaller_table}
+
+**Figure 1B from Data**
+
+:::
+
+::: {.fragment}
+
+![](figures/Figure1B.png){width=90%}
+
+:::
+
+:::
+
+::: {.smaller_caption}
+
+Individual Change in Plaque Volume
+
+
+\(B) The red line represents the median change (0.8%), and the shaded area represents the IQR (0.3%-1.7%).
+
+:::
+:::
+
+---
+
+## Incorrect Shading Area
+
+::: {.columns}
+
+::: {.column width="45%"}
+
+
+::: {.smaller_table}
+
+**Figure 1A from Study**
+
+:::
+
+::: {.fragment}
+
+![](assets/Figure1A.jpg){width=90% fig-link="https://www.jacc.org/doi/10.1016/j.jacadv.2025.101686"}
+
+:::
+:::
+
+::: {.column width="10%"}
+
+:::
+::: {.column width="45%"}
+
+::: {.smaller_table}
+
+**Figure 1A from Data**
+
+:::
+
+::: {.fragment}
+
+![](figures/Figure1A.png){width=90%}
+
+:::
+
+:::
+
+::: {.smaller_caption}
+
+Individual Change in Plaque Volume
+
+
+\(A). The red line represents the median change (18.9 mm3), and the shaded area represents the IQR (9.3-47.0 mm3).
+
+:::
+:::
+
+---
+
+## Incorrect Y-Axis Tick Labels
+
+::: {.columns}
+
+::: {.column width="45%"}
+
+
+::: {.smaller_table}
+
+**Figure 2F from Study**
+
+:::
+
+::: {.fragment}
+
+![](assets/Figure2F.jpg){width=90% fig-link="https://www.jacc.org/doi/10.1016/j.jacadv.2025.101686"}
+
+:::
+:::
+
+::: {.column width="10%"}
+
+:::
+::: {.column width="45%"}
+
+::: {.smaller_table}
+
+**Figure 2F from Data**
+
+:::
+
+::: {.fragment}
+
+![](figures/Figure2F.png){width=90%}
+
+:::
+
+:::
+
+::: {.smaller_caption}
+
+Changes in Total Plaque Score vs Coronary Artery Calcium
+
+\(C, F) Only CAC is associated with changes in NCPV and TPS. The regression line was fitted with the function "lm," which
+regresses y~x, and the shaded area represents the standard error. 
+
+:::
+:::
+
+---
+
+
+## Linear Model Assumptions 
+
+
+::: {.smaller}
+
+
+4 Simple Linear Regression Assumptions
+
+3 are tested with data
+
+::: {.fragment}
+
+- **Linearity**: between the predictor and the outcome
+
+- **Constant variance** (homoscedasticity) of residuals
+
+- **Normally distributed residuals** 
+
+:::
+
+<br>
+
+::: {.fragment}
+
+These linear assumptions are **quantifiable** and **objectively testable**.
+
+:::
+::: {.fragment}
+
+- If the assumptions don’t hold, statistical significance and uncertainty estimates aren’t trustworthy
+- Results may be invalid
+
+:::
+:::
+
+::: {.notes}
+
+- Linearity: on average, the relationship between the predictor and the outcome is a straight line
+
+If the true pattern is curved, the slope summarizes the wrong thing and can misstate direction and size.
+
+- Independence of errors
+
+Dependence makes uncertainty estimates too small or too large.
+
+- Constant variance (homoskedasticity)
+
+If the spread grows or shrinks, standard errors and p-values from the basic model are mis-calibrated.
+
+- Normally Distributed Residuals (errors) (mainly for small samples): error terms follow normal distribution.
+
+The usual t-tests and confidence intervals rely on this; strong departures undermine those calculations.
+
+
+- No exact collinearity (relevant in multivariable settings): predictors aren’t exact copies of each other.
+
+
+:::
+
+
+---
+
+
+![](assets/Table3_caption.png){width=90%  fig-align="center"}
+
+---
+
+![](assets/Table3_caption_highlight.png){width=90%  fig-align="center"}
+
+---
+
+## Violations
+
+::: {.smaller_table}
+
+> ["all linear model assumptions were corroborated with the R function `performance::check_model`."](https://www.jacc.org/doi/10.1016/j.jacadv.2025.101686)
+>
+> \- *Direct quote from the study*
+
+:::
+
+::: {.smaller2}
+::: {.fragment}
+
+Actual Assumption Tests
+
+:::
+:::
+
+::: {.fragment}
+
+```{r echo=FALSE, message=FALSE, results='asis'}
+
+source("code/linear_models.R")
+
+gt_tbl
+
+```
+
+:::
+
+::: {.smaller2}
+
+
+::: {.fragment}
+
+Objective tests show all 4 models failed at least 2 tests.
+
+:::
+:::
+
+::: {.notes}
+
+- RESET test for linearity
+
+- Breusch–Pagan test for Constant Variance (heterskedasticity)
+
+- Shapiro–Wilk test for normal residuals
+
+Calling residual-plot evaluation “subjective” is **misleading.**
+Visual checks are interpretive, but these assumptions are **objectively quantifiably** testable
+
+Robust Linear Regression mainly down-weights outliers/heavy tails.
+
+It does not deal with non-linearity, heteroskedasticity and non-normality of residuals (directly, it can help sometimes...but)
+
+
+:::
+
+---
+
+### Response from Authors
+
+
+::: {.smaller2}
+
+> ["The validity of the regression models is also questionable. Despite claims of meeting assumptions, variables were reported using medians, suggesting non-normal distributions. Visual inspection of scatter plots shows clustering and no clear linear trends. Robust or nonparametric methods might have been more appropriate, and model diagnostics would improve transparency."](https://www.jacc.org/doi/10.1016/j.jacadv.2025.101861)
+>
+> \- *quote from letter to the editor*
+
+::: {.fragment}
+
+> ["we are aware of the relevance of linear assumptions to obtain accurate estimators. Because residual plot evaluation can also be subjective, we followed their suggestion and reran all models with robust linear regression (using the `MASS::rlm` function in R version 4.4.3 [R Foundation]). While, as expected, there were small differences with the published estimates, all models using robust regression were consistent with what was reported."](https://www.jacc.org/doi/10.1016/j.jacadv.2025.101862)
+>
+> \- *quote from the reply to a letter to the editor*
+
+:::
+:::
+
+---
+
+### Subjective Assumptions
+
+
+::: {.smaller}
+
+::: {.fragment}
+
+- Calling residual-plot evaluation "subjective" is **misleading.**
+
+- Visual checks are interpretive, but these linear assumptions are **quantifiable** and **objectively testable**.
+
+:::
+::: {.fragment}
+
+- Robust Linear Regression mainly just down-weights outliers/heavy tails.
+
+:::
+::: {.fragment}
+
+- Does not deal with non-linearity, heteroskedasticity and non-normality of residuals.
+
+:::
+
+:::
+
+::: {.notes}
+
+RLM can sometimes help a bit with non-normality but depends.
+
+:::
+
+
+---
+
+
+![](figures/diagnostics/check__NCPV_CAC_bl.png){width=100%  fig-align="center"}
+
+
+---
+The two violations you keep seeing—non-normality and heteroskedasticity—are largely driven by the outcome’s distribution (ΔNCPV) and its mean–variance pattern. Swapping predictors (e.g., APOB vs CAC) usually won’t fix those. So it’s likely most univariable Δ models would show the same two problems.
+
+
+- 2 assumption violations:
+
+The simple linear model breaks two key rules: the residuals aren’t normally distributed and their spread changes with 
+x (heteroskedasticity).
+
+The estimated slope (the “trend”) can still be a good average summary of how y changes with x.
+
+But the usual p-values/confidence intervals from ordinary least squares (OLS) can’t be trusted because the standard error formula is wrong under heteroskedasticity, and non-normality hurts small-sample tests.
+If your OLS p-value < 0.05: treat it as suggestive, not definitive. Recompute using heteroskedasticity-robust or bootstrap methods. It may stay significant—or it may not.
+If your OLS p-value ≥ 0.05: you can’t conclude “no association.” The test might be too noisy or mis-calibrated. Recheck with robust/bootstrapped standard errors and report the effect size with a confidence interval.
+
+the conventional OLS standard errors, t-tests, and CIs are invalid with heteroskedasticity; non-normality further invalidates small-sample t-inference.
+
+- 3 assumption violation (linearity)
+
+In plain terms
+The model breaks three core assumptions: residuals aren’t normal, their spread changes with  x, and the relationship isn’t actually linear.
+Because of the changing spread, the usual p-values/intervals are mis-calibrated (they can be too small or too big).
+Because the relationship isn’t linear, the reported “slope” isn’t a clear effect; it’s just a weighted average of a curved pattern. Its size—or even its sign—may not reflect the true relationship.
+If the reported OLS p-value < 0.05:
+“This suggests a non-zero average linear trend, but inference is mis-calibrated and the effect has no clear meaning under a misspecified (nonlinear) model. The ‘significance’ may be an artifact.”
+If the reported OLS p-value ≥ 0.05:
+“This is a non-result from a mis-calibrated, misspecified model. It does not justify concluding ‘no association,’ and it may mask real patterns due to the nonlinear form and changing variance.”
+
+Interpretation of reported results:
+p < 0.05: Evidence only for a non-zero projected linear component under misspecification; inference is mis-sized and the estimand lacks a clear causal/functional meaning.
+p ≥ 0.05: Absence of evidence from a misspecified, mis-sized test; it does not speak to the presence or absence of a true association.
+
+
+### Assumptions of linear model
+Assumptions of a linear model (and why they matter)
+Linearity of the mean: the average outcome changes in a straight-line way with the predictor.
+Why it matters: If the true pattern is curved, the slope summarizes the wrong thing and can misstate direction and size.
+
+Independence of errors: observations don’t carry leftover information about each other (no autocorrelation/clustering).
+Why it matters: Dependence makes uncertainty estimates too small or too large.
+
+Constant variance (homoskedasticity): the scatter of errors is roughly the same across the predictor.
+Why it matters: If the spread grows or shrinks, standard errors and p-values from the basic model are mis-calibrated.
+
+Approximately normal errors (mainly for small samples): error terms are roughly bell-shaped.
+Why it matters: The usual t-tests and confidence intervals rely on this; strong departures undermine those calculations.
+
+Exogeneity / no systematic bias: on average, errors are unrelated to the predictor (no omitted confounders correlated with 
+x).
+Why it matters: Violations bias the slope itself, not just its uncertainty.
+
+No exact collinearity (relevant in multivariable settings): predictors aren’t exact copies of each other.
+Why it matters: Otherwise the model can’t isolate individual effects. (Not an issue in a single-predictor model.)
+
+
+The study’s univariable ‘ΔNCPV ~ APOB’ analysis is not decisive. The appropriate test is APOB’s partial association in a follow-up model that controls for baseline NCPV (and age/sex). Only 
+H
+0
+ ⁣
+:
+β
+APOB
+=
+0
+H 
+0
+​	
+ :β 
+APOB
+​	
+ =0 in follow-up ~ baseline + APOB + covariates addresses whether APOB is associated with follow-up independent of baseline.
+ 
+The reported null does not address whether APOB is associated with follow-up conditional on baseline, age, and sex, which is the clinically relevant estimand.
