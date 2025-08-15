@@ -103,7 +103,7 @@ plot_two_timepoints <- function(df,
 
 figure_1A = plot_two_timepoints(df,
     V1_Non_Calcified_Plaque_Volume, V2_Non_Calcified_Plaque_Volume,
-    y_lab = "NCPV mm<sup>3</sup>", title = "Change in NCPV (mm<sup>3</sup>)",
+    y_lab = "NCPV mm<sup>3</sup>", title = "ΔNCPV (mm<sup>3</sup>)",
     label1 = "Baseline", label2 = "1 Year"
 )
 

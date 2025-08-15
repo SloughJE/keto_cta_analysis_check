@@ -288,7 +288,7 @@ Objective tests show all 4 models failed at least 2 tests.
 Calling residual-plot evaluation “subjective” is **misleading.**
 Visual checks are interpretive, but these assumptions are **objectively quantifiably** testable
 
-Robust Linear Regression mainly down-weights outliers/heavy tails.
+Robust Linear Regression mainly down-weights outliers
 
 It does not deal with non-linearity, heteroskedasticity and non-normality of residuals (directly, it can help sometimes...but)
 
@@ -331,7 +331,7 @@ It does not deal with non-linearity, heteroskedasticity and non-normality of res
 :::
 ::: {.fragment}
 
-- Robust Linear Regression mainly just down-weights outliers/heavy tails.
+- Robust Linear Regression mainly just down-weights outliers.
 
 :::
 ::: {.fragment}
@@ -356,6 +356,379 @@ RLM can sometimes help a bit with non-normality but depends.
 
 
 ---
+
+### Conclusions vs Actual Reported Model
+
+::: {.smaller2}
+
+> "**CONCLUSIONS** In lean metabolically healthy people on KD, neither total exposure nor changes in baseline levels of ApoB and LDL-C were associated with changes in plaque."
+
+:::
+
+::: {.smaller_table}
+
+<br>
+
+::: {.fragment}
+
+
+| **Abstract claim component**  | **Model**                     | **Model reported**                     |
+| ----------------------------- | ----------------------------- | -------------------------------------- |
+| Δ-plaque vs LDL-C exposure    | Δ-NCPV \~ LDL-C exposure     | Not reported                           |
+| Δ-plaque vs LDL-C baseline    | Δ-NCPV \~ LDL-C baseline     | Not reported                           |
+| Δ-plaque vs ΔLDL-C            | Δ-NCPV \~ ΔLDL-C             | Not reported                           |
+| Δ-plaque vs ApoB exposure     | Δ-NCPV \~ ApoB exposure      | Not reported                           |
+| Δ-plaque vs ApoB baseline     | Δ-NCPV \~ ΔApoB              | **Reported**                           |
+| Δ-plaque vs ΔApoB             | Δ-NCPV \~ ΔApoB              | **Reported**                           |
+| N/A                           | NCPV_final \~ LDL-C exposure | **Reported** (NCPV\_final, PAV\_final) |
+
+:::
+:::
+
+---
+
+### No TPS Model Results
+
+::: {.smaller_table}
+
+> "**Results** Neither change in ApoB ..., baseline ApoB, nor total LDL-C exposure ... were associated with the change in noncalcified plaque volume (NCPV) or TPS."
+
+> "Neither … change in ApoB nor the ApoB level ... were associated ... with **TPS** (Figures 2D and 2E, **Table 3**)." - "changes in and baseline levels of ApoB were not associated with changes in NCPV or TPS"
+
+<br>
+
+:::
+
+::: {.smaller2}
+
+::: {.fragment}
+
+Figures 2D–2F are Δ-TPS (outcome) panels (vs ΔApoB, ApoB, CAC_bl)
+
+:::
+
+<br>
+
+::: {.fragment}
+
+Table 3 has no Δ-TPS models
+
+No Δ-TPS ~ LDL-C exposure models or results anywhere.
+
+:::
+:::
+
+---
+
+
+### Lifetime LDL-C Exposure Calculation
+
+::: {.smaller_table}
+
+> "LDL-C exposure on a KD was calculated by sum- ming the products of the reported days on a KD prior to study commencement and baseline LDL-C on a KD plus the study follow-up days by their final LDL-C."
+
+
+
+$$
+\text{LDL-C}_{\text{exp}}
+=
+Days_{\text{KD}}\cdot LDL_{\text{baseline}}
+\;+\;
+Days_{\text{follow-up}}\cdot LDL_{\text{final}}
+$$
+
+<br>
+
+:::
+::: {.smaller2}
+
+::: {.fragment}
+
+- one baseline value for all pre-study KD time and one final value for all follow-up is a coarse simplification
+- standard AUC/time-weighted approach (need multiple measurements)
+- limitation due to resources
+- relies on recall of KD start
+
+:::
+:::
+
+---
+
+### Lifetime LDL-C Exposure Calculation
+
+::: {.smaller_table}
+
+> "LDL-C exposure on a KD was calculated by summing the products of the reported days on a KD prior to study commencement and baseline LDL-C on a KD plus the study follow-up days by their final LDL-C."
+
+
+
+$$
+\text{LDL-C}_{\text{exp}}
+=
+Days_{\text{KD}}\cdot LDL_{\text{baseline}}
+\;+\;
+Days_{\text{follow-up}}\cdot LDL_{\text{final}}
+$$
+
+
+> "Estimated lifelong LDL-C additionally included the product of age upon commencing a KD and pre-KD LDL-C."
+
+
+$$
+\text{Life-LDL-C}_{\text{exp}}
+=
+Days_{\text{KD}}\cdot LDL_{\text{baseline}}
+\;+\;
+Days_{\text{follow-up}}\cdot LDL_{\text{final}}
+\;+\;
+\boldsymbol{\big( Age_{\text{at-KD-start}}\cdot LDL_{\text{pre-KD}} \big)}
+$$
+
+::: {.fragment}
+
+- **This equation is nonsensical. It is invalid.**
+
+:::
+::: {.fragment}
+- It adds days and age together. It's like adding miles and inches.
+- pre-KD term is down-scaled by ~365× relative to the day-based terms.
+- any associations with outcomes are dominated by keto diet exposure.
+- if they did convert age, "lifetime" exposure just reflects how old someone was at KD
+
+:::
+:::
+
+---
+
+### Age "mediation" analysis
+
+
+![](assets/Age_mediation_bp.png){style="width:60%; height:auto !important;"}
+
+::: {.smaller_caption}
+
+> "Estimated lifetime LDL-C exposure was only a significant predictor of final NCPV in the univariable analysis but lost significance when age was included as a covariate (Table 3). Both age and lifetime LDL-C exposure lost significance when baseline CAC was included in the model (Table 3)."
+
+:::
+
+::: {.smaller_table}
+
+**This is not a "mediation" analysis**. A mediation analysis:
+
+::: {.fragment}
+
+- tests how an exposure affects an outcome through a middle step (the *mediator*)
+- estimates an indirect effect (through the mediator) and a direct effect (everything else).
+- requires a pre-specified pathway and proper statistical testing (usually with CIs or bootstraps).
+
+::: {.fragment}
+
+This isn't mediation analysis
+
+- No indirect effect was estimated or tested.
+- Age can’t be a mediator of LDL exposure (age isn’t caused by LDL); it’s a confounder.
+- They only compared p-values after adding variables.
+
+:::
+:::
+:::
+
+::: {.notes}
+
+
+Exposure (E): lifetime LDL-C exposure
+Mediator (M): baseline CAC (CAC_bl)
+Outcome (Y): final NCPV
+Confounder (A): age (affects E, M, and Y)
+
+- The mediated/indirect path you’d test is: E → M → Y (LDL exposure → baseline CAC → final NCPV).
+- When you include M = baseline CAC in the model, you block that E → M → Y path and estimate only the direct effect of E on Y (the E → Y arrow not going through M).
+
+So “Adding baseline CAC blocks the pathway → tests only the direct effect” means: conditioning on baseline CAC removes the indirect route through CAC, leaving only the unmediated E → Y association to be estimated.
+
+
+What mediation is (A → C through B):
+
+Specify roles: Exposure (A), Mediator (B), Outcome (C).
+
+Fit two models:
+
+B ~ A (+ confounders) → path a
+
+C ~ A + B (+ confounders) → paths b, c′
+
+Report the indirect effect (a×b) with CIs (usually bootstrapped). State assumptions.
+
+Only shows outcome regressions (NCPV_final ~ Age, then + Life-LDL-C_exp, then + CAC_bl).
+
+No mediator model, no indirect effect, no CIs.
+
+The “mediator” (Life-LDL-C_exp) is partly built from Age and mixes units → mathematical coupling; any drop in the Age coefficient can be mechanical.
+
+
+:::
+
+---
+
+### Age "mediation" analysis
+
+
+![](assets/Age_mediation_bp.png){style="width:60%; height:auto !important;"}
+
+::: {.smaller_caption}
+
+> "Estimated lifetime LDL-C exposure was only a significant predictor of final NCPV in the univariable analysis but lost significance when age was included as a covariate (Table 3). Both age and lifetime LDL-C exposure lost significance when baseline CAC was included in the model (Table 3)."
+
+:::
+
+::: {.smaller_table}
+
+They ran (reported) three regressions in sequence.
+
+::: {.fragment}
+
+Conclusion: after adjusting for baseline CAC, neither age nor lifetime LDL-C predicts NCPV_final.
+
+:::
+::: {.fragment}
+
+- CAC explains the association; age / lifetime LDL-exposure don’t matter.
+
+:::
+::: {.fragment}
+
+Changes in p-values come from collinearity due to Age being embedded in lifetime LDL-C exposure.
+
+Age is a confounder/proxy for exposure duration, not a mediator.
+
+<br> 
+
+:::
+::: {.fragment}
+
+**They did NOT report `NCPV_final ~ lifetime LDL-C exposure` model results.**
+
+:::
+:::
+
+::: {.notes}
+
+they actually did a stepwise covariate adjustment on highly collinear variables and then over-interpreted p-value changes.
+
+“loss of significance” doesn’t show that LDL or Age don’t matter; it shows the model is not set up to answer the mediation/mechanism question.
+
+
+Intended pathway?: lifetime LDL-C → baseline CAC → NCPV_final.
+
+Age affects all variables.
+
+
+The “mediator” (Life-LDL-C_exp) is partly built from Age and mixes units → mathematical coupling; any drop in the Age coefficient can be mechanical.
+
+
+:::
+
+---
+
+### "Sensitivity" Analysis
+
+::: {.smaller_table}
+
+> "Sensitivity analyses on participants with >80% of bHB measurements above 0.3 mmol/L (Supplemental Tables 2 to 4) and with high calculated 10-year cardiovascular risk showed similar results to those just reported (Supplemental Table 5)."
+
+:::
+
+::: {.smaller2}
+
+::: {.fragment}
+
+This is **not** a sensitivity analysis. This is a subgroup analysis. 
+:::
+::: {.fragment}
+
+**Sensitivity analysis**: demonstrate robustness of conclusions to reasonable alternative assumptions or analytic choices
+
+:::
+::: {.fragment}
+
+**Subgroup analysis**: assess differences of effects across subsets of the dataset (e.g., high vs low adherence; low vs high baseline risk).
+
+
+Properly, this is tested with interaction terms in the full sample, not by splitting the data, running the exact same models and eyeballing p-values.
+
+:::
+:::
+
+
+---
+
+### Bayes Factor R-scale
+
+::: {.smaller_table}
+
+> "Bayes factors were calculated...with default settings and an `~ rscale value of 0.8` to contrast a moderately informative prior with a conservative distribution width (to allow for potential large effect sizes) due to the well-documented association between ApoB changes and coronary plaque changes."
+
+:::
+
+::: {.smaller2}
+
+::: {.fragment}
+
+Calling 0.8 "moderately informative" is inaccurate.
+
+:::
+::: {.fragment}
+
+[R package docs](https://search.r-project.org/CRAN/refmans/BayesFactor/html/regressionBF.html): **"medium", "wide", "ultrawide" = 0.354, 0.5, 0.707**  
+
+:::
+::: {.fragment}
+
+- `rscaleCont = 0.8` is **wider than “ultrawide”** → a **very diffuse** prior that places substantial mass on **very large** effects  
+- No reported **prior-sensitivity** to alternative r-scales  
+- Same r-scale apparently used for **all models**, no justification.
+
+:::
+:::
+
+::: {.smaller_table}
+::: {.fragment}
+
+**Fixed description**:
+:::
+
+::: {.fragment}
+
+"We used a very wide prior on coefficients (`rscale = 0.8`, wider than the package’s "ultrawide"), which places substantial prior mass on very large effects. This diffuse prior penalizes small-to-moderate effects, requiring substantially stronger evidence than under the ‘wide’ or ‘medium’ defaults to support them."
+
+:::
+
+:::
+
+
+---
+
+### Univariable change-score models as primary evidence
+
+
+---
+
+### Preprint vs Published Version
+
+Title is now: Longitudinal Data From the KETO-CTA Study
+Plaque Predicts Plaque, ApoB Does Not
+
+Find and replace 'begets' with 'predicts'.
+
+"Most participants presented with stable NCPV (Figures 1A and 1B), with 1 participant exhibiting a decrease in NCPV"
+
+That interpretation of Figures 1A and 1B was removed and replaced with:
+
+"The median change in NCPV was 18.9 mm3 (IQR: 9.3-47.0 mm3) and the median change in PAV was 0.8% (IQR: 0.3%-1.7%)."
+
+Table 1 median (Q1–Q3) PAV at baseline changed from 1.25% (0.5–3.6) in the preprint to 1.6% (0.5–4.9
+
+
 The two violations you keep seeing—non-normality and heteroskedasticity—are largely driven by the outcome’s distribution (ΔNCPV) and its mean–variance pattern. Swapping predictors (e.g., APOB vs CAC) usually won’t fix those. So it’s likely most univariable Δ models would show the same two problems.
 
 
