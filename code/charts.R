@@ -147,6 +147,23 @@ figure_2F = ggplot(df, aes(x = V1_CAC, y = delta_TPS)) +
 
 figure_2F
 
+#### Delta NCPV ~ baseline NCPV
+ggplot(df, aes(x = V1_Non_Calcified_Plaque_Volume, y = delta_NCPV)) +
+  geom_point(alpha = 0.8, size = 1.6, na.rm = TRUE) +
+  stat_smooth(method = "lm", formula = y ~ x,
+              se = TRUE, level = 0.95,
+              color = "red", fill = "grey70", linewidth = 1) +
+  geom_hline(yintercept = 0, linetype = "dotted") +
+  labs(x = "Baseline NCPV", y = "ΔNCPV", title = "Baseline NCPV vs ΔNCPV") +
+  #scale_y_continuous(breaks = -1:6, minor_breaks = NULL) +
+  #coord_cartesian(ylim = c(-1, 6)) +   # keeps points & fit intact
+  theme_classic(base_size = 16) +
+  theme(
+    
+    axis.text.y = element_text(face = "bold"),
+    axis.text.x  = element_text(face = "bold"),
+  )
+
 # save figs as png
 save_png <- function(p, file, width = 6, height = 4, dpi = 600, bg = "white") {
   ggsave(file, plot = p, device = ragg::agg_png,

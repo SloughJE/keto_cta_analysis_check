@@ -306,13 +306,24 @@ It does not deal with non-linearity, heteroskedasticity and non-normality of res
 >
 > \- *quote from letter to the editor*
 
-::: {.fragment}
+::: {.r-stack}
+
+::: {.fragment .current-visible}
 
 > ["we are aware of the relevance of linear assumptions to obtain accurate estimators. Because residual plot evaluation can also be subjective, we followed their suggestion and reran all models with robust linear regression (using the `MASS::rlm` function in R version 4.4.3 [R Foundation]). While, as expected, there were small differences with the published estimates, all models using robust regression were consistent with what was reported."](https://www.jacc.org/doi/10.1016/j.jacadv.2025.101862)
 >
 > \- *quote from the reply to a letter to the editor*
 
 :::
+
+::: {.fragment .current-visible}
+> ["**residual plot evaluation can also be subjective**"](https://www.jacc.org/doi/10.1016/j.jacadv.2025.101862)
+>
+> \- *quote from the reply to a letter to the editor*
+
+:::
+:::
+
 :::
 
 ---
@@ -322,12 +333,20 @@ It does not deal with non-linearity, heteroskedasticity and non-normality of res
 
 ::: {.smaller}
 
-::: {.fragment}
 
-- Calling residual-plot evaluation "subjective" is **misleading.**
+- Calling residual plot evaluation "subjective" is **misleading.**
+
+::: {.fragment}
 
 - Visual checks are interpretive, but these linear assumptions are **quantifiable** and **objectively testable**.
 
+:::
+
+<br>
+
+::: {.fragment}
+
+- "reran all models with robust linear regression...`MASS::rlm`"
 :::
 ::: {.fragment}
 
@@ -357,12 +376,15 @@ RLM can sometimes help a bit with non-normality but depends.
 
 ---
 
-### Conclusions vs Actual Reported Model
+### Conclusions vs Actual Models Reported 
 
 ::: {.smaller2}
 
-> "**CONCLUSIONS** In lean metabolically healthy people on KD, neither total exposure nor changes in baseline levels of ApoB and LDL-C were associated with changes in plaque."
+::: {.fragment}
 
+> "**CONCLUSIONS** In lean metabolically healthy people on KD, neither **total exposure** nor changes in baseline levels of ApoB and LDL-C were associated with **changes in plaque**."
+
+:::
 :::
 
 ::: {.smaller_table}
@@ -373,14 +395,14 @@ RLM can sometimes help a bit with non-normality but depends.
 
 
 | **Abstract claim component**  | **Model**                     | **Model reported**                     |
-| ----------------------------- | ----------------------------- | -------------------------------------- |
-| Δ-plaque vs LDL-C exposure    | Δ-NCPV \~ LDL-C exposure     | Not reported                           |
-| Δ-plaque vs LDL-C baseline    | Δ-NCPV \~ LDL-C baseline     | Not reported                           |
-| Δ-plaque vs ΔLDL-C            | Δ-NCPV \~ ΔLDL-C             | Not reported                           |
-| Δ-plaque vs ApoB exposure     | Δ-NCPV \~ ApoB exposure      | Not reported                           |
-| Δ-plaque vs ApoB baseline     | Δ-NCPV \~ ΔApoB              | **Reported**                           |
-| Δ-plaque vs ΔApoB             | Δ-NCPV \~ ΔApoB              | **Reported**                           |
-| N/A                           | NCPV_final \~ LDL-C exposure | **Reported** (NCPV\_final, PAV\_final) |
+| ----------------------------- | ------------------------------| ---------------------------------------|
+| Δ-plaque vs ΔLDL-C            | Δ-NCPV \~ ΔLDL-C              | Not reported                           |
+| Δ-plaque vs LDL-C exposure    | Δ-NCPV \~ LDL-C exposure      | Not reported                           |
+| Δ-plaque vs LDL-C baseline    | Δ-NCPV \~ LDL-C baseline      | Not reported                           |
+| Δ-plaque vs ΔApoB             | Δ-NCPV \~ ΔApoB               | **Reported**                           |
+| Δ-plaque vs ApoB exposure     | Δ-NCPV \~ ApoB exposure       | Not reported                           |
+| Δ-plaque vs ApoB baseline     | Δ-NCPV \~ ΔApoB               | **Reported**                           |
+| N/A                           | NCPV_final \~ LDL-C exposure  | **Reported** (NCPV\_final, PAV\_final) |
 
 :::
 :::
@@ -425,7 +447,7 @@ No Δ-TPS ~ LDL-C exposure models or results anywhere.
 
 ::: {.smaller_table}
 
-> "LDL-C exposure on a KD was calculated by sum- ming the products of the reported days on a KD prior to study commencement and baseline LDL-C on a KD plus the study follow-up days by their final LDL-C."
+> "LDL-C exposure on a KD was calculated by summing the products of the reported days on a KD prior to study commencement and baseline LDL-C on a KD plus the study follow-up days by their final LDL-C."
 
 
 
@@ -445,9 +467,11 @@ $$
 ::: {.fragment}
 
 - one baseline value for all pre-study KD time and one final value for all follow-up is a coarse simplification
+- relies on recall of KD start
+:::
+::: {.fragment}
 - standard AUC/time-weighted approach (need multiple measurements)
 - limitation due to resources
-- relies on recall of KD start
 
 :::
 :::
@@ -513,7 +537,7 @@ $$
 
 ::: {.smaller_table}
 
-**This is not a "mediation" analysis**. A mediation analysis:
+A mediation analysis:
 
 ::: {.fragment}
 
@@ -523,7 +547,7 @@ $$
 
 ::: {.fragment}
 
-This isn't mediation analysis
+**This is not a mediation analysis**.
 
 - No indirect effect was estimated or tested.
 - Age can’t be a mediator of LDL exposure (age isn’t caused by LDL); it’s a confounder.
@@ -644,6 +668,9 @@ The “mediator” (Life-LDL-C_exp) is partly built from Age and mixes units →
 
 This is **not** a sensitivity analysis. This is a subgroup analysis. 
 :::
+
+<br>
+
 ::: {.fragment}
 
 **Sensitivity analysis**: demonstrate robustness of conclusions to reasonable alternative assumptions or analytic choices
@@ -653,8 +680,14 @@ This is **not** a sensitivity analysis. This is a subgroup analysis.
 
 **Subgroup analysis**: assess differences of effects across subsets of the dataset (e.g., high vs low adherence; low vs high baseline risk).
 
+:::
 
-Properly, this is tested with interaction terms in the full sample, not by splitting the data, running the exact same models and eyeballing p-values.
+<br>
+
+::: {.fragment}
+
+
+- tested with interaction terms in the full sample, not by splitting the data, running the exact same models and eyeballing p-values.
 
 :::
 :::
@@ -708,12 +741,113 @@ Calling 0.8 "moderately informative" is inaccurate.
 
 ---
 
-### Univariable change-score models as primary evidence
+### Conclusions from Univariable Δ-Models
 
+::: {.smaller_table}
+
+> "Linear models on the primary (NCPV) and secondary outcomes were univariable"
+
+:::
+
+::: {.smaller2}
+
+::: {.fragment}
+
+All conclusions based on independent univariable change score models
+
+`Δ-NCPV ~ ApoB`; `Δ-NCPV ~ NCPV_baseline`
+
+:::
+::: {.fragment}
+
+- Confounding unchecked (age, sex, BP, CAC_bl, baseline plaque) 
+- Δ-NCPV contains baseline NCPV, biasing associations (mathematical coupling)
+- less power, more noise
+- ignores starting plaque and basics like age/sex/blood
+- baseline imbalance and shared correlates can inflate, reduce, or reverse associations
+
+
+:::
+::: {.fragment}
+
+Consensus in [biostatistics](https://onlinelibrary.wiley.com/doi/10.1002/sim.2682): use [ANCOVA](https://pubmed.ncbi.nlm.nih.gov/16526009/) [style model](https://pmc.ncbi.nlm.nih.gov/articles/PMC1121605), [follow-up](https://europepmc.org/article/pmc/pmc9557845) ~ baseline + covariates for pre/post analyses.
+
+`NCPV_follow-up ~ NCPV_baseline + ApoB_baseline + age + sex + systolic_BP`
+
+:::
+:::
+
+---
+
+### Conclusions from Univariable Δ-Models
+
+::: {.smaller2}
+
+`ΔNCPV ~ ApoB_baseline` (unadjusted change score)
+
+:::
+
+::: {.smaller_table}
+
+::: {.fragment}
+
+**Question**: "Among all participants, is baseline ApoB associated with the raw change in plaque over 1 year, without accounting for where people started or other factors"?
+
+:::
+::: {.fragment}
+
+**Slope interpretation**: Average difference in change (mm³) per 1 mg/dL higher ApoB, unadjusted.
+
+:::
+::: {.fragment}
+
+**Clinically limited**: Doesn’t condition on starting plaque, age, sex, BP; easily distorted by baseline differences and extra noise in change scores.<br> 
+It doesn’t tell an individual with given baseline/risk profile what their 1-year plaque will be.
+
+:::
+
+:::
+
+::: {.smaller2}
+
+::: {.fragment}
+
+`NCPV_follow-up ~ NCPV_baseline + ApoB_baseline + age + sex + systolic_BP` (ANCOVA)
+
+:::
+
+:::
+
+::: {.smaller_table}
+
+::: {.fragment}
+
+**Question**: Among people with the same starting plaque, age, sex, and BP, do those with higher ApoB tend to have more plaque at 1 year?
+
+:::
+::: {.fragment}
+
+**Slope interpretation**: Expected difference in 1-year NCPV (mm³) per 1 mg/dL higher ApoB, holding baseline NCPV and covariates fixed.
+
+:::
+::: {.fragment}
+
+**Clinically relevant**: Aligns with what a patient asks: “Given where I start and my risk factors, does higher ApoB mean more plaque next year, and by how much?” 
+
+:::
+
+::: {.fragment}
+
+Optionally test ApoB × NCPV_baseline to allow baseline-dependent progression.
+
+:::
+:::
 
 ---
 
 ### Preprint vs Published Version
+
+::: {.smaller_table}
 
 Title is now: Longitudinal Data From the KETO-CTA Study
 Plaque Predicts Plaque, ApoB Does Not
@@ -727,6 +861,12 @@ That interpretation of Figures 1A and 1B was removed and replaced with:
 "The median change in NCPV was 18.9 mm3 (IQR: 9.3-47.0 mm3) and the median change in PAV was 0.8% (IQR: 0.3%-1.7%)."
 
 Table 1 median (Q1–Q3) PAV at baseline changed from 1.25% (0.5–3.6) in the preprint to 1.6% (0.5–4.9
+
+
+:::
+
+
+---
 
 
 The two violations you keep seeing—non-normality and heteroskedasticity—are largely driven by the outcome’s distribution (ΔNCPV) and its mean–variance pattern. Swapping predictors (e.g., APOB vs CAC) usually won’t fix those. So it’s likely most univariable Δ models would show the same two problems.
