@@ -1,7 +1,7 @@
 ---
-title: "Keto-CTA Study"
-subtitle: "An Analysis of the Available Data"
-author: "John (The John & Calvin Podcast)"
+title: "Audit of KETO-CTA Study Results"
+subtitle: "Using the actual study dataset"
+author: "John | The John & Calvin Podcast"
 format:
   revealjs:
     self-contained: true
@@ -11,6 +11,26 @@ format:
 ---
 
 
+
+## Dataset of Plaque Metrics
+
+::: {.smaller}
+
+<br>
+
+Released by organization funding the study:
+
+[https://citizensciencefoundation.org/keto-cta/](https://citizensciencefoundation.org/keto-cta/)
+
+<br>
+
+All code, figures, data, studies available at:
+
+[https://github.com/SloughJE/keto_cta_analysis_check](https://github.com/SloughJE/keto_cta_analysis_check)
+
+
+
+:::
 
 
 ## Incorrect Y-Axis Tick Labels
@@ -364,6 +384,8 @@ It does not deal with non-linearity, heteroskedasticity and non-normality of res
 ::: {.notes}
 
 RLM can sometimes help a bit with non-normality but depends.
+
+The two violations, non-normality and heteroskedasticity, are largely driven by the outcome’s distribution (ΔNCPV) and its mean–variance pattern. Swapping predictors (e.g., APOB vs CAC) usually won’t fix those. So it’s likely most univariable Δ models would show the same two problems.
 
 :::
 
@@ -849,95 +871,57 @@ Optionally test ApoB × NCPV_baseline to allow baseline-dependent progression.
 
 ::: {.smaller_table}
 
-Title is now: Longitudinal Data From the KETO-CTA Study
-Plaque Predicts Plaque, ApoB Does Not
+Pre-print title: **Plaque Begets Plaque, ApoB Does Not; Longitudinal Data From the KETO-CTA Trial**
 
-Find and replace 'begets' with 'predicts'.
+Published title: **Longitudinal Data From the KETO-CTA Study; Plaque Predicts Plaque, ApoB Does Not**
 
-"Most participants presented with stable NCPV (Figures 1A and 1B), with 1 participant exhibiting a decrease in NCPV"
+::: {.fragment}
 
-That interpretation of Figures 1A and 1B was removed and replaced with:
+In text: find and replace 'begets' with 'predicts'.
+
+:::
+
+::: {.smaller_table}
+<br>
+:::
+
+::: {.fragment}
+
+Description of main figure, and primary outcome:
+
+"Most participants presented with stable NCPV (Figures 1A and 1B), with 1 participant exhibiting a decrease in NCPV (Figures 2A to 2C) and 6 participants showing decreases in TPS scores over 1 year"
+
+:::
+::: {.fragment}
+
+Removed and replaced with:
 
 "The median change in NCPV was 18.9 mm3 (IQR: 9.3-47.0 mm3) and the median change in PAV was 0.8% (IQR: 0.3%-1.7%)."
 
-Table 1 median (Q1–Q3) PAV at baseline changed from 1.25% (0.5–3.6) in the preprint to 1.6% (0.5–4.9
+:::
 
+::: {.smaller_table}
+<br>
+:::
+
+::: {.fragment}
+In CONCLUSIONS section: "**In an exploratory analysis,** changes in and baseline levels of ApoB were not associated with changes in NCPV or TPS..."
+
+"exploratory analysis" added in published version. Only mention in entire paper.
+
+:::
+
+::: {.smaller_table}
+<br>
+:::
+
+::: {.fragment}
+
+
+Table 1 median (Q1–Q3) PAV at baseline changed from 1.25% (0.5–3.6) to 1.6% (0.5–4.9). 
+
+:::
 
 :::
 
 
----
-
-
-The two violations you keep seeing—non-normality and heteroskedasticity—are largely driven by the outcome’s distribution (ΔNCPV) and its mean–variance pattern. Swapping predictors (e.g., APOB vs CAC) usually won’t fix those. So it’s likely most univariable Δ models would show the same two problems.
-
-
-- 2 assumption violations:
-
-The simple linear model breaks two key rules: the residuals aren’t normally distributed and their spread changes with 
-x (heteroskedasticity).
-
-The estimated slope (the “trend”) can still be a good average summary of how y changes with x.
-
-But the usual p-values/confidence intervals from ordinary least squares (OLS) can’t be trusted because the standard error formula is wrong under heteroskedasticity, and non-normality hurts small-sample tests.
-If your OLS p-value < 0.05: treat it as suggestive, not definitive. Recompute using heteroskedasticity-robust or bootstrap methods. It may stay significant—or it may not.
-If your OLS p-value ≥ 0.05: you can’t conclude “no association.” The test might be too noisy or mis-calibrated. Recheck with robust/bootstrapped standard errors and report the effect size with a confidence interval.
-
-the conventional OLS standard errors, t-tests, and CIs are invalid with heteroskedasticity; non-normality further invalidates small-sample t-inference.
-
-- 3 assumption violation (linearity)
-
-In plain terms
-The model breaks three core assumptions: residuals aren’t normal, their spread changes with  x, and the relationship isn’t actually linear.
-Because of the changing spread, the usual p-values/intervals are mis-calibrated (they can be too small or too big).
-Because the relationship isn’t linear, the reported “slope” isn’t a clear effect; it’s just a weighted average of a curved pattern. Its size—or even its sign—may not reflect the true relationship.
-If the reported OLS p-value < 0.05:
-“This suggests a non-zero average linear trend, but inference is mis-calibrated and the effect has no clear meaning under a misspecified (nonlinear) model. The ‘significance’ may be an artifact.”
-If the reported OLS p-value ≥ 0.05:
-“This is a non-result from a mis-calibrated, misspecified model. It does not justify concluding ‘no association,’ and it may mask real patterns due to the nonlinear form and changing variance.”
-
-Interpretation of reported results:
-p < 0.05: Evidence only for a non-zero projected linear component under misspecification; inference is mis-sized and the estimand lacks a clear causal/functional meaning.
-p ≥ 0.05: Absence of evidence from a misspecified, mis-sized test; it does not speak to the presence or absence of a true association.
-
-
-### Assumptions of linear model
-Assumptions of a linear model (and why they matter)
-Linearity of the mean: the average outcome changes in a straight-line way with the predictor.
-Why it matters: If the true pattern is curved, the slope summarizes the wrong thing and can misstate direction and size.
-
-Independence of errors: observations don’t carry leftover information about each other (no autocorrelation/clustering).
-Why it matters: Dependence makes uncertainty estimates too small or too large.
-
-Constant variance (homoskedasticity): the scatter of errors is roughly the same across the predictor.
-Why it matters: If the spread grows or shrinks, standard errors and p-values from the basic model are mis-calibrated.
-
-Approximately normal errors (mainly for small samples): error terms are roughly bell-shaped.
-Why it matters: The usual t-tests and confidence intervals rely on this; strong departures undermine those calculations.
-
-Exogeneity / no systematic bias: on average, errors are unrelated to the predictor (no omitted confounders correlated with 
-x).
-Why it matters: Violations bias the slope itself, not just its uncertainty.
-
-No exact collinearity (relevant in multivariable settings): predictors aren’t exact copies of each other.
-Why it matters: Otherwise the model can’t isolate individual effects. (Not an issue in a single-predictor model.)
-
-
-The study’s univariable ‘ΔNCPV ~ APOB’ analysis is not decisive. The appropriate test is APOB’s partial association in a follow-up model that controls for baseline NCPV (and age/sex). Only 
-H
-0
- ⁣
-:
-β
-APOB
-=
-0
-H 
-0
-​	
- :β 
-APOB
-​	
- =0 in follow-up ~ baseline + APOB + covariates addresses whether APOB is associated with follow-up independent of baseline.
- 
-The reported null does not address whether APOB is associated with follow-up conditional on baseline, age, and sex, which is the clinically relevant estimand.
