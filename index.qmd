@@ -16,6 +16,8 @@ format:
 
 ::: {.smaller}
 
+[Longitudinal Data From the KETO-CTA Study: Plaque Predicts Plaque, ApoB Does Not](https://www.jacc.org/doi/10.1016/j.jacadv.2025.101686)
+
 <br>
 
 Released by organization funding the study:
@@ -922,6 +924,11 @@ Table 1 median (Q1–Q3) PAV at baseline changed from 1.25% (0.5–3.6) to 1.6% 
 
 :::
 
+::: {.fragment}
+
+Record of pre-print is unavailable. All links go to new version. It is available [here](https://github.com/SloughJE/keto_cta_analysis_check/tree/main/papers).
+
+:::
 :::
 
 
