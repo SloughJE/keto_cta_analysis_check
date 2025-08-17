@@ -678,47 +678,6 @@ The “mediator” (Life-LDL-C_exp) is partly built from Age and mixes units →
 
 ---
 
-### "Sensitivity" Analysis
-
-::: {.smaller_table}
-
-> "Sensitivity analyses on participants with >80% of bHB measurements above 0.3 mmol/L (Supplemental Tables 2 to 4) and with high calculated 10-year cardiovascular risk showed similar results to those just reported (Supplemental Table 5)."
-
-:::
-
-::: {.smaller2}
-
-::: {.fragment}
-
-This is **not** a sensitivity analysis. This is a subgroup analysis. 
-:::
-
-<br>
-
-::: {.fragment}
-
-**Sensitivity analysis**: demonstrate robustness of conclusions to reasonable alternative assumptions or analytic choices
-
-:::
-::: {.fragment}
-
-**Subgroup analysis**: assess differences of effects across subsets of the dataset (e.g., high vs low adherence; low vs high baseline risk).
-
-:::
-
-<br>
-
-::: {.fragment}
-
-
-- tested with interaction terms in the full sample, not by splitting the data, running the exact same models and eyeballing p-values.
-
-:::
-:::
-
-
----
-
 ### Bayes Factor R-scale
 
 ::: {.smaller_table}
