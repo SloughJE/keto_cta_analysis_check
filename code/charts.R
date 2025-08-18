@@ -129,7 +129,7 @@ gg_figure_1A
 
 figure_1B = plot_two_timepoints(df,
                                 V1_Percent_Atheroma_Volume, V2_Percent_Atheroma_Volume,
-                                y_lab = "PAV %", title = "Change in PAV",
+                                y_lab = "PAV %", title = "Proportional NCP and CP by PAV",
                                 label1 = "Baseline", label2 = "1 Year",
                                 scale_fn = ~ .x * 100 # convert decimal to %
                                 

@@ -355,9 +355,12 @@
 <text x='335.68' y='852.01' text-anchor='middle' style='font-size: 14.40px; font-weight: bold;fill: #4D4D4D; font-family: "Arial";' textLength='42.12px' lengthAdjust='spacingAndGlyphs'>1 Year</text>
 <text transform='translate(21.85,463.46) rotate(-90)' style='font-size: 18.00px; font-weight: bold; font-family: "Arial";' textLength='34.34px' lengthAdjust='spacingAndGlyphs'>PAV</text>
 <text transform='translate(21.85,424.12) rotate(-90)' style='font-size: 18.00px; font-weight: bold; font-family: "Arial";' textLength='16.00px' lengthAdjust='spacingAndGlyphs'>%</text>
-<text x='166.38' y='24.42' style='font-size: 21.60px; font-family: "Arial";' textLength='75.67px' lengthAdjust='spacingAndGlyphs'>Change</text>
-<text x='248.05' y='24.42' style='font-size: 21.60px; font-family: "Arial";' textLength='16.81px' lengthAdjust='spacingAndGlyphs'>in</text>
-<text x='270.86' y='24.42' style='font-size: 21.60px; font-family: "Arial";' textLength='40.00px' lengthAdjust='spacingAndGlyphs'>PAV</text>
+<text x='78.16' y='24.42' style='font-size: 21.60px; font-family: "Arial";' textLength='116.47px' lengthAdjust='spacingAndGlyphs'>Proportional</text>
+<text x='200.63' y='24.42' style='font-size: 21.60px; font-family: "Arial";' textLength='45.59px' lengthAdjust='spacingAndGlyphs'>NCP</text>
+<text x='252.22' y='24.42' style='font-size: 21.60px; font-family: "Arial";' textLength='36.05px' lengthAdjust='spacingAndGlyphs'>and</text>
+<text x='294.27' y='24.42' style='font-size: 21.60px; font-family: "Arial";' textLength='30.00px' lengthAdjust='spacingAndGlyphs'>CP</text>
+<text x='330.27' y='24.42' style='font-size: 21.60px; font-family: "Arial";' textLength='22.81px' lengthAdjust='spacingAndGlyphs'>by</text>
+<text x='359.08' y='24.42' style='font-size: 21.60px; font-family: "Arial";' textLength='40.00px' lengthAdjust='spacingAndGlyphs'>PAV</text>
 </g>
 </g>
 </svg>

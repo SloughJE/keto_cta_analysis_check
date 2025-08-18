@@ -1,6 +1,6 @@
 ---
-title: "Audit of KETO-CTA Study Results"
-subtitle: "Using the actual study dataset"
+title: "KETO-CTA Study"
+subtitle: "An Audit with the Actual Data"
 author: "John | The John & Calvin Podcast"
 format:
   revealjs:
@@ -35,7 +35,7 @@ All code, figures, data, studies available at:
 :::
 
 
-## Incorrect Y-Axis Tick Labels
+## Incorrect Figure 1B
 
 ::: {.columns}
 
@@ -97,7 +97,7 @@ q75     2 163.
 
 ---
 
-## Incorrect Shading Area
+## Incorrect Figure 1A
 
 ::: {.columns}
 
@@ -148,7 +148,7 @@ Individual Change in Plaque Volume
 
 ---
 
-## Incorrect Y-Axis Tick Labels
+## Incorrect Figures 2D, 2E, 2F
 
 ::: {.columns}
 
@@ -271,7 +271,7 @@ The usual t-tests and confidence intervals rely on this; strong departures under
 
 ---
 
-## Violations
+## LM Assumptions (claims vs tests)
 
 ::: {.smaller_table}
 
@@ -284,7 +284,7 @@ The usual t-tests and confidence intervals rely on this; strong departures under
 ::: {.smaller2}
 ::: {.fragment}
 
-Actual Assumption Tests
+Actual Linear Model Assumption Tests
 
 :::
 :::
@@ -331,7 +331,7 @@ It does not deal with non-linearity, heteroskedasticity and non-normality of res
 
 ---
 
-### Response from Authors
+### Letter to Editor and Response
 
 
 ::: {.smaller2}
@@ -376,7 +376,7 @@ It does not deal with non-linearity, heteroskedasticity and non-normality of res
 
 ---
 
-### Subjective Assumptions
+### LM Assumptions: Objective Tests
 
 
 ::: {.smaller}
@@ -387,6 +387,9 @@ It does not deal with non-linearity, heteroskedasticity and non-normality of res
 ::: {.fragment}
 
 - Visual checks are interpretive, but these assumptions **objectively** testable with **quantifiable** methods.
+
+- This is Statistics 101.
+
 
 :::
 
@@ -447,13 +450,15 @@ The two violations, non-normality and heteroskedasticity, are largely driven by 
 
 ---
 
-### Conclusions vs Actual Models Reported 
+### Conclusions Without Supporting Models
 
-::: {.smaller2}
+::: {.smaller_table}
 
 ::: {.fragment}
 
 > "**CONCLUSIONS** In lean metabolically healthy people on KD, neither **total exposure** nor changes in baseline levels of ApoB and LDL-C were associated with **changes in plaque**."
+
+> "there is no association between NCPV vs LDL-C or ApoB and TPS vs LDL-C or ApoB."
 
 :::
 :::
@@ -480,7 +485,7 @@ The two violations, non-normality and heteroskedasticity, are largely driven by 
 
 ---
 
-### No TPS Model Results
+### Missing TPS Models and Results
 
 ::: {.smaller_table}
 
@@ -506,15 +511,60 @@ Figures 2D–2F are Δ-TPS (outcome) panels (vs ΔApoB, ApoB, CAC_bl)
 
 Table 3 has no Δ-TPS models
 
-No Δ-TPS ~ LDL-C exposure models or results anywhere.
+No Δ-TPS ~ LDL-C, LDL-C exposure, or ApoB model results anywhere.
 
 :::
 :::
 
 ---
 
+### Bayes Factor `rscale` is not Moderate
 
-### Lifetime LDL-C Exposure Calculation
+::: {.smaller_table}
+
+> "Bayes factors were calculated...with default settings and an ~ `rscale value of 0.8` to contrast a moderately informative prior with a conservative distribution width (to allow for potential large effect sizes) due to the well-documented association between ApoB changes and coronary plaque changes."
+
+:::
+
+::: {.smaller2}
+
+::: {.fragment}
+
+Calling rscale = 0.8 "moderately informative" is inaccurate.
+
+:::
+::: {.fragment}
+
+[R package docs](https://search.r-project.org/CRAN/refmans/BayesFactor/html/regressionBF.html): **"medium", "wide", "ultrawide" = 0.354, 0.5, 0.707**  
+
+:::
+::: {.fragment}
+
+- `rscaleCont = 0.8` is **wider than “ultrawide”** → a **very diffuse** prior that places substantial mass on **very large** effects  
+- No reported **prior-sensitivity** to alternative r-scales  
+- Same r-scale apparently used for **all models**, no justification.
+
+:::
+:::
+
+::: {.smaller_table}
+::: {.fragment}
+
+**Fixed description**:
+:::
+
+::: {.fragment}
+
+"We used a very wide prior on coefficients (`rscale = 0.8`, wider than the package’s "ultrawide"), which places substantial prior mass on very large effects. This diffuse prior penalizes small-to-moderate effects, requiring substantially stronger evidence than under the ‘wide’ or ‘medium’ defaults to support them."
+
+:::
+
+:::
+
+---
+
+
+### LDL-C Exposure Calculation
 
 ::: {.smaller_table}
 
@@ -537,7 +587,7 @@ $$
 
 ::: {.fragment}
 
-- one baseline value for all pre-study KD time and one final value for all follow-up is a coarse simplification
+- one baseline value for all pre-study Keto Diet time and one final value for all follow-up is a coarse simplification
 - relies on recall of KD start
 :::
 ::: {.fragment}
@@ -549,7 +599,7 @@ $$
 
 ---
 
-### Lifetime LDL-C Exposure Calculation
+### Lifetime LDL-C Formula Doesn’t Add Up
 
 ::: {.smaller_table}
 
@@ -595,7 +645,7 @@ $$
 
 ---
 
-### Age "mediation" analysis
+### This isn't an Age Mediation Analysis
 
 
 ![](assets/Age_mediation_bp.png){style="width:60%; height:auto !important;"}
@@ -608,9 +658,10 @@ $$
 
 ::: {.smaller_table}
 
+::: {.fragment}
+
 A mediation analysis:
 
-::: {.fragment}
 
 - tests how an exposure affects an outcome through a middle step (the *mediator*)
 - estimates an indirect effect (through the mediator) and a direct effect (everything else).
@@ -658,14 +709,14 @@ Only shows outcome regressions (NCPV_final ~ Age, then + Life-LDL-C_exp, then + 
 
 No mediator model, no indirect effect, no CIs.
 
-The “mediator” (Life-LDL-C_exp) is partly built from Age and mixes units → mathematical coupling; any drop in the Age coefficient can be mechanical.
+The "mediator" (Life-LDL-C_exp) is partly built from Age and mixes units → mathematical coupling; any drop in the Age coefficient can be mechanical.
 
 
 :::
 
 ---
 
-### Age "mediation" analysis
+### Age in Exposure, then Control for Age
 
 
 ![](assets/Age_mediation_bp.png){style="width:60%; height:auto !important;"}
@@ -682,12 +733,11 @@ They ran (reported) three regressions in sequence.
 
 ::: {.fragment}
 
-Conclusion: after adjusting for baseline CAC, neither age nor lifetime LDL-C predicts NCPV_final.
-
+Conclusion: *after adjusting for baseline CAC, neither age nor lifetime LDL-C predicts NCPV_final.*
 :::
 ::: {.fragment}
 
-- CAC explains the association; age / lifetime LDL-exposure don’t matter.
+*- **CAC explains the association**; age / lifetime LDL-exposure don’t matter.*
 
 :::
 ::: {.fragment}
@@ -696,12 +746,25 @@ Changes in p-values come from collinearity due to Age being embedded in lifetime
 
 Age is a confounder/proxy for exposure duration, not a mediator.
 
+
+:::
+
+
+::: {.fragment}
+
+::: {.smaller_caption}
+<br>
+:::
+
+CAC association just shows **baseline disease predicts future disease**.
+
+
 <br> 
 
 :::
 ::: {.fragment}
 
-**They did NOT report `NCPV_final ~ lifetime LDL-C exposure` model results.**
+**They did NOT report `NCPV_final ~ lifetime LDL-C exposure` in the analysis.**
 
 :::
 :::
@@ -710,7 +773,7 @@ Age is a confounder/proxy for exposure duration, not a mediator.
 
 they actually did a stepwise covariate adjustment on highly collinear variables and then over-interpreted p-value changes.
 
-“loss of significance” doesn’t show that LDL or Age don’t matter; it shows the model is not set up to answer the mediation/mechanism question.
+"loss of significance" doesn’t show that LDL or Age don’t matter; it shows the model is not set up to answer the mediation/mechanism question.
 
 
 Intended pathway?: lifetime LDL-C → baseline CAC → NCPV_final.
@@ -720,58 +783,16 @@ Age affects all variables.
 
 The “mediator” (Life-LDL-C_exp) is partly built from Age and mixes units → mathematical coupling; any drop in the Age coefficient can be mechanical.
 
+Baseline CAC likely sits on the pathway from long-term LDL exposure to later plaque. Controlling for it can remove the very effect they're trying to test.
 
-:::
-
----
-
-### Bayes Factor R-scale
-
-::: {.smaller_table}
-
-> "Bayes factors were calculated...with default settings and an `~ rscale value of 0.8` to contrast a moderately informative prior with a conservative distribution width (to allow for potential large effect sizes) due to the well-documented association between ApoB changes and coronary plaque changes."
-
-:::
-
-::: {.smaller2}
-
-::: {.fragment}
-
-Calling 0.8 "moderately informative" is inaccurate.
-
-:::
-::: {.fragment}
-
-[R package docs](https://search.r-project.org/CRAN/refmans/BayesFactor/html/regressionBF.html): **"medium", "wide", "ultrawide" = 0.354, 0.5, 0.707**  
-
-:::
-::: {.fragment}
-
-- `rscaleCont = 0.8` is **wider than “ultrawide”** → a **very diffuse** prior that places substantial mass on **very large** effects  
-- No reported **prior-sensitivity** to alternative r-scales  
-- Same r-scale apparently used for **all models**, no justification.
-
-:::
-:::
-
-::: {.smaller_table}
-::: {.fragment}
-
-**Fixed description**:
-:::
-
-::: {.fragment}
-
-"We used a very wide prior on coefficients (`rscale = 0.8`, wider than the package’s "ultrawide"), which places substantial prior mass on very large effects. This diffuse prior penalizes small-to-moderate effects, requiring substantially stronger evidence than under the ‘wide’ or ‘medium’ defaults to support them."
-
-:::
+CAC association just shows baseline disease predicts future disease; they don’t establish that age or lifetime LDL exposure don’t matter
 
 :::
 
 
 ---
 
-### Conclusions from Univariable Δ-Models
+### Univariable Change Models Can Mislead
 
 ::: {.smaller_table}
 
@@ -793,7 +814,7 @@ All conclusions based on independent univariable change score models
 - Confounding unchecked (age, sex, BP, CAC_bl, baseline plaque) 
 - Δ-NCPV contains baseline NCPV, biasing associations (mathematical coupling)
 - less power, more noise
-- ignores starting plaque and basics like age/sex/blood
+- ignores starting plaque and basics like age/sex
 - baseline imbalance and shared correlates can inflate, reduce, or reverse associations
 
 
@@ -802,14 +823,14 @@ All conclusions based on independent univariable change score models
 
 Consensus in [biostatistics](https://onlinelibrary.wiley.com/doi/10.1002/sim.2682): use [ANCOVA](https://pubmed.ncbi.nlm.nih.gov/16526009/) [style model](https://pmc.ncbi.nlm.nih.gov/articles/PMC1121605), [follow-up](https://europepmc.org/article/pmc/pmc9557845) ~ baseline + covariates for pre/post analyses.
 
-`NCPV_follow-up ~ NCPV_baseline + ApoB_baseline + age + sex + systolic_BP`
+`NCPV_follow-up ~ NCPV_baseline + ApoB_baseline + age + sex`
 
 :::
 :::
 
 ---
 
-### Conclusions from Univariable Δ-Models
+### Next-Year Plaque, Given Your Baseline
 
 ::: {.smaller2}
 
@@ -821,7 +842,7 @@ Consensus in [biostatistics](https://onlinelibrary.wiley.com/doi/10.1002/sim.268
 
 ::: {.fragment}
 
-**Question**: "Among all participants, is baseline ApoB associated with the raw change in plaque over 1 year, without accounting for where people started or other factors"?
+**Question**: Among all participants, is baseline ApoB associated with the raw change in plaque over 1 year, without accounting for where people started or other factors?
 
 :::
 ::: {.fragment}
@@ -842,7 +863,11 @@ It doesn’t tell an individual with given baseline/risk profile what their 1-ye
 
 ::: {.fragment}
 
-`NCPV_follow-up ~ NCPV_baseline + ApoB_baseline + age + sex + systolic_BP` (ANCOVA)
+::: {.smaller_caption}
+<br>
+:::
+
+`NCPV_follow-up ~ NCPV_baseline + ApoB_baseline + age + sex` (ANCOVA)
 
 :::
 
@@ -862,11 +887,15 @@ It doesn’t tell an individual with given baseline/risk profile what their 1-ye
 :::
 ::: {.fragment}
 
-**Clinically relevant**: Aligns with what a patient asks: “Given where I start and my risk factors, does higher ApoB mean more plaque next year, and by how much?” 
+**Clinically relevant**: What a patient wants to know; "Given where I start and my risk factors, does higher ApoB mean more plaque next year, and by how much?"
 
 :::
 
 ::: {.fragment}
+
+::: {.smaller_caption}
+<br>
+:::
 
 Optionally test ApoB × NCPV_baseline to allow baseline-dependent progression.
 
@@ -875,17 +904,22 @@ Optionally test ApoB × NCPV_baseline to allow baseline-dependent progression.
 
 ---
 
-### Preprint vs Published Version
+### Preprint vs Published: What Changed
 
 ::: {.smaller_table}
+
+::: {.fragment}
 
 Pre-print title: **Plaque Begets Plaque, ApoB Does Not; Longitudinal Data From the KETO-CTA Trial**
 
 Published title: **Longitudinal Data From the KETO-CTA Study; Plaque Predicts Plaque, ApoB Does Not**
 
+:::
+
+
 ::: {.fragment}
 
-In text: find and replace 'begets' with 'predicts'.
+In text: find and replace '**begets**' with '**predicts**'.
 
 :::
 
@@ -938,3 +972,26 @@ Record of pre-print is unavailable. All links go to new version. It is available
 :::
 
 
+# Conclusions
+
+---
+
+
+1. Figures, data, and tests don’t match
+
+::: {.fragment}
+
+2. Modeling choices systematically weaken evidence for an association
+
+:::
+::: {.fragment}
+
+3. Key analyses not reported.
+
+:::
+::: {.fragment}
+
+
+4. Crowdfunded. 
+
+:::
