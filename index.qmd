@@ -83,6 +83,18 @@ Individual Change in Plaque Volume
 :::
 :::
 
+::: {.notes}
+
+      x     y
+  <dbl> <dbl>
+q25     1  15.5
+q75     2  25.2
+
+q25     1 102. 
+q75     2 163. 
+
+:::
+
 ---
 
 ## Incorrect Shading Area
@@ -307,8 +319,8 @@ Objective tests show all 4 models failed at least 2 tests.
 
 - Shapiro–Wilk test for normal residuals
 
-Calling residual-plot evaluation “subjective” is **misleading.**
-Visual checks are interpretive, but these assumptions are **objectively quantifiably** testable
+Calling residual plot evaluation "subjective" is **misleading and evasive**.
+Visual checks are interpretive, but these assumptions **objectively** testable with **quantifiable** methods.
 
 Robust Linear Regression mainly down-weights outliers
 
@@ -328,6 +340,9 @@ It does not deal with non-linearity, heteroskedasticity and non-normality of res
 >
 > \- *quote from letter to the editor*
 
+
+::: {.screen-only}
+
 ::: {.r-stack}
 
 ::: {.fragment .current-visible}
@@ -345,6 +360,17 @@ It does not deal with non-linearity, heteroskedasticity and non-normality of res
 
 :::
 :::
+:::
+
+
+::: {.print-only}
+
+> ["we are aware of the relevance of linear assumptions to obtain accurate estimators. Because residual plot evaluation can also be subjective, we followed their suggestion and reran all models with robust linear regression (using the `MASS::rlm` function in R version 4.4.3 [R Foundation]). While, as expected, there were small differences with the published estimates, all models using robust regression were consistent with what was reported."](https://www.jacc.org/doi/10.1016/j.jacadv.2025.101862)
+>
+> \- *quote from the reply to a letter to the editor*
+
+:::
+
 
 :::
 
@@ -356,11 +382,11 @@ It does not deal with non-linearity, heteroskedasticity and non-normality of res
 ::: {.smaller}
 
 
-- Calling residual plot evaluation "subjective" is **misleading.**
+- Calling residual plot evaluation "subjective" is **misleading and evasive**.
 
 ::: {.fragment}
 
-- Visual checks are interpretive, but these linear assumptions are **quantifiable** and **objectively testable**.
+- Visual checks are interpretive, but these assumptions **objectively** testable with **quantifiable** methods.
 
 :::
 
@@ -394,9 +420,30 @@ The two violations, non-normality and heteroskedasticity, are largely driven by 
 
 ---
 
+::: {.columns}
 
-![](figures/diagnostics/check__NCPV_CAC_bl.png){width=100%  fig-align="center"}
+::: {.column width="25%"}
 
+<br>
+<br>
+
+**`check_model` output**:
+
+
+:::
+
+::: {.column width="75%"}
+
+::: {.fragment}
+
+::: {.img-wrap style="width:75%; float:center;"}
+
+![](figures/diagnostics/check__NCPV_CAC_bl.png){style="width:100%; height:auto;"}
+
+:::
+:::
+:::
+:::
 
 ---
 

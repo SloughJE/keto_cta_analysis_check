@@ -21,6 +21,18 @@ df <- df %>%
 
 ##########
 
+#The median change in NCPV was 18.9 mm3 (IQR: 9.3-47.0 mm3) 
+
+quantile(df$V1_Non_Calcified_Plaque_Volume, probs = c(0.25, 0.5, 0.75), na.rm = TRUE)
+IQR(df$V1_Non_Calcified_Plaque_Volume, na.rm = TRUE)
+
+quantile(df$V2_Non_Calcified_Plaque_Volume, probs = c(0.25, 0.5, 0.75), na.rm = TRUE)
+IQR(df$V2_Non_Calcified_Plaque_Volume, na.rm = TRUE)
+
+quantile(df$delta_NCPV, probs = c(0.25, 0.5, 0.75), na.rm = TRUE)
+IQR(df$delta_NCPV, na.rm = TRUE)
+
+
 # function for main chart
 
 plot_two_timepoints <- function(df,

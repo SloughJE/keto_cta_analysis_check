@@ -23,3 +23,16 @@
   margin-right: auto !important;
   width: 700px !important; /* match your layout() width */
 }
+
+/* Default: hide print-only on screen */
+.print-only { display: none !important; }
+
+/* When using Quarto/Reveal PDF Export Mode (adds .print-pdf to <body>) */
+.print-pdf .screen-only { display: none !important; }
+.print-pdf .print-only  { display: block !important; }
+
+/* When using the browser's actual print media */
+@media print {
+  .screen-only { display: none !important; }
+  .print-only  { display: block !important; }
+}
