@@ -176,3 +176,44 @@ round(summ, 3)
 # Percent Atheroma Volume (PAV)
 # Keto-CTA Table – Imaging Metrics
 
+
+###
+# Calculate actual normal common % change
+
+# Helper: per-person % change, with non-finite set to NA
+pct_change <- function(baseline, followup) {
+  pc <- 100 * (followup - baseline) / baseline
+  pc[!is.finite(pc)] <- NA_real_   # handles Inf, -Inf, NaN
+  pc
+}
+
+## NCPV
+pct_ncpv <- pct_change(df$V1_Non_Calcified_Plaque_Volume,
+                       df$V2_Non_Calcified_Plaque_Volume)
+
+median_pct_ncpv <- median(pct_ncpv, na.rm = TRUE)
+mean_pct_ncpv   <- mean(pct_ncpv,   na.rm = TRUE)
+iqr_pct_ncpv    <- quantile(pct_ncpv, probs = c(.25, .75), na.rm = TRUE)
+
+
+
+# Their figure-style "percent change" (ratio of medians)
+their_ncpv <- 100 * median(df$V2_Non_Calcified_Plaque_Volume -
+                             df$V1_Non_Calcified_Plaque_Volume, na.rm = TRUE) /
+  median(df$V1_Non_Calcified_Plaque_Volume, na.rm = TRUE)
+
+print(c(median_pct_ncpv, mean_pct_ncpv,their_ncpv ))
+
+## PAV
+pct_pav <- pct_change(df$V1_Percent_Atheroma_Volume,
+                      df$V2_Percent_Atheroma_Volume)
+
+median_pct_pav <- median(pct_pav, na.rm = TRUE)
+mean_pct_pav   <- mean(pct_pav,   na.rm = TRUE)
+iqr_pct_pav    <- quantile(pct_pav, probs = c(.25, .75), na.rm = TRUE)
+
+their_pav <- 100 * median(df$V2_Percent_Atheroma_Volume -
+                            df$V1_Percent_Atheroma_Volume, na.rm = TRUE) /
+  median(df$V1_Percent_Atheroma_Volume, na.rm = TRUE)
+
+print(c(median_pct_pav, mean_pct_pav, their_pav ))
