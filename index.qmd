@@ -986,12 +986,12 @@ Record of pre-print is unavailable. All links go to new version. It is available
 :::
 ::: {.fragment}
 
-3. Key analyses not reported.
+3. Key analyses not reported
 
 :::
 ::: {.fragment}
 
 
-4. Crowdfunded. 
+4. Crowdfunded
 
 :::
