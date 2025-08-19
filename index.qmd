@@ -631,7 +631,7 @@ $$
 
 ::: {.fragment}
 
-- **This equation is nonsensical. It is invalid.**
+- **This equation is dimensionally inconsistent.**
 
 :::
 ::: {.fragment}
@@ -1012,39 +1012,26 @@ Record of pre-print is unavailable. All links go to new version. It is available
 
 :::
 
+
 ---
 
-### Quick Hits
+### Quick Hits — Claims vs. Issues
 
-::: {.smaller_table}
-
-Figures 2 (D to F) Change in ApoB, baseline ApoB, and baseline CAC vs **NCPV**. Actually TPS.
-
-R2, actually adjusted R2
-
-Table 1 Ketogenic diet duration (d) mean: 1,642.7 (4.5 years)
-Table 3 caption; "LDL-C exposure while on a ketogenic diet (mean 5.7 years);" 
-
-LDL exposure:
-Abstract: total LDL-C exposure:   median 1,302 days, Q1-Q3: 984 - 1,754 days
-Table 1: Ketogenic diet duration: median 1,427 days, Q1-Q3: 1,002-1,938 days
-
-also exposure should be in mg/dL·days (not days).
-
-Total cholesterol (mg/dL) median: 338 IQR (301-337) cannot be right.
-
-Baseline Characteristics Table. 
-Why No Follow-up Characteristics table?
-
-multiple: "changes in baseline levels". Baseline levels don't change.
-
-Direct quote from CENTRAL ILLUSTRATION:
-> "Neither total exposure nor changes in baseline levels of ApoB and mg/dL were associated with changes in plaque. Conversely, baseline plaque but ApoB was not associated with plaque progression."
-
-
-"using R version 4.0.3 (R Core Team [2020], R Foundation for Statistical Computing, with the last available version for September 2024)." Does that mean they used version 4.0.3 from 2020 or version 4.4.2 from Sept 2024?
-
-
+::: {.smaller_large_table}
+| Where | Paper text (claim) | Issue  |
+|:--|:--|:--|
+| **Figure 1 caption** | "...the shaded area represents the IQR ..." | **Imprecise.** IQR is a single number; shaded band is  **25th–75th percentile band** at baseline and 1-year. |
+| **Figure 1 caption** | “(9.3–47.0 mm³)” | Wrong context/unstated. Those numbers are **IQR of ΔNCPV** |
+| **Figures 2D–F** | “Change in ApoB, baseline ApoB, and baseline CAC vs **NCPV**.” | Axes/legend appear to be **TPS**, not NCPV → **label/data mismatch** |
+| **Table 3 caption** | “R² = squared correlation coefficient (explained variability).” | Reports **negative values**, must be adjusted R² |
+| **KD Duration** Table 1 vs Table 3 | KD duration mean **1,642.7 days (≈4.5 y)** vs caption “LDL-C exposure … **mean 5.7 y**.” | **Inconsistent durations.** |
+| **KD Duration** Abstract vs Table 1 | LDL-C exposure median **1,302 d (984–1,754)** vs KD duration median **1,427 d (1,002–1,938)**. | Metrics conflated. **exposure should be in units** like **mg/dL·days**, not days. |
+| **Table 1 (Total cholesterol)** | Median **338**, IQR **(301–337)**. | **Impossible IQR** (Q3 < median) |
+| **Baseline characteristics only** | Baseline table provided. | **No follow-up characteristics table** |
+| **Terminology (multiple)** | "changes in baseline levels" | Baseline doesn’t change.  |
+| **Software statement** | "using R 4.0.3 (2020)… with the last available version for Sept 2024." | Unclear what version was used. |
+| **Central illustration (quote)** | "Neither total exposure nor changes in baseline levels of ApoB and mg/dL were associated… Baseline plaque but ApoB was not associated…" | **Incoherent/grammatical errors** |
+| Main text (Results/Discussion) | “…baseline values magnify their **percentual** changes…” | percent change or percentage-point change |
 
 :::
 
@@ -1052,7 +1039,7 @@ Direct quote from CENTRAL ILLUSTRATION:
 ---
 
 
-### A Nonstandard Percent Change
+### Nonstandard Percent Change
 
 ::: {.smaller_table}
 
@@ -1060,9 +1047,10 @@ Direct quote from CENTRAL ILLUSTRATION:
 
 ::: {.fragment}
 
-**This isn’t percent change.**
+**This isn’t the standard subject-level percent change.**
 
-They computed a **ratio of median change to baseline median:** $\dfrac{\mathrm{median}(ΔNCPV)}{\mathrm{median}(\mathrm{NCPV_{bl}})}\times 100\%$  
+They computed a **ratio of median change to baseline median:** $\frac{\operatorname{median}(NCPV_{1y}-NCPV_{bl})}{\operatorname{median}(NCPV_{bl})}\times 100\%$
+  
 
 :::
 ::: {.fragment}
@@ -1074,7 +1062,11 @@ They computed a **ratio of median change to baseline median:** $\dfrac{\mathrm{m
 :::
 ::: {.fragment}
 
-**Standard percent change:** $\text{median}\!\left(\frac{ΔNCPV}{NCPV_{bl}} \times 100\%\right)$
+
+**Standard percent change:**   $\operatorname{median}\!\left(\frac{NCPV_{1y}-NCPV_{bl}}{NCPV_{bl}}\right)\times 100\%$
+
+
+"What was the typical relative change per subject?"
 
 :::
 
@@ -1113,7 +1105,7 @@ They computed a **ratio of median change to baseline median:** $\dfrac{\mathrm{m
 
 ::: {.fragment}
 
-Their "percent change" metric is **mislabelled**, **nonstandard** and not well explained.
+Their "percent change" metric is **mislabeled**, **nonstandard** and not well explained.
 
 :::
 :::
@@ -1135,4 +1127,16 @@ It is mathematically true that this can occur, but they didn’t compute per-per
 :::
 
 ---
+
+Plaque Metrics Summary Table
+
+<br>
+
+```{r echo=FALSE, message=FALSE, results='asis'}
+
+source("code/tables.R")
+
+gt_tbl_plaque
+
+```
 

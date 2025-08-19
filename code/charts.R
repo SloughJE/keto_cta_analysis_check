@@ -74,7 +74,7 @@ plot_two_timepoints <- function(df,
     y = c(s$q1[1], s$q1[2], s$q3[2], s$q3[1])
   )
   
-  print(iqr_band)
+  #print(iqr_band)
   # Median segment
   segment_df <- tibble(
     x = 1, xend = 2,
@@ -94,7 +94,7 @@ plot_two_timepoints <- function(df,
                  aes(x = x, xend = xend, y = y, yend = yend),
                  inherit.aes = FALSE, colour = "red", linewidth = 1.2) +
     scale_x_continuous(breaks = c(1, 2), labels = c(label1, label2),
-       expand = expansion(mult = 0.45)   # try 0.3–0.5
+       expand = expansion(mult = 0.5)   # try 0.3–0.5
     ) +
     scale_y_continuous(limits = c(0, y_top), minor_breaks = minor_y) +
     labs(x = NULL, y = y_lab, title = title) +
