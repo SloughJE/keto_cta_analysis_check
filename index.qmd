@@ -1177,7 +1177,7 @@ gt_tbl_pct_hybrid
 
 ---
 
-[Plaque Metrics Charts](https://github.com/SloughJE/keto_cta_analysis_check/tree/447f880d5b9d51f27226222f85d62e125978bd47/figures/plots_plaque_metrics)
+[Plaque Metrics Charts](https://github.com/SloughJE/keto_cta_analysis_check/tree/main/figures/plots_plaque_metrics/)
 
 ::: {.columns}
 
