@@ -197,105 +197,6 @@ regresses y~x, and the shaded area represents the standard error.
 :::
 :::
 
----
-
-
-### Nonstandard Percent Change
-
-::: {.smaller_table}
-
-> "The median change in NCPV was 18.9 mm3 (IQR: 9.3-47.0 mm³) and the median change in PAV was 0.8% (IQR: 0.3%-1.7%). Compared to baseline, these represent **a 43% and 50% change**, respectively."
-
-::: {.fragment}
-
-
-**Standard percent change:**   $\operatorname{median}\!\left(\frac{NCPV_{1y}-NCPV_{bl}}{NCPV_{bl}}\right)\times 100\%$
-
-
-"What was the typical relative change per subject?"
-
-:::
-
-::: {.smaller2}
-<br>
-:::
-
-::: {.fragment}
-
-This is not what they did (on the **Primary Outcome**).
-
-:::
-::: {.fragment}
-
-They computed a **ratio of median change to baseline median:** $\frac{\operatorname{median}(NCPV_{1y}-NCPV_{bl})}{\operatorname{median}(NCPV_{bl})}\times 100\%$
-  
-
-:::
-::: {.fragment}
-
-
-- NCPV: $18.9/44 \approx 43\%$; and PAV: $0.8/1.6 \approx 50\%$  
-
-
-:::
-
-
-::: {.fragment}
-
-::: {.smaller2}
-<br>
-:::
-
-::: {.columns}
-
-::: {.column width="40%"}
-
-**Standard percent change vs. reported ratio-of-medians:**
-
-:::
-
-::: {.column width="60%"}
-
-::: {.smaller}
-
-| Outcome | "ratio-of-medians" | Median % change | Mean % change |
-|:--|--:|--:|--:|
-| NCPV | 43%   | 49.2% | 81.4% |
-| PAV  | 50%   | 47.3% | 80.7% |
-
-:::
-:::
-
-:::
-:::
-
-::: {.smaller2}
-<br>
-:::
-
-::: {.fragment}
-
-Their "percent change" metric is **nonstandard**, not expected, and not explained.
-
-:::
-:::
-
-::: {.notes}
-
-*(note: $0.8$ is **percentage points**, not “%”)*
-
-observations with baseline = 0 excluded from % change.”
-
-IMPORTANT QUOTE:
-
-"While it is true their **low-plaque baseline values magnify their percentual** changes and the observed absolute NCPV and PAV progression (18.9 mm3 and 0.8%, respectively)..."
-
-They don't report "percentual" changes!
-
-It is mathematically true that this can occur, but they didn’t compute per-person % change; the 43%/50% are ratios of medians and don’t capture that effect. 
-
-:::
-
 
 ---
 
@@ -616,6 +517,7 @@ No Δ-TPS ~ LDL-C, LDL-C exposure, or ApoB model results anywhere.
 :::
 :::
 
+
 ---
 
 ### Bayes Factor `rscale` is not Moderate
@@ -844,7 +746,7 @@ They ran (reported) three regressions with sequential covariate adjustment and c
 
 "Loses significance" ≠ mediation. Collinearity since lifetime LDL-C embeds age.
 
-Age is a common cause/proxy of both lifetime LDL-C exposure and NCPV (not caused by LDL), so it’s a confounder, not a mediator.
+Age is a common cause/proxy of both lifetime LDL-C exposure and NCPV. It’s a confounder, not a mediator.
 
 :::
 
@@ -884,6 +786,109 @@ The “mediator” (Life-LDL-C_exp) is partly built from Age and mixes units →
 Baseline CAC likely sits on the pathway from long-term LDL exposure to later plaque. Controlling for it can remove the very effect they're trying to test.
 
 CAC association just shows baseline disease predicts future disease; they don’t establish that age or lifetime LDL exposure don’t matter
+
+:::
+
+
+---
+
+
+### Nonstandard Percent Change
+
+::: {.smaller_table}
+
+> "The median change in NCPV was 18.9 mm3 (IQR: 9.3-47.0 mm³) and the median change in PAV was 0.8% (IQR: 0.3%-1.7%). Compared to baseline, these represent **a 43% and 50% change**, respectively."
+
+::: {.fragment}
+
+
+**Standard percent change:**   $\operatorname{median}\!\left(\frac{NCPV_{1y}-NCPV_{bl}}{NCPV_{bl}}\right)\times 100\%$
+
+
+"What was the typical relative change per subject?"
+
+:::
+
+::: {.smaller2}
+<br>
+:::
+
+
+::: {.fragment}
+
+They computed a **ratio of median change to baseline median:** $\frac{\operatorname{median}(NCPV_{1y}-NCPV_{bl})}{\operatorname{median}(NCPV_{bl})}\times 100\%$
+  
+
+:::
+::: {.fragment}
+
+
+- NCPV: $18.9/44 \approx 43\%$; and PAV: $0.8/1.6 \approx 50\%$  
+
+
+:::
+
+
+::: {.fragment}
+
+::: {.smaller2}
+<br>
+:::
+
+::: {.columns}
+
+::: {.column width="40%"}
+
+**Standard percent change vs. reported ratio-of-medians:**
+
+:::
+
+::: {.column width="60%"}
+
+::: {.smaller}
+
+| Outcome | "ratio-of-medians" | Median % change | Mean % change |
+|:--|--:|--:|--:|
+| NCPV | 43%   | 49.2% | 81.4% |
+| PAV  | 50%   | 47.3% | 80.7% |
+
+:::
+:::
+
+:::
+:::
+
+::: {.smaller2}
+<br>
+:::
+
+::: {.fragment}
+
+Likely chosen because some baselines were zero.
+
+:::
+::: {.fragment}
+
+Their "percent change" metric is nonstandard and should be labeled and justified.
+
+:::
+:::
+
+::: {.notes}
+
+Ratio-of-medians does not estimate a typical subject’s relative change; it can over/understate it.
+
+*(note: $0.8$ is **percentage points**, not “%”)*
+
+observations with baseline = 0 excluded from % change.”
+
+IMPORTANT QUOTE:
+
+"While it is true their **low-plaque baseline values magnify their percentual** changes and the observed absolute NCPV and PAV progression (18.9 mm3 and 0.8%, respectively)..."
+
+They don't report "percentual" changes!
+
+It is mathematically true that this can occur, but they didn’t compute per-person % change; the 43%/50% are ratios of medians and don’t capture that effect. 
 
 :::
 

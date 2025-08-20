@@ -177,7 +177,7 @@ gt_tbl <- assumption_summary %>%
 # #library(qqplotr) # if want loess band on Quantile Dev chart
 # 
 
-### UNCOMMENT BELOW TO mAKE THE check_model charts
+### UNCOMMENT BELOW TO MAKE THE check_model charts
 
 # purrr::iwalk(forms, function(f, nm) {
 #   m  <- lm(f, data = df)
