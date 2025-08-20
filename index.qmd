@@ -20,7 +20,7 @@ format:
 
 <br>
 
-Released by organization funding the study:
+Plaque Data released by organization funding the study:
 
 [https://citizensciencefoundation.org/keto-cta/](https://citizensciencefoundation.org/keto-cta/)
 
@@ -200,6 +200,106 @@ regresses y~x, and the shaded area represents the standard error.
 ---
 
 
+### Nonstandard Percent Change
+
+::: {.smaller_table}
+
+> "The median change in NCPV was 18.9 mm3 (IQR: 9.3-47.0 mm³) and the median change in PAV was 0.8% (IQR: 0.3%-1.7%). Compared to baseline, these represent **a 43% and 50% change**, respectively."
+
+::: {.fragment}
+
+
+**Standard percent change:**   $\operatorname{median}\!\left(\frac{NCPV_{1y}-NCPV_{bl}}{NCPV_{bl}}\right)\times 100\%$
+
+
+"What was the typical relative change per subject?"
+
+:::
+
+::: {.smaller2}
+<br>
+:::
+
+::: {.fragment}
+
+This is not what they did (on the **Primary Outcome**).
+
+:::
+::: {.fragment}
+
+They computed a **ratio of median change to baseline median:** $\frac{\operatorname{median}(NCPV_{1y}-NCPV_{bl})}{\operatorname{median}(NCPV_{bl})}\times 100\%$
+  
+
+:::
+::: {.fragment}
+
+
+- NCPV: $18.9/44 \approx 43\%$; and PAV: $0.8/1.6 \approx 50\%$  
+
+
+:::
+
+
+::: {.fragment}
+
+::: {.smaller2}
+<br>
+:::
+
+::: {.columns}
+
+::: {.column width="40%"}
+
+**Standard percent change vs. reported ratio-of-medians:**
+
+:::
+
+::: {.column width="60%"}
+
+::: {.smaller}
+
+| Outcome | "ratio-of-medians" | Median % change | Mean % change |
+|:--|--:|--:|--:|
+| NCPV | 43%   | 49.2% | 81.4% |
+| PAV  | 50%   | 47.3% | 80.7% |
+
+:::
+:::
+
+:::
+:::
+
+::: {.smaller2}
+<br>
+:::
+
+::: {.fragment}
+
+Their "percent change" metric is **nonstandard**, not expected, and not explained.
+
+:::
+:::
+
+::: {.notes}
+
+*(note: $0.8$ is **percentage points**, not “%”)*
+
+observations with baseline = 0 excluded from % change.”
+
+IMPORTANT QUOTE:
+
+"While it is true their **low-plaque baseline values magnify their percentual** changes and the observed absolute NCPV and PAV progression (18.9 mm3 and 0.8%, respectively)..."
+
+They don't report "percentual" changes!
+
+It is mathematically true that this can occur, but they didn’t compute per-person % change; the 43%/50% are ratios of medians and don’t capture that effect. 
+
+:::
+
+
+---
+
+
 ## Linear Model Assumptions 
 
 
@@ -208,7 +308,7 @@ regresses y~x, and the shaded area represents the standard error.
 
 4 Simple Linear Regression Assumptions
 
-3 are tested with data
+3 are tested with data (in this situation)
 
 ::: {.fragment}
 
@@ -241,7 +341,7 @@ These linear assumptions are **quantifiable** and **objectively testable**.
 
 If the true pattern is curved, the slope summarizes the wrong thing and can misstate direction and size.
 
-- Independence of errors
+- Independence of errors (can be tested in some situations, not this one)
 
 Dependence makes uncertainty estimates too small or too large.
 
@@ -306,7 +406,7 @@ gt_tbl
 
 ::: {.fragment}
 
-Objective tests show all 4 models failed at least 2 tests.
+Objective tests show all 4 models failed at least 2 tests each.
 
 :::
 :::
@@ -555,7 +655,7 @@ Calling rscale = 0.8 "moderately informative" is inaccurate.
 
 ::: {.fragment}
 
-"We used a very wide prior on coefficients (`rscale = 0.8`, wider than the package’s "ultrawide"), which places substantial prior mass on very large effects. This diffuse prior penalizes small-to-moderate effects, requiring substantially stronger evidence than under the ‘wide’ or ‘medium’ defaults to support them."
+"We used a very wide prior on coefficients (`rscale = 0.8`, wider than the package’s "ultrawide"), which places substantial prior mass on very large effects. This diffuse prior penalizes small-to-moderate effects, requiring much stronger evidence than under the ‘wide’ or ‘medium’ defaults to support them."
 
 :::
 
@@ -660,7 +760,7 @@ $$
 
 ::: {.fragment}
 
-A mediation analysis:
+A [mediation](https://library.virginia.edu/data/articles/introduction-to-mediation-analysis) analysis is a specific statistical method that:
 
 
 - tests how an exposure affects an outcome through a middle step (the *mediator*)
@@ -671,7 +771,7 @@ A mediation analysis:
 
 **This is not a mediation analysis**.
 
-- No indirect effect was estimated or tested.
+- No indirect effect was estimated or tested. No causal model specified.
 - Age can’t be a mediator of LDL exposure (age isn’t caused by LDL); it’s a confounder.
 - They only compared p-values after adding variables.
 
@@ -729,11 +829,11 @@ The "mediator" (Life-LDL-C_exp) is partly built from Age and mixes units → mat
 
 ::: {.smaller_table}
 
-They ran (reported) three regressions in sequence.
+They ran (reported) three regressions with sequential covariate adjustment and concluded:
 
 ::: {.fragment}
 
-Conclusion: *after adjusting for baseline CAC, neither age nor lifetime LDL-C predicts NCPV_final.*
+*after adjusting for baseline CAC, neither age nor lifetime LDL-C predicts NCPV_final.*
 :::
 ::: {.fragment}
 
@@ -742,10 +842,9 @@ Conclusion: *after adjusting for baseline CAC, neither age nor lifetime LDL-C pr
 :::
 ::: {.fragment}
 
-Changes in p-values come from collinearity due to Age being embedded in lifetime LDL-C exposure.
+"Loses significance" ≠ mediation. Collinearity since lifetime LDL-C embeds age.
 
-Age is a confounder/proxy for exposure duration, not a mediator.
-
+Age is a common cause/proxy of both lifetime LDL-C exposure and NCPV (not caused by LDL), so it’s a confounder, not a mediator.
 
 :::
 
@@ -756,15 +855,14 @@ Age is a confounder/proxy for exposure duration, not a mediator.
 <br>
 :::
 
-CAC association just shows **baseline disease predicts future disease**.
-
+Adding baseline CAC (a downstream variable) blocks the mediation pathway and biases effects.
 
 <br> 
 
 :::
 ::: {.fragment}
 
-**They did NOT report `NCPV_final ~ lifetime LDL-C exposure` in the analysis.**
+**They did NOT report `NCPV_final ~ lifetime LDL-C exposure`.**
 
 :::
 :::
@@ -811,17 +909,17 @@ All conclusions based on independent univariable change score models
 :::
 ::: {.fragment}
 
-- Confounding unchecked (age, sex, BP, CAC_bl, baseline plaque) 
+- Basic confounding unchecked (age, sex, BP) 
 - Δ-NCPV contains baseline NCPV, biasing associations (mathematical coupling)
-- less power, compounded noise
-- ignores starting plaque and basics like age/sex
+- Δ results in less power, compounded noise
+- ignores starting plaque
 - baseline imbalance and shared correlates can inflate, reduce, or reverse associations
 
 
 :::
 ::: {.fragment}
 
-[Consensus](https://www.fharrell.com/post/errmed/#change-from-baseline) in [biostatistics](https://onlinelibrary.wiley.com/doi/10.1002/sim.2682): use [ANCOVA](https://pubmed.ncbi.nlm.nih.gov/16526009/) [style model](https://pmc.ncbi.nlm.nih.gov/articles/PMC1121605), [follow-up](https://europepmc.org/article/pmc/pmc9557845) ~ baseline + covariates for pre/post analyses.
+[Consensus](https://www.fharrell.com/post/errmed/#change-from-baseline) in [biostatistics](https://onlinelibrary.wiley.com/doi/10.1002/sim.2682): use [baseline-adjusted regression,](https://pubmed.ncbi.nlm.nih.gov/16526009/) [ANCOVA style model](https://pmc.ncbi.nlm.nih.gov/articles/PMC1121605): [follow-up](https://europepmc.org/article/pmc/pmc9557845) ~ baseline + covariates for pre/post analyses.
 
 `NCPV_follow-up ~ NCPV_baseline + ApoB_baseline + age + sex`
 
@@ -867,7 +965,7 @@ It doesn’t tell an individual with given baseline/risk profile what their 1-ye
 <br>
 :::
 
-`NCPV_follow-up ~ NCPV_baseline + ApoB_baseline + age + sex` (ANCOVA)
+`NCPV_follow-up ~ NCPV_baseline + ApoB_baseline + age + sex` (baseline-adjusted regression)
 
 :::
 
@@ -877,7 +975,7 @@ It doesn’t tell an individual with given baseline/risk profile what their 1-ye
 
 ::: {.fragment}
 
-**Question**: Among people with the same starting plaque, age, sex, and BP, do those with higher ApoB tend to have more plaque at 1 year?
+**Question**: Among people with the same starting plaque, age, sex, and BP, do those with higher ApoB tend to have more plaque in 1 year?
 
 :::
 ::: {.fragment}
@@ -949,7 +1047,7 @@ Description of main figure, and primary outcome:
 
 Removed and replaced with:
 
-"The median change in NCPV was 18.9 mm3 (IQR: 9.3-47.0 mm3) and the median change in PAV was 0.8% (IQR: 0.3%-1.7%)."
+"The median change in NCPV was 18.9 mm3 (IQR: 9.3-47.0 mm3) and the median change in PAV was 0.8% (IQR: 0.3%-1.7%). Compared to baseline, these represent a **43% and 50% change**, respectively."
 
 :::
 
@@ -960,7 +1058,7 @@ Removed and replaced with:
 ::: {.fragment}
 In CONCLUSIONS section: "**In an exploratory analysis,** changes in and baseline levels of ApoB were not associated with changes in NCPV or TPS..."
 
-"exploratory analysis" added in published version. Only mention in entire paper.
+"exploratory" added in published version. Only mention in entire paper.
 
 :::
 
@@ -988,149 +1086,58 @@ Record of pre-print is unavailable. All links go to new version. It is available
 ---
 
 
-1. Figures, data, and tests don’t match
+1. Claims and visuals contradict the data
 
 ::: {.fragment}
 
-2. Key analyses not reported
+2. Multiple headline conclusions lack supporting analyses/results
 
 :::
 ::: {.fragment}
 
-3. Modeling choices systematically weaken evidence for an association
+3. Some metrics are nonstandard or conceptually unsound
 
 :::
 ::: {.fragment}
 
-4. Analytic design flaws across multiple analyses
+4. Core statistical assumptions are not met, despite the claim that they were "corroborated"
 
 :::
 
 ::: {.fragment}
 
-5. ANCOVA is the clinically relevant model
+5. Baseline-adjusted regression (ANCOVA) is the clinically relevant analysis
 
 :::
 
 
 ---
 
-### Quick Hits — Claims vs. Issues
+#### Miscellaneous issues
 
 ::: {.smaller_large_table}
-| Where | Paper text (claim) | Issue  |
+| Location | Study Text | Issue  |
 |:--|:--|:--|
-| **Figure 1 caption** | "...the shaded area represents the IQR ..." | **Imprecise.** IQR is a single number; shaded band is  **25th–75th percentile band** at baseline and 1-year. |
-| **Figure 1 caption** | “(9.3–47.0 mm³)” | Wrong context/unstated. Those numbers are **IQR of ΔNCPV** |
-| **Figures 2D–F** | “Change in ApoB, baseline ApoB, and baseline CAC vs **NCPV**.” | Axes/legend appear to be **TPS**, not NCPV → **label/data mismatch** |
+| **Figure 1 caption** | "...the shaded area represents the IQR (9.3-47.0 mm³)..." | **Imprecise.** The quoted IQR is the ΔNCPV IQR; shaded band is  **25th–75th percentile band** at baseline and 1-year. |
+| **Figures 2D–F Caption** | "(D to F) Change in ApoB, baseline ApoB, and baseline CAC vs **NCPV**." | Axes/legend appear to be **TPS**, not NCPV → **label/data mismatch** |
 | **Table 3 caption** | “R² = squared correlation coefficient (explained variability).” | Reports **negative values**, must be adjusted R² |
+| **Table 3 ** | β = 0.18 | No reporting of CIs for β. |
 | **KD Duration** Table 1 vs Table 3 | KD duration mean **1,642.7 days (≈4.5 y)** vs caption “LDL-C exposure … **mean 5.7 y**.” | **Inconsistent durations.** |
 | **KD Duration** Abstract vs Table 1 | LDL-C exposure median **1,302 d (984–1,754)** vs KD duration median **1,427 d (1,002–1,938)**. | Metrics conflated. **exposure should be in units** like **mg/dL·days**, not days. |
 | **Table 1 (Total cholesterol)** | Median **338**, IQR **(301–337)**. | **Impossible IQR** (Q3 < median) |
-| **Baseline characteristics only** | Baseline table provided. | **No follow-up characteristics table** |
-| **Terminology (multiple)** | "changes in baseline levels" | Baseline doesn’t change.  |
+| **Table 1 Baseline Characteristics** | Baseline table provided. | **No follow-up characteristics table** |
+| **multiple** | "changes in baseline levels" | Baseline doesn’t change.  |
 | **Software statement** | "using R 4.0.3 (2020)… with the last available version for Sept 2024." | Unclear what version was used. |
-| **Central illustration (quote)** | "Neither total exposure nor changes in baseline levels of ApoB and mg/dL were associated… Baseline plaque but ApoB was not associated…" | **Incoherent/grammatical errors** |
-| Main text (Results/Discussion) | “…baseline values magnify their **percentual** changes…” | percent change or percentage-point change |
+| **Central illustration (quote)** | "Neither total exposure nor changes in baseline levels of ApoB and mg/dL were associated with changes in plaque. Conversely, baseline plaque but ApoB was not associated…" | Incoherent/grammatical errors |
+| Main text (Results/Discussion) | "…baseline values magnify their **percentual** changes…"| percent change or percentage-point change |
 
 :::
 
+
+# Appendix: Plaque Metrics 
 
 ---
 
-
-### Nonstandard Percent Change
-
-::: {.smaller_table}
-
-> "The median change in NCPV was 18.9 mm3 (IQR: 9.3-47.0 mm³) and the median change in PAV was 0.8% (IQR: 0.3%-1.7%). Compared to baseline, these represent **a 43% and 50% change**, respectively."
-
-::: {.fragment}
-
-**This isn’t the standard subject-level percent change.**
-
-They computed a **ratio of median change to baseline median:** $\frac{\operatorname{median}(NCPV_{1y}-NCPV_{bl})}{\operatorname{median}(NCPV_{bl})}\times 100\%$
-  
-
-:::
-::: {.fragment}
-
-
-- NCPV: $18.9/44 \approx 43\%$; and PAV: $0.8/1.6 \approx 50\%$  
-
-
-:::
-::: {.fragment}
-
-
-**Standard percent change:**   $\operatorname{median}\!\left(\frac{NCPV_{1y}-NCPV_{bl}}{NCPV_{bl}}\right)\times 100\%$
-
-
-"What was the typical relative change per subject?"
-
-:::
-
-::: {.fragment}
-
-::: {.smaller2}
-<br>
-:::
-
-::: {.columns}
-
-::: {.column width="40%"}
-
-**Standard percent change vs. reported ratio-of-medians:**
-
-:::
-
-::: {.column width="60%"}
-
-::: {.smaller}
-
-| Outcome | "ratio-of-medians" | Median % change | Mean % change |
-|:--|--:|--:|--:|
-| NCPV | 43%   | 49.2% | 81.4% |
-| PAV  | 50%   | 47.3% | 80.7% |
-
-:::
-:::
-
-:::
-:::
-
-::: {.smaller2}
-<br>
-:::
-
-::: {.fragment}
-
-Their "percent change" metric is **mislabeled**, **nonstandard** and not well explained.
-
-:::
-:::
-
-::: {.notes}
-
-*(note: $0.8$ is **percentage points**, not “%”)*
-
-observations with baseline = 0 excluded from % change.”
-
-IMPORTANT QUOTE:
-
-"While it is true their **low-plaque baseline values magnify their percentual** changes and the observed absolute NCPV and PAV progression (18.9 mm3 and 0.8%, respectively)..."
-
-They don't report "percentual" changes!
-
-It is mathematically true that this can occur, but they didn’t compute per-person % change; the 43%/50% are ratios of medians and don’t capture that effect. 
-
-:::
-
----
-
-Plaque Metrics Summary Table
-
-<br>
 
 ```{r echo=FALSE, message=FALSE, results='asis'}
 
@@ -1138,5 +1145,175 @@ source("code/tables.R")
 
 gt_tbl_plaque
 
+gt_tbl_plaque_pct
+
 ```
+
+---
+
+```{r echo=FALSE, message=FALSE, results='asis'}
+
+gt_tbl_zero
+
+gt_tbl_pct_hybrid
+
+```
+
+---
+
+::: {.img-wrap style="width:100%; float:center;"}
+
+![](figures/plots_plaque_metrics/zero_transition_plot.png){style="width:90%; height:auto;"}
+
+:::
+
+---
+
+::: {.img-wrap style="width:100%; float:center;"}
+
+![](figures/plots_plaque_metrics/change_category_plot.png){style="width:90%; height:auto;"}
+
+:::
+
+---
+
+[Plaque Metrics Charts](https://github.com/SloughJE/keto_cta_analysis_check/tree/447f880d5b9d51f27226222f85d62e125978bd47/figures/plots_plaque_metrics)
+
+::: {.columns}
+
+::: {.column width="50%"}
+
+::: {.img-wrap style="width:70%; float:right;"}
+
+![](figures/plots_plaque_metrics/ncpv_mm3_delta.png){style="width:100%; height:auto;"}
+
+
+![](figures/plots_plaque_metrics/ncpv_scatter_non_log.png){style="width:100%; height:auto;"}
+
+
+:::
+:::
+
+::: {.column width="50%"}
+
+
+::: {.img-wrap style="width:70%; float:right;"}
+
+![](figures/plots_plaque_metrics/ncpv_mm3_waterfall.png){style="width:100%; height:auto;"}
+
+
+![](figures/plots_plaque_metrics/ncpv_mm3_prop.png){style="width:100%; height:auto;"}
+
+:::
+
+
+:::
+:::
+
+---
+
+
+::: {.columns}
+
+::: {.column width="55%"}
+
+::: {.smaller_caption}
+
+Plaque Baseline and Follow-up metrics are **highly correlated**
+
+::: {.img-wrap style="width:100%; float:center;"}
+
+![](figures/plots_plaque_metrics/gls_fit__ncpv2_plot.png){style="width:100%; height:auto;"}
+:::
+:::
+:::
+
+::: {.column width="45%"}
+
+::: {.smaller_large_table}
+
+<br>
+
+Follow-up NCPV was modeled as a linear function of baseline NCPV using generalized least squares (GLS): $Y_i=\beta_0+\beta_1 X_i+\varepsilon_i$, with a power-of-the-mean residual variance $\operatorname{Var}(\varepsilon_i)=\sigma^2\lvert\mu_i\rvert^{2\delta}$ (`nlme` `varPower`), where $\mu_i=\mathbb{E}[Y_i\mid X_i]$. 
+
+Candidate variance structures (same fixed effects) were compared by likelihood-ratio tests under maximum likelihood.
+
+The selected structure was refit by restricted maximum likelihood (REML) for parameter estimates and uncertainty. 
+
+Pointwise 95% confidence bands for $\mathbb{E}[Y\mid X]$ were obtained from the model-based covariance of the fitted mean.
+
+**Fit statistics (REML):** AIC = 874.15; BIC = 884.49; $\log L=-433.08$
+
+**Variance function:** $\hat\delta=0.526$ (95% CI 0.357–0.695)
+
+**Residual SD:** $2.097$ (df = 98; 95% CI 1.029–4.273)
+
+| Term        | Estimate | 95% CI             | p-value |
+|-------------|---------:|--------------------|:--------|
+| Intercept   |   8.547  | 5.504 to 11.590    | <0.001  |
+| Baseline NCPV | 1.304  | 1.231 to 1.378     | <0.001  |
+
+*Robustness check (OLS with HC3 SEs):* $\hat\beta_1=1.251$ (SE 0.041), $p<0.001$, consistent with the GLS slope
+
+Diagnostics were acceptable: on the normalized GLS scale residuals were approximately homoscedastic and centered, with only mild tail departures; inferences were robust to tail behavior (HC3-robust SEs and pairs bootstrap CIs).
+
+
+:::
+
+:::
+:::
+
+---
+
+::: {.columns}
+
+::: {.column width="55%"}
+
+::: {.smaller_caption}
+
+Plaque Baseline and Follow-up metrics are **highly correlated**
+
+::: {.img-wrap style="width:100%; float:center;"}
+
+![](figures/plots_plaque_metrics/gls_fit__ncpv2_plot.png){style="width:100%; height:auto;"}
+:::
+:::
+:::
+
+::: {.column width="45%"}
+
+::: {.smaller_large_table}
+
+<br>
+
+R² (baseline → follow-up, with linear mean): Baseline alone explains ≈ 96% of the variation (GLS weighted "R²" ≈ 93%) in follow-up values. Only ~4% (or 7%) is left after accounting for baseline.
+
+ICC = Intraclass Correlation Coefficient — Proportion of total variance due to differences between people (vs within-person change).
+
+ICC ≈ 0.91: about 91% of variability is between individuals; within-person year-to-year change is small.
+
+This is Autocorrelation, more specifically **test–retest reliability**, not insight. Baseline plaque "predicts" follow-up mainly because the measure is relatively stable over time (high R², high ICC).
+
+If we use baseline-adjusted regression, we could answer the question: "What explains the extra change beyond baseline?" 
+
+ baseline-adjusted model (ANCOVA):
+
+`Follow-up ~ Baseline + ApoB (+ covariates)`
+
+– Test ApoB’s incremental value (partial F-test / ΔR²)
+
+– still need to check model assumptions
+
+Effect modification check:
+
+`Follow-up ~ Baseline + ApoB + (+ covariates) + Baseline*ApoB`
+
+– If the interaction is non-significant, ApoB’s association with follow-up does not depend on baseline level.
+
+
+
+
+:::
+:::
+:::
 
