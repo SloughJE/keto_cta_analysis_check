@@ -118,7 +118,7 @@ sub_bl <- function(x) gsub("_bl\\b", "<sub>bl</sub>", x, perl = TRUE)
 assumption_summary <- assumption_tbl %>%
   transmute(
     Model              = sub_bl(model),
-    Beta               = cell_beta(slope, slope_p),          # NEW 2nd column
+    Beta               = cell_beta(slope, slope_p),          
     Linearity          = cell_compact(reset_p),              # RESET
     `Constant Variance`= cell_compact(bp_p),                 # Breusch–Pagan
     `Residual Normality` = cell_compact(shapiro_p)           # Shapiro–Wilk
