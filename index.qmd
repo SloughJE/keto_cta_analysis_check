@@ -523,9 +523,10 @@ No Δ-TPS ~ LDL-C, LDL-C exposure, or ApoB model results anywhere.
 ### Bayes Factor `rscale` is not Moderate
 
 ::: {.smaller_table}
+::: {.fragment}
 
-> "Bayes factors were calculated...with default settings and an ~ `rscale value of 0.8` to contrast a moderately informative prior with a conservative distribution width (to allow for potential large effect sizes) due to the well-documented association between ApoB changes and coronary plaque changes."
-
+> "Bayes factors were calculated...with...an ~ `rscale value of 0.8` to contrast a **moderately informative** prior with a conservative distribution width (to allow for potential large effect sizes) due to the well-documented association between ApoB changes and coronary plaque changes."
+:::
 :::
 
 ::: {.smaller2}
@@ -543,8 +544,12 @@ Calling rscale = 0.8 "moderately informative" is inaccurate.
 ::: {.fragment}
 
 - `rscaleCont = 0.8` is **wider than “ultrawide”** → a **very diffuse** prior that places substantial mass on **very large** effects  
-- No reported **prior-sensitivity** to alternative r-scales  
+
+:::
+::: {.fragment}
+
 - Same r-scale apparently used for **all models**, no justification.
+- No reported **prior-sensitivity** to alternative r-scales  
 
 :::
 :::
@@ -557,7 +562,7 @@ Calling rscale = 0.8 "moderately informative" is inaccurate.
 
 ::: {.fragment}
 
-"We used a very wide prior on coefficients (`rscale = 0.8`, wider than the package’s "ultrawide"), which places substantial prior mass on very large effects. This diffuse prior penalizes small-to-moderate effects, requiring much stronger evidence than under the ‘wide’ or ‘medium’ defaults to support them."
+"We used a very wide prior on coefficients (`rscale = 0.8`) wider than the package’s ultrawide, which places substantial prior mass on very large effects. This diffuse prior penalizes small-to-moderate effects, requiring much stronger evidence than under the ‘wide’ or ‘medium’ defaults."
 
 :::
 
@@ -770,6 +775,10 @@ Adding baseline CAC (a downstream variable) blocks the mediation pathway and bia
 :::
 
 ::: {.notes}
+
+MENTION THIS:
+
+**lifetime LDL-C exposure was only a significant predictor of final NCPV in the univariable analysis**
 
 they actually did a stepwise covariate adjustment on highly collinear variables and then over-interpreted p-value changes.
 
