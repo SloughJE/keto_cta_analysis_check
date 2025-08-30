@@ -24,6 +24,8 @@ Plaque Data released by organization funding the study:
 
 [https://citizensciencefoundation.org/keto-cta/](https://citizensciencefoundation.org/keto-cta/)
 
+No cholesterol (ApoB), demographic or other clinical data
+
 <br>
 
 All code, figures, data, studies available at:
@@ -385,7 +387,7 @@ It does not deal with non-linearity, heteroskedasticity and non-normality of res
 
 - Calling residual plot evaluation "subjective" is evasive.
 
-::: {.fragment}
+:::{.incremental}
 
 - Visual checks are interpretive, but these assumptions **objectively** testable with **quantifiable** methods.
 
@@ -543,6 +545,9 @@ No Δ-TPS ~ LDL-C, LDL-C exposure, or ApoB model results anywhere.
 
 $\Delta \text{TPS} \sim \text{CAC}_{\text{baseline}}$
 
+:::
+::: {.fragment}
+
 ```{r echo=FALSE, message=FALSE, results='asis'}
 
 b   <- coef(m_tps_cac)['V1_CAC']
@@ -572,6 +577,8 @@ data.frame(
 :::
 
 ::: {.fragment}
+
+<br>
 
 *Zero inflation*
 
@@ -627,23 +634,16 @@ regresses y~x, and the shaded area represents the standard error.
 Calling rscale = 0.8 "moderately informative" is inaccurate.
 
 :::
-::: {.fragment}
+:::{.fragment}
 
 [R package docs](https://search.r-project.org/CRAN/refmans/BayesFactor/html/regressionBF.html): **"medium", "wide", "ultrawide" = 0.354, 0.5, 0.707**  
 
 :::
-::: {.fragment}
 
-  - `rscaleCont = 0.8` is **wider than “ultrawide”**
+:::{.incremental}
 
-:::
-::: {.fragment}
-
+- `rscaleCont = 0.8` is **wider than “ultrawide”**
 - substantial evidence needed to show a non-null effect
-
-:::
-::: {.fragment}
-
 - Same r-scale apparently used for **all models**. No sensitivity analysis on r-scale.
 
 :::
@@ -656,10 +656,9 @@ Calling rscale = 0.8 "moderately informative" is inaccurate.
 
 :::
 
-::: {.fragment}
+::: {.incremental}
 
 - only "justification" for Bayesian modeling
-
 - no indication of prespecification
 
 :::
@@ -739,7 +738,7 @@ $$
 - **This equation is dimensionally inconsistent.**
 
 :::
-::: {.fragment}
+::: {.incremental}
 - It adds days and age together. It's like adding miles and inches.
 - pre-KD term is down-scaled by ~365× relative to the day-based terms.
 - any associations with outcomes are dominated by keto diet exposure.
@@ -767,6 +766,8 @@ $$
 
 A [mediation](https://library.virginia.edu/data/articles/introduction-to-mediation-analysis) analysis is a specific statistical method that:
 
+:::
+::: {.incremental}
 
 - tests how an exposure affects an outcome through a middle step (the *mediator*)
 - estimates an indirect effect (through the mediator) and a direct effect (everything else).
@@ -775,6 +776,9 @@ A [mediation](https://library.virginia.edu/data/articles/introduction-to-mediati
 ::: {.fragment}
 
 **This is not a mediation analysis**.
+
+:::
+::: {.incremental}
 
 - No indirect effect was estimated or tested. No causal model specified.
 - Age can’t be a mediator of LDL exposure (age isn’t caused by LDL); it’s a confounder.
@@ -821,7 +825,7 @@ The "mediator" (Life-LDL-C_exp) is partly built from Age and mixes units → mat
 
 ---
 
-### Age in Exposure, then Control for Age
+### This isn't an Age Mediation Analysis
 
 
 ![](assets/Age_mediation_bp.png){style="width:60%; height:auto !important;"}
@@ -1019,16 +1023,22 @@ All conclusions based on independent univariable change score models
 `Δ-NCPV ~ ApoB`; `Δ-NCPV ~ NCPV_baseline`
 
 :::
-::: {.fragment}
 
-- Basic confounding unchecked (age, sex, BP) 
+:::{.incremental}
+
+- Basic confounding unchecked (age, sex, BP)
 - Δ-NCPV contains baseline NCPV, biasing associations (mathematical coupling)
 - Δ results in less power, compounded noise
 - ignores starting plaque
-- baseline imbalance and shared correlates can inflate, reduce, or even reverse associations
-
+- baseline imbalance and shared correlates can increase, reduce, or even reverse associations
 
 :::
+
+
+
+
+
+
 ::: {.fragment}
 
 [Consensus](https://www.fharrell.com/post/errmed/#change-from-baseline) in [biostatistics](https://onlinelibrary.wiley.com/doi/10.1002/sim.2682): use [baseline-adjusted regression,](https://pubmed.ncbi.nlm.nih.gov/16526009/) [ANCOVA style model](https://pmc.ncbi.nlm.nih.gov/articles/PMC1121605): [follow-up](https://europepmc.org/article/pmc/pmc9557845) ~ baseline + covariates for pre/post analyses.
@@ -1150,32 +1160,25 @@ CCTA plaque-progression studies — model types & links
 
 ::: {.smaller_table}
 
+::: {.incremental}
+
 - Adjusting for baseline with follow-up as outcome (ANCOVA) is considered the [preferred method](https://pmc.ncbi.nlm.nih.gov/articles/PMC1121605/)
+
 
 - ["Whether the outcome is change score or post score, one should always adjust for baseline using analysis of covariance (ANCOVA)"](https://pmc.ncbi.nlm.nih.gov/articles/PMC6330413/): follow-up as outcome, baseline as covariate
 
-::: {.fragment}
-
 - [Adjusting](https://pmc.ncbi.nlm.nih.gov/articles/PMC8345531/) for [baseline and confounders](https://pmc.ncbi.nlm.nih.gov/articles/PMC7382001/) is [standard practice](https://pmc.ncbi.nlm.nih.gov/articles/PMC2796339/) in studies on [plaque progression](https://pmc.ncbi.nlm.nih.gov/articles/PMC8374741/)
-
-:::
-::: {.fragment}
 
 - Observational (pre–post) studies almost always include **baseline plaque** when modeling progression. Not doing so risks confounding and regression to the mean (baseline imbalance). 
 
-:::
-::: {.fragment}
-
 - In RCTs randomization handles bias on average, but ANCOVA still gives cleaner, more precise estimates; it’s the usual choice.  
 
-:::
-::: {.fragment}
 
 - Baseline adjustment with change scores (Δ)?
   - Better than not including it, ANCOVA still preferred
   - Compounds measurement error, noisier and more biased
 
-
+:::
 
 ::: {.fragment}
 
@@ -1185,7 +1188,7 @@ CCTA plaque-progression studies — model types & links
 - [Statistics notes: Analysing controlled trials with baseline and follow up measurements](https://pmc.ncbi.nlm.nih.gov/articles/PMC1121605/) — **ANCOVA** is the **preferred** general approach; more powerful/robust than Δ alone.  
 - [Analyses of “change scores” do not estimate causal effects in observational data](https://pmc.ncbi.nlm.nih.gov/articles/PMC9557845/) — Change scores do **not** estimate causal effects in observational settings.  
 
-:::
+
 :::
 
 ::: {.fragment}
@@ -1224,17 +1227,11 @@ But consider the [Partial R²](https://online.stat.psu.edu/stat462/node/138/)
 `NCPV_follow-up ~ NCPV_basline + ApoB`
 
 :::
-::: {.fragment}
+::: {.incremental}
 
 - R² is the **fraction of total** variance explained by the **model** 
 
-:::
-::: {.fragment}
-
 - **Baseline R²**: % of variation explained baseline-only model, very high due to test-retest reliability
-
-:::
-::: {.fragment}
 
 - **Partial R²**: % of the **remaining** variation explained by another covariate(s) (e.g., ApoB)
 
@@ -1253,23 +1250,25 @@ If baseline explains a lot, a small R² can still be a large share of what’s e
 ::: {.fragment}
 
 
-::: {.smaller}
 
 
 `NCPV_follow-up ~ NCPV_basline + ApoB`
+
+::: {.incremental}
 
 - **Baseline R² ≈ 0.95:** 95% of follow-up NCPV variance is explained by **baseline NCPV**.
 - **Residual R² after baseline: 5%**  (for risk factors + measurement error + noise)
 - **ApoB effect:** ΔR² ≈ 0.03 ⇒ Partial R² (ApoB | baseline) = 0.03 / 0.05 = 0.60  
 - ApoB explains 60% of the variance remaining after baseline.
 
+:::
 ::: {.fragment}
 
 A near-zero univariable slope (β≈0.07, R²=0.05) does not imply no association. Once baseline is accounted for, ApoB could explain a large fraction of the remaining variation. 
 
 :::
 
-:::
+
 
 :::
 :::
@@ -1393,7 +1392,7 @@ Record of pre-print is unavailable. All links go to new version. It is available
 :::
 ::: {.fragment}
 
-4. Despite the claim of being "corroborated", model assumptions were violated. Many models were misspecified.
+4. Despite "corroborated" claim, model assumptions were violated. Many misspecified models 
 
 :::
 
