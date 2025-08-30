@@ -150,7 +150,7 @@ figure_2F = ggplot(df, aes(x = V1_CAC, y = delta_TPS)) +
   labs(x = "Baseline CAC", y = "ΔTotal Plaque Score") +
   scale_y_continuous(breaks = -1:6, minor_breaks = NULL) +
   coord_cartesian(ylim = c(-1, 6)) +   # keeps points & fit intact
-  theme_classic(base_size = 16) +
+  theme_classic(base_size = 18) +
   theme(
     
   axis.text.y = element_text(face = "bold"),

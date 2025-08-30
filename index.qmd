@@ -320,7 +320,7 @@ Objective tests show all 4 models failed at least 2 tests each.
 
 - Shapiro–Wilk test for normal residuals
 
-Calling residual plot evaluation "subjective" is **misleading and evasive**.
+Calling residual plot evaluation "subjective" is evasive.
 Visual checks are interpretive, but these assumptions **objectively** testable with **quantifiable** methods.
 
 Robust Linear Regression mainly down-weights outliers
@@ -383,7 +383,7 @@ It does not deal with non-linearity, heteroskedasticity and non-normality of res
 ::: {.smaller}
 
 
-- Calling residual plot evaluation "subjective" is **misleading and evasive**.
+- Calling residual plot evaluation "subjective" is evasive.
 
 ::: {.fragment}
 
@@ -520,6 +520,97 @@ No Δ-TPS ~ LDL-C, LDL-C exposure, or ApoB model results anywhere.
 
 ---
 
+### TPS association with CAC
+
+::: {.columns}
+
+::: {.column width="45%"}
+
+
+::: {.smaller_table}
+
+::: {.fragment}
+
+"**CAC is associated with changes in NCPV and TPS**"
+
+:::
+
+
+::: {.fragment}
+
+<br>
+<br>
+
+$\Delta \text{TPS} \sim \text{CAC}_{\text{baseline}}$
+
+```{r echo=FALSE, message=FALSE, results='asis'}
+
+b   <- coef(m_tps_cac)['V1_CAC']
+ci  <- confint(m_tps_cac)['V1_CAC', ]
+p   <- summary(m_tps_cac)$coefficients['V1_CAC', 4]
+r2a <- summary(m_tps_cac)$adj.r.squared
+
+data.frame(
+  `β (95% CI)` = sprintf("%.3f (%.3f, %.3f)", b, ci[1], ci[2]),
+  `P Value` = format.pval(p, digits = 3, eps = 0.001),
+  `R² adj` = sprintf("%.3f", r2a),
+  check.names = FALSE
+) |>
+  knitr::kable(align = "l")
+
+```
+
+
+:::
+
+::: {.fragment}
+
+<br>
+
+**CAC is not associated with $\Delta$TPS**
+
+:::
+
+::: {.fragment}
+
+*Zero inflation*
+
+:::
+
+:::
+
+:::
+
+::: {.column width="10%"}
+
+:::
+::: {.column width="45%"}
+
+::: {.smaller_table}
+
+**Figure 2F from Data**
+
+:::
+
+
+![](figures/Figure2F.png){width=90%}
+
+
+
+:::
+
+::: {.smaller_caption}
+
+Changes in Total Plaque Score vs Coronary Artery Calcium
+
+\(C, F) Only **CAC is associated with changes in NCPV and TPS**. The regression line was fitted with the function "lm," which
+regresses y~x, and the shaded area represents the standard error. 
+
+:::
+:::
+
+---
+
 ### Bayes Factor `rscale` is not Moderate
 
 ::: {.smaller_table}
@@ -543,29 +634,36 @@ Calling rscale = 0.8 "moderately informative" is inaccurate.
 :::
 ::: {.fragment}
 
-- `rscaleCont = 0.8` is **wider than “ultrawide”** → a **very diffuse** prior that places substantial mass on **very large** effects  
+  - `rscaleCont = 0.8` is **wider than “ultrawide”**
 
 :::
 ::: {.fragment}
 
-- Same r-scale apparently used for **all models**, no justification.
-- No reported **prior-sensitivity** to alternative r-scales  
+- substantial evidence needed to show a non-null effect
 
 :::
-:::
-
-::: {.smaller_table}
 ::: {.fragment}
 
-**Fixed description**:
+- Same r-scale apparently used for **all models**. No sensitivity analysis on r-scale.
+
 :::
 
 ::: {.fragment}
 
-"We used a very wide prior on coefficients (`rscale = 0.8`) wider than the package’s ultrawide, which places substantial prior mass on very large effects. This diffuse prior penalizes small-to-moderate effects, requiring much stronger evidence than under the ‘wide’ or ‘medium’ defaults."
+::: {.smaller2}
+
+> "the addition of Bayesian inference adds credence to finding that there is no association between NCPV vs LDL-C or ApoB and TPS vs LDL-C or ApoB"
 
 :::
 
+::: {.fragment}
+
+- only "justification" for Bayesian modeling
+
+- no indication of prespecification
+
+:::
+:::
 :::
 
 ---
@@ -927,7 +1025,7 @@ All conclusions based on independent univariable change score models
 - Δ-NCPV contains baseline NCPV, biasing associations (mathematical coupling)
 - Δ results in less power, compounded noise
 - ignores starting plaque
-- baseline imbalance and shared correlates can inflate, reduce, or reverse associations
+- baseline imbalance and shared correlates can inflate, reduce, or even reverse associations
 
 
 :::
@@ -942,7 +1040,7 @@ All conclusions based on independent univariable change score models
 
 ---
 
-### Next-Year Plaque, Given Your Baseline
+### ANCOVA Answers Relevant Question
 
 ::: {.smaller2}
 
@@ -979,7 +1077,7 @@ It doesn’t tell an individual with given baseline/risk profile what their 1-ye
 <br>
 :::
 
-`NCPV_follow-up ~ NCPV_baseline + ApoB_baseline + age + sex` (baseline-adjusted regression)
+`NCPV_follow-up ~ NCPV_baseline + ApoB_baseline + age + sex` (ANCOVA)
 
 :::
 
@@ -1026,6 +1124,187 @@ Optionally test ApoB × NCPV_baseline to allow baseline-dependent progression.
 :::
 
 ---
+
+### Univariable Models are not the Norm
+
+::: {.smaller_large_table}
+
+CCTA plaque-progression studies — model types & links
+
+| Study | Author | Model |
+|---|---|---|
+| [Association of Statin Treatment With Progression of Coronary Atherosclerotic Plaque Composition](https://pmc.ncbi.nlm.nih.gov/articles/PMC8374741/) | van Rosendael | Linear mixed-effects regression with a random intercept; baseline plaque volume included (with statin×baseline interaction). |
+| [Longitudinal Quantitative Assessment of Coronary Atherosclerotic Plaque Burden Related to Serum Hemoglobin Levels](https://www.jacc.org/doi/10.1016/j.jacasi.2021.10.010) | Won | Multiple linear regression (annualized change) and logistic regression; adjusted including baseline total plaque volume. |
+| [Association of Cardiovascular Disease Risk Factor Burden With Progression of Coronary Atherosclerosis](https://pmc.ncbi.nlm.nih.gov/articles/PMC7382001/) | Han | Multivariable linear regression of annualized PAV change; adjusted including baseline PAV; logistic for incident adverse plaque. |
+| [Assessment of Coronary Plaque Progression in Coronary CT Angiography Using a Semi-Quantitative Score](https://pmc.ncbi.nlm.nih.gov/articles/PMC2796339/) | Lehman | Longitudinal regression (multivariable); adjusted for age, sex, and follow-up interval; baseline plaque presence included as a predictor. |
+| [The impact of baseline calcified plaque volume on coronary rapid plaque progression by serial coronary computed tomography angiography in patients with type 2 diabetes](https://pmc.ncbi.nlm.nih.gov/articles/PMC10120538/) | Jian | Multivariable logistic regression for rapid plaque progression (binary) with odds ratios; adjusted for baseline variables; baseline calcified plaque volume as key predictor. |
+| [Comparison of mineral oil and non-mineral oil placebo on coronary plaque progression by coronary computed tomography angiography](https://pmc.ncbi.nlm.nih.gov/articles/PMC7031703/) | Lakshmanan | Analysis of covariance (ANCOVA) comparing plaque progression rates; final model adjusted for baseline plaque volume.|
+| [Polygenic Risk Is Associated With Long-Term Coronary Plaque Progression and High-Risk Plaque](https://pmc.ncbi.nlm.nih.gov/articles/PMC12190865/) | Nurmohamed | Linear mixed-effects models for plaque progression (change in PAV and % noncalcified plaque) adjusted including baseline plaque volume and conventional risk factors; logistic regression for HRP presence at baseline and follow-up. |
+
+
+:::
+
+---
+
+### The Norm: ANCOVA
+
+::: {.smaller_table}
+
+- Adjusting for baseline with follow-up as outcome (ANCOVA) is considered the [preferred method](https://pmc.ncbi.nlm.nih.gov/articles/PMC1121605/)
+
+- ["Whether the outcome is change score or post score, one should always adjust for baseline using analysis of covariance (ANCOVA)"](https://pmc.ncbi.nlm.nih.gov/articles/PMC6330413/): follow-up as outcome, baseline as covariate
+
+::: {.fragment}
+
+- [Adjusting](https://pmc.ncbi.nlm.nih.gov/articles/PMC8345531/) for [baseline and confounders](https://pmc.ncbi.nlm.nih.gov/articles/PMC7382001/) is [standard practice](https://pmc.ncbi.nlm.nih.gov/articles/PMC2796339/) in studies on [plaque progression](https://pmc.ncbi.nlm.nih.gov/articles/PMC8374741/)
+
+:::
+::: {.fragment}
+
+- Observational (pre–post) studies almost always include **baseline plaque** when modeling progression. Not doing so risks confounding and regression to the mean (baseline imbalance). 
+
+:::
+::: {.fragment}
+
+- In RCTs randomization handles bias on average, but ANCOVA still gives cleaner, more precise estimates; it’s the usual choice.  
+
+:::
+::: {.fragment}
+
+- Baseline adjustment with change scores (Δ)?
+  - Better than not including it, ANCOVA still preferred
+  - Compounds measurement error, noisier and more biased
+
+
+
+::: {.fragment}
+
+::: {.smaller_table}
+
+- [The correlation between baseline score and post-intervention score, and its implications for statistical analysis](https://pmc.ncbi.nlm.nih.gov/articles/PMC6330413/) — Change or post, **adjust for baseline** (ANCOVA) to avoid bias.  
+- [Statistics notes: Analysing controlled trials with baseline and follow up measurements](https://pmc.ncbi.nlm.nih.gov/articles/PMC1121605/) — **ANCOVA** is the **preferred** general approach; more powerful/robust than Δ alone.  
+- [Analyses of “change scores” do not estimate causal effects in observational data](https://pmc.ncbi.nlm.nih.gov/articles/PMC9557845/) — Change scores do **not** estimate causal effects in observational settings.  
+
+:::
+:::
+
+::: {.fragment}
+
+- **Baseline** often explains a [large share of variance](https://pmc.ncbi.nlm.nih.gov/articles/PMC8374741/) in follow-up, ie a high R². What does that mean for the R² of the other covariates?
+
+:::
+
+:::
+:::
+
+::: {.notes}
+
+Make ANCOVA primary; use Δ+Baseline as sensitivity. Annualize or adjust for scan interval; consider log/percent change for skew; report partial effects.
+
+:::
+
+---
+
+
+### Low R² = No Association!
+
+::: {.smaller2}
+
+::: {.fragment}
+
+But consider the [Partial R²](https://online.stat.psu.edu/stat462/node/138/)
+
+:::
+:::
+
+::: {.smaller_table}
+
+::: {.fragment}
+
+`NCPV_follow-up ~ NCPV_basline + ApoB`
+
+:::
+::: {.fragment}
+
+- R² is the **fraction of total** variance explained by the **model** 
+
+:::
+::: {.fragment}
+
+- **Baseline R²**: % of variation explained baseline-only model, very high due to test-retest reliability
+
+:::
+::: {.fragment}
+
+- **Partial R²**: % of the **remaining** variation explained by another covariate(s) (e.g., ApoB)
+
+:::
+::: {.fragment}
+
+If baseline explains a lot, a small R² can still be a large share of what’s explainable beyond baseline.
+
+:::
+::: {.fragment}
+
+- **Clinical ≠ high R²**: small effects add up over time and can still push patients past treatment thresholds and risk classification
+
+:::
+
+::: {.fragment}
+
+
+::: {.smaller}
+
+
+`NCPV_follow-up ~ NCPV_basline + ApoB`
+
+- **Baseline R² ≈ 0.95:** 95% of follow-up NCPV variance is explained by **baseline NCPV**.
+- **Residual R² after baseline: 5%**  (for risk factors + measurement error + noise)
+- **ApoB effect:** ΔR² ≈ 0.03 ⇒ Partial R² (ApoB | baseline) = 0.03 / 0.05 = 0.60  
+- ApoB explains 60% of the variance remaining after baseline.
+
+::: {.fragment}
+
+A near-zero univariable slope (β≈0.07, R²=0.05) does not imply no association. Once baseline is accounted for, ApoB could explain a large fraction of the remaining variation. 
+
+:::
+
+:::
+
+:::
+:::
+
+::: {.notes}
+
+In addition to all the other problems:
+
+- nonlinearity
+- change scores amplifying noise
+- short follow up
+- probably underpowered
+- obvious ommitted variables
+
+let's talk about partial R²
+
+
+- Coefficients (slope) change because Baseline and ApoB share variance; adjusting for Baseline reveals ApoB’s unique contribution (β_ApoB≈+0.19 here).
+- R² must increase when adding predictors; the key is how much of the **leftover explainable residual** variance is explained:  
+  residual after Baseline+age+sex is 1−0.50=0.50; ApoB adds 0.02 → partial R² = 0.02/0.50=0.04.
+- Messaging: “ApoB adds **unique** information about progression beyond Baseline; ‘small’ ΔR² on the total scale understates its share of the explainable residual.”
+
+- **Everything else:** \(1 - 0.95 - 0.03 = 0.02\) → ~**2%** left  
+
+
+- Could still simply mean the study was underpowered
+
+
+
+:::
+
+
+
+---
+
 
 ### Preprint vs Published: What Changed
 
@@ -1104,7 +1383,7 @@ Record of pre-print is unavailable. All links go to new version. It is available
 
 ::: {.fragment}
 
-2. Multiple headline conclusions lack supporting analyses/results
+2. Multiple conclusions lack supporting analyses/results
 
 :::
 ::: {.fragment}
@@ -1114,7 +1393,7 @@ Record of pre-print is unavailable. All links go to new version. It is available
 :::
 ::: {.fragment}
 
-4. Core statistical assumptions are not met, despite the claim that they were "corroborated"
+4. Despite the claim of being "corroborated", model assumptions were violated. Many models were misspecified.
 
 :::
 
@@ -1306,7 +1585,7 @@ ICC = Intraclass Correlation Coefficient — Proportion of total variance due to
 
 ICC ≈ 0.91: about 91% of variability is between individuals; within-person year-to-year change is small.
 
-This is Autocorrelation, more specifically **test–retest reliability**, not insight. Baseline plaque "predicts" follow-up mainly because the measure is relatively stable over time (high R², high ICC).
+This is Autocorrelation, more specifically **serial (auto)correlation, or within-person persistence**, not insight. Baseline plaque "predicts" follow-up mainly because the measure is relatively stable over time (high R², high ICC).
 
 If we use baseline-adjusted regression, we could answer the question: "What explains the extra change beyond baseline?" 
 

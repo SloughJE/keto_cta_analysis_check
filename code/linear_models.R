@@ -83,7 +83,7 @@ fmt_num <- function(x, digits = 2) ifelse(
   is.na(x), "—", formatC(x, format = "f", digits = digits)
 )
 
-flag <- function(p, red = 0.05, amber = 0.10) dplyr::case_when(
+flag <- function(p, red = 0.05, amber = 0.06) dplyr::case_when(
   is.na(p)  ~ "—",
   p < red   ~ "Violation",
   p < amber ~ "Borderline",
@@ -163,6 +163,8 @@ gt_tbl <- assumption_summary %>%
     locations = cells_column_labels(everything())
   )
 
+gtsave(gt_tbl, "figures/LM_assumptions.png", vwidth = 1400, vheight = 900, expand = 0)
+
 #############
 
 
@@ -200,3 +202,39 @@ gt_tbl <- assumption_summary %>%
 #     units = "in", dpi = 800, bg = "white"
 #   )
 # })
+
+#######
+
+# TPS is associated with CAC?
+# model 
+m_tps_cac <- lm(delta_TPS ~ V1_CAC, data=df)
+summary(m_tps_cac)
+confint(m_tps_cac)["V1_CAC", ] # not significant
+
+
+
+# Part 1: Logistic model for P(ΔTPS = 0)
+m_zero <- glm(I(delta_TPS == 0) ~ V1_CAC, 
+              data = df, family = binomial)
+
+summary(m_zero)
+
+# Part 2: Linear model for ΔTPS among non-zeros
+m_nonzero <- lm(delta_TPS ~ V1_CAC, 
+                data = df %>% filter(delta_TPS != 0))
+
+summary(m_nonzero)
+confint(m_nonzero)
+
+
+library(mhurdle)
+
+# Single-equation hurdle (logit + linear regression)
+m_mhurdle <- mhurdle(
+  formula = delta_TPS ~ V1_CAC | V1_CAC, 
+  data    = df, 
+  dist    = "ln",      # log-normal for positive part
+  h2      = FALSE      # standard hurdle
+)
+
+summary(m_mhurdle)
