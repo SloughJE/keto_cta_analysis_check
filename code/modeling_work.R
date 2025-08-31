@@ -218,7 +218,7 @@ save_plot_simple <- function(p, filepath, width, height, dpi) {
 save_plot_simple(
   gls_fit_plot,
   "figures/plots_plaque_metrics/gls_fit__ncpv2_plot.png",
-  6, 6, 600
+  6, 6, 800
 )
 
 ###
@@ -380,4 +380,80 @@ p <- scatter_bf_with_stats("Non_Calcified_Plaque_Volume", transform = "log1p",
 p
 
 
-lm
+
+#########################
+colnames(df)
+
+m_multi <- lm(V2_Non_Calcified_Plaque_Volume ~ V1_CAC + V1_Total_Plaque_Score + 
+                V1_Percent_Atheroma_Volume + V1_Total_Calcified_Plaque_Volume + V1_Non_Calcified_Plaque_Volume,
+              data=df)
+summary(m_multi)
+confint(m_multi)["V1_CAC", ]
+
+m_multi <- lm(V2_Non_Calcified_Plaque_Volume ~ V1_CAC  + 
+                 V1_Non_Calcified_Plaque_Volume,
+              data=df)
+summary(m_multi)
+confint(m_multi)["V1_CAC", ]
+
+
+library(MASS)
+
+# Stepwise selection (both directions) using AIC
+m_step <- stepAIC(m_full, direction = "both", trace = FALSE)
+summary(m_step)
+
+#################
+# design matrix (no intercept) and outcome
+X <- model.matrix(V2_Non_Calcified_Plaque_Volume ~ V1_CAC + V1_Total_Plaque_Score +
+                    V1_Percent_Atheroma_Volume + V1_Total_Calcified_Plaque_Volume +
+                    V1_Non_Calcified_Plaque_Volume,
+                  data = df)[, -1]
+y <- df$V2_Non_Calcified_Plaque_Volume
+
+set.seed(123)
+cv_en <- cv.glmnet(X, y, alpha = 0.5, standardize = TRUE, nfolds = 10)
+
+# nonzero at lambda.1se (conservative) — use "lambda.min" if you prefer
+nz <- which(as.numeric(coef(cv_en, s = "lambda.1se")) != 0)
+sel_vars <- rownames(coef(cv_en, s = "lambda.1se"))[nz]
+sel_vars <- setdiff(sel_vars, "(Intercept)")
+
+sel_vars
+
+# 2) Refit a plain lm() on the selected variables for reporting
+fm <- reformulate(sel_vars, response = "V2_Non_Calcified_Plaque_Volume")
+m_sel <- lm(fm, data = df)
+summary(m_sel)
+
+# (optional) robust SEs (HC3) + CIs, as often reported
+library(sandwich)
+library(lmtest)
+ct <- coeftest(m_sel, vcov = vcovHC(m_sel, type = "HC3"))
+ct
+
+# 95% CIs with robust SEs
+robust_se <- sqrt(diag(vcovHC(m_sel, type = "HC3")))
+est <- coef(m_sel)
+z <- qnorm(0.975)
+ci_lo <- est - z * robust_se
+ci_hi <- est + z * robust_se
+data.frame(Estimate = est, `Robust SE` = robust_se, `2.5%` = ci_lo, `97.5%` = ci_hi)
+
+
+lm_coupled <- lm(delta_NCPV ~ V1_Non_Calcified_Plaque_Volume,
+              data=df)
+summary(lm_coupled)
+
+lm_less_coupled <- lm(delta_NCPV ~ V1_Percent_Atheroma_Volume,
+                 data=df)
+summary(lm_less_coupled)
+
+
+lm_both_coupled <- lm(delta_NCPV ~ V1_Non_Calcified_Plaque_Volume + V1_Percent_Atheroma_Volume,
+                      data=df)
+summary(lm_both_coupled)
+
+lm_bf <- lm(V2_Non_Calcified_Plaque_Volume ~ V1_Non_Calcified_Plaque_Volume,
+                 data=df)
+summary(lm_bf)
