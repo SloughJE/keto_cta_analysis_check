@@ -1169,10 +1169,15 @@ CCTA plaque-progression studies — model types & links
 
 - [Adjusting](https://pmc.ncbi.nlm.nih.gov/articles/PMC8345531/) for [baseline and confounders](https://pmc.ncbi.nlm.nih.gov/articles/PMC7382001/) is [standard practice](https://pmc.ncbi.nlm.nih.gov/articles/PMC2796339/) in studies on [plaque progression](https://pmc.ncbi.nlm.nih.gov/articles/PMC8374741/)
 
+:::
+::: {.incremental}
+
 - Observational (pre–post) studies almost always include **baseline plaque** when modeling progression. Not doing so risks confounding and regression to the mean (baseline imbalance). 
 
 - In RCTs randomization handles bias on average, but ANCOVA still gives cleaner, more precise estimates; it’s the usual choice.  
 
+:::
+::: {.incremental}
 
 - Baseline adjustment with change scores (Δ)?
   - Better than not including it, ANCOVA still preferred
@@ -1182,18 +1187,12 @@ CCTA plaque-progression studies — model types & links
 
 ::: {.fragment}
 
-::: {.smaller_table}
+::: {.smaller2}
 
 - [The correlation between baseline score and post-intervention score, and its implications for statistical analysis](https://pmc.ncbi.nlm.nih.gov/articles/PMC6330413/) — Change or post, **adjust for baseline** (ANCOVA) to avoid bias.  
 - [Statistics notes: Analysing controlled trials with baseline and follow up measurements](https://pmc.ncbi.nlm.nih.gov/articles/PMC1121605/) — **ANCOVA** is the **preferred** general approach; more powerful/robust than Δ alone.  
 - [Analyses of “change scores” do not estimate causal effects in observational data](https://pmc.ncbi.nlm.nih.gov/articles/PMC9557845/) — Change scores do **not** estimate causal effects in observational settings.  
 
-
-:::
-
-::: {.fragment}
-
-- **Baseline** often explains a [large share of variance](https://pmc.ncbi.nlm.nih.gov/articles/PMC8374741/) in follow-up, ie a high R². What does that mean for the R² of the other covariates?
 
 :::
 
@@ -1203,6 +1202,10 @@ CCTA plaque-progression studies — model types & links
 ::: {.notes}
 
 Make ANCOVA primary; use Δ+Baseline as sensitivity. Annualize or adjust for scan interval; consider log/percent change for skew; report partial effects.
+
+
+- **Baseline** often explains a [large share of variance](https://pmc.ncbi.nlm.nih.gov/articles/PMC8374741/) in follow-up, ie a high R². What does that mean for the R² of the other covariates?
+
 
 :::
 
@@ -1224,7 +1227,7 @@ But consider the [Partial R²](https://online.stat.psu.edu/stat462/node/138/)
 
 ::: {.fragment}
 
-`NCPV_follow-up ~ NCPV_basline + ApoB`
+`NCPV_follow-up ~ NCPV_baseline + ApoB`
 
 :::
 ::: {.incremental}
@@ -1252,14 +1255,14 @@ If baseline explains a lot, a small R² can still be a large share of what’s e
 
 
 
-`NCPV_follow-up ~ NCPV_basline + ApoB`
+`NCPV_follow-up ~ NCPV_baseline + ApoB`
 
 ::: {.incremental}
 
-- **Baseline R² ≈ 0.95:** 95% of follow-up NCPV variance is explained by **baseline NCPV**.
-- **Residual R² after baseline: 5%**  (for risk factors + measurement error + noise)
-- **ApoB effect:** ΔR² ≈ 0.03 ⇒ Partial R² (ApoB | baseline) = 0.03 / 0.05 = 0.60  
-- ApoB explains 60% of the variance remaining after baseline.
+- **Baseline R² ≈ 0.90:** 90% of follow-up NCPV variance is explained by **baseline NCPV**.
+- **Residual R² after baseline: 10%**  (for risk factors + measurement error + noise)
+- **ApoB effect:** ΔR² ≈ 0.03 ⇒ Partial R² (ApoB | baseline) = 0.03 / 0.10 = 0.30  
+- ApoB explains 30% of the variance remaining after baseline.
 
 :::
 ::: {.fragment}
@@ -1283,23 +1286,115 @@ In addition to all the other problems:
 - probably underpowered
 - obvious ommitted variables
 
-let's talk about partial R²
-
-
 - Coefficients (slope) change because Baseline and ApoB share variance; adjusting for Baseline reveals ApoB’s unique contribution (β_ApoB≈+0.19 here).
 - R² must increase when adding predictors; the key is how much of the **leftover explainable residual** variance is explained:  
-  residual after Baseline+age+sex is 1−0.50=0.50; ApoB adds 0.02 → partial R² = 0.02/0.50=0.04.
-- Messaging: “ApoB adds **unique** information about progression beyond Baseline; ‘small’ ΔR² on the total scale understates its share of the explainable residual.”
-
-- **Everything else:** \(1 - 0.95 - 0.03 = 0.02\) → ~**2%** left  
 
 
 - Could still simply mean the study was underpowered
 
+:::
 
+---
+
+### Baseline Explains 96% of Variation
+
+::: {.columns}
+
+::: {.column width="55%"}
+::: {.smaller_table}
+
+
+`NCPV_follow-up ~ NCPV_baseline`
+
+univariable lm: **R² = 0.96**
+
+GLS (REML) model: weighted **R² = 0.93**
+
+::: {.incremental}
+
+- Baseline almost perfectly predicts follow-up.
+- ApoB or LDL is almost guaranteed to look null.
+- The "signal" left for anything else to explain in NCPV_final is **~4%**.
+- You’d need a huge ApoB effect, or much longer follow-up, more timepoints (), to detect anything.
+- Univariable ApoB nulls are underpowered and non-informative.
 
 :::
 
+:::{.fragment}
+
+"Plaque predicts plaque; ApoB does not" is a consequence of study design and model choice.
+
+
+:::
+:::
+:::
+
+::: {.column width="45%"}
+
+::: {.screen-only}
+
+::: {.r-stack}
+
+::: {.fragment .current-visible}
+
+::: {.img-wrap style="width:100%; text-align:center;"}
+![](figures/ncpv2.png){style="width:100%; height:auto;"}
+:::
+
+:::
+
+::: {.fragment .current-visible}
+![](figures/gls_fit_ncpv2_plot.png){style="width:100%; height:auto;"}
+
+:::
+:::
+:::
+:::
+
+:::
+
+:::{.notes}
+
+GLS: Generalized Least Squares (as opposed to Ordinary Least Squares)
+
+REML = Restricted maximum likelihood
+
+Most groups handle the ‘baseline dominates’ problem by (i) analyzing follow-up while explicitly adjusting for where each person started, (ii) also reporting a simple clinical endpoint like the share who regress vs progress, (iii) using size-neutral measures or transforms (e.g., PAV, √CAC) so results aren’t driven by starting size, (iv) comparing the same lesions across scans with models that account for multiple lesions per patient, and (v) standardizing scan protocols and, when possible, extending follow-up or adding a third scan so there’s real change left to detect.
+
+:::
+
+---
+
+### R² metrics are seldom shown here
+
+::: {.smaller2}
+
+**Total/adjusted/partial R²:** common in simple linear models; not standard for more advanced models
+
+::: {.fragment}
+
+There isn't one standard R² (beyond ordinary linear regression)
+
+:::
+::: {.incremental}
+
+- **Model dependence & collinearity:** ApoB, LDL‐C, non‐HDL correlate → partial $R^2$ unstable.
+- **Small samples:** partial $R^2$ can be very noisy
+- **Mixed model families:** GLM/mixed/hurdle lack a single standard $R^2$ 
+:::
+::: {.incremental}
+
+- **Plaque progression convention:** report $\beta$/OR with 95% CI and p-values.
+- **Clinical interpretability:** "Δ outcome per 10 mg/dL ApoB" > "% residual variance."
+:::
+
+::: {.fragment}
+
+**Example:** Each 10 mg/dL higher ApoB is associated with a **+0.25 percentage-point** increase in plaque progression.
+
+:::
+
+:::
 
 
 ---

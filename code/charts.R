@@ -160,7 +160,7 @@ figure_2F = ggplot(df, aes(x = V1_CAC, y = delta_TPS)) +
 figure_2F
 
 #### Delta NCPV ~ baseline NCPV
-ggplot(df, aes(x = V1_Non_Calcified_Plaque_Volume, y = delta_NCPV)) +
+ggplot(df, aes(x = V1_CAC, y = delta_TPS)) +
   geom_point(alpha = 0.8, size = 1.6, na.rm = TRUE) +
   stat_smooth(method = "lm", formula = y ~ x,
               se = TRUE, level = 0.95,
@@ -176,6 +176,7 @@ ggplot(df, aes(x = V1_Non_Calcified_Plaque_Volume, y = delta_NCPV)) +
     axis.text.x  = element_text(face = "bold"),
   )
 
+
 # save figs as png
 save_png <- function(p, file, width = 6, height = 4, dpi = 600, bg = "white") {
   ggsave(file, plot = p, device = ragg::agg_png,
@@ -187,6 +188,7 @@ save_png(figure_1A, "figures/Figure1A.png", width = 6, height = 5.86, dpi = 800)
 save_png(figure_1B, "figures/Figure1B.png", width = 6, height = 6.23, dpi = 800)
 save_png(figure_2F, "figures/Figure2F.png", width = 6, height = 6.26, dpi = 800)
 
+
 #ggsave("figures/Figure1A.pdf", plot = figure_1A, device = "pdf",
 #       width = 6, height = 12, units = "in")
 
@@ -196,3 +198,114 @@ ggsave("figures/Figure1B.svg", plot = figure_1B, device = svglite::svglite,
        width = 6, height = 12, units = "in")
 ggsave("figures/Figure2F.svg", plot = figure_2F, device = svglite::svglite,
        width = 6, height = 6, units = "in")
+
+
+
+###########
+# fit
+####  NCPV_2 ~ baseline NCPV
+
+fit <- lm(V2_Non_Calcified_Plaque_Volume ~ V1_Non_Calcified_Plaque_Volume, data = df)
+s   <- summary(fit)
+ci  <- confint(fit, level = 0.95)
+
+# pull numbers
+b1   <- unname(coef(fit)["V1_Non_Calcified_Plaque_Volume"])
+ci_l <- ci["V1_Non_Calcified_Plaque_Volume", 1]
+ci_h <- ci["V1_Non_Calcified_Plaque_Volume", 2]
+r2   <- s$r.squared
+pval <- s$coefficients["V1_Non_Calcified_Plaque_Volume", "Pr(>|t|)"]
+
+# small helpers for pretty printing
+fmt   <- function(x, d = 3) formatC(x, format = "f", digits = d, drop0trailing = TRUE)
+fmt_p <- function(p) ifelse(p < 1e-4, "< 0.0001", formatC(p, format = "g", digits = 3))
+
+# label text: β, CI, R², p
+lab <- paste0(
+  "β = ", fmt(b1), ";  95% CI: (", fmt(ci_l), "–", fmt(ci_h), ")\n",
+  "R", "\u00B2", " = ", fmt(r2), ",  p ", fmt_p(pval)
+)
+
+# plot
+ncpv2 <- ggplot(df, aes(x = V1_Non_Calcified_Plaque_Volume, y = V2_Non_Calcified_Plaque_Volume)) +
+  geom_point(alpha = 0.8, size = 1.6, na.rm = TRUE) +
+  stat_smooth(method = "lm", formula = y ~ x,
+              se = TRUE, level = 0.95,
+              color = "red", fill = "grey70", linewidth = 1) +
+  geom_hline(yintercept = 0, linetype = "dotted") +
+  labs(x = "Baseline NCPV", y = "Follow-up NCPV", title = "Baseline NCPV vs Follow-up NCPV") +
+  theme_classic(base_size = 16) +
+  theme(
+    axis.text.y = element_text(face = "bold"),
+    axis.text.x = element_text(face = "bold"),
+    plot.title  = element_text(face = "bold")
+  ) +
+  annotate("label",
+           x = -Inf, y = Inf, label = lab,
+           hjust = -0.05, vjust = 1.1, size = 4.2,
+           label.size = 0, lineheight = 1.05) +
+  coord_cartesian(clip = "off")
+
+print(ncpv2)
+
+
+save_png(ncpv2, "figures/ncpv2.png", width = 6, height = 6, dpi = 800)
+
+
+#### proportional growth? ie more plaque = even more plaque
+
+fit_log <- lm(log1p(V2_Non_Calcified_Plaque_Volume) ~ log1p(V1_Non_Calcified_Plaque_Volume), data=df)
+summary(fit_log)$coef  # slope near 1 ⇒ proportional growth; >1 ⇒ super-proportional
+# Test H0: slope = 1
+b <- coef(fit_log)[2]; se <- summary(fit_log)$coef[2,2]
+b
+t <- (b - 1)/se; dfree <- df.residual(fit_log); p_super <- 2*pt(-abs(t), dfree)
+t
+
+# Slope on the log1p–log1p scale is β = 0.805 (SE ≈ 0.0252).
+# 95% CI ≈ [0.756, 0.854] (0.805 ± 1.96·0.0252).
+# test of H₀: β = 1 gives t = −7.72 (df ≈ n−2), so p ≪ 0.0001.
+# rejects “proportional growth” (β = 1).
+
+# Interpretation (in plain terms)
+# β < 1 ⇒ sub-proportional growth. On this scale, a doubling of baseline increases follow-up by about 2^0.805, or 1.74
+# Equivalently, the percentage growth declines with higher baseline (the ratio 
+#Y/X falls as X rises).
+
+# contradicts the “more plaque → disproportionately more plaque” story. 
+# If anything, relative growth is slower at higher baseline.
+
+
+# Test relative change directly (restricting to X>0)
+
+df_pos <- subset(df, V1_Non_Calcified_Plaque_Volume > 0 & V2_Non_Calcified_Plaque_Volume > 0)
+fit_ratio <- lm(log(V2_Non_Calcified_Plaque_Volume / V1_Non_Calcified_Plaque_Volume) ~ log(V1_Non_Calcified_Plaque_Volume), data=df_pos)
+summary(fit_ratio)  # slope < 0 ⇒ % growth falls with baseline
+
+# So doubling baseline multiplies the relative growth by 
+# 2^−0.181 ≈ 0.88: ~12% lower % growth per doubling (CI ≈ 9–15% lower).
+
+# That’s the opposite of “self-accelerating” growth
+
+fit_ratio <- lm(log(V2_Non_Calcified_Plaque_Volume / V1_Non_Calcified_Plaque_Volume) ~ 
+                  log(V1_Non_Calcified_Plaque_Volume), data = df_pos)
+
+b   <- coef(fit_ratio)[2]
+se  <- summary(fit_ratio)$coef[2,2]
+ci  <- confint(fit_ratio)[2, ]  # slope CI
+
+# % change in the growth ratio per doubling of baseline
+per_double      <- exp(b * log(2))
+per_double_lo   <- exp(ci[1] * log(2))
+per_double_hi   <- exp(ci[2] * log(2))
+
+sprintf("Per doubling of baseline: growth ratio × %.3f (95%% CI %.3f–%.3f)",
+        per_double, per_double_lo, per_double_hi)
+# output: "× 0.882 (95% CI 0.855–0.910)"  → about 12% lower (9–15% lower).
+
+
+
+# raw fit:
+fit_pos <- lm(V2_Non_Calcified_Plaque_Volume ~ V1_Non_Calcified_Plaque_Volume, data=df_pos)
+summary(fit_pos)  # slope < 0 ⇒ % growth falls with baseline
+
