@@ -309,3 +309,10 @@ sprintf("Per doubling of baseline: growth ratio × %.3f (95%% CI %.3f–%.3f)",
 fit_pos <- lm(V2_Non_Calcified_Plaque_Volume ~ V1_Non_Calcified_Plaque_Volume, data=df_pos)
 summary(fit_pos)  # slope < 0 ⇒ % growth falls with baseline
 
+
+fit_global <- lm(log(V2_Non_Calcified_Plaque_Volume / V1_Non_Calcified_Plaque_Volume) ~ 
+                   log1p(CAC_baseline) + log(V1_Non_Calcified_Plaque_Volume) + 
+                   age + ApoB_baseline, data = df_pos)  # df_pos: V1,V2>0
+summary(fit_global)
+
+
