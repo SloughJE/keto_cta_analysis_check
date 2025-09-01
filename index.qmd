@@ -832,7 +832,7 @@ The "mediator" (Life-LDL-C_exp) is partly built from Age and mixes units → mat
 
 ::: {.smaller_caption}
 
-> "Estimated lifetime LDL-C exposure was only a significant predictor of final NCPV in the univariable analysis but lost significance when age was included as a covariate (Table 3). Both age and lifetime LDL-C exposure lost significance when baseline CAC was included in the model (Table 3)."
+> "Estimated **lifetime LDL-C exposure** was only a **significant predictor of final NCPV** in the univariable analysis but lost significance when age was included as a covariate (Table 3). Both age and lifetime LDL-C exposure lost significance when baseline CAC was included in the model (Table 3)."
 
 :::
 
