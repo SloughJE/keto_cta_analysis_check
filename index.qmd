@@ -30,7 +30,7 @@ No cholesterol (ApoB), demographic or other clinical data
 
 All code, figures, data, studies available at:
 
-[https://github.com/SloughJE/keto_cta_analysis_check](https://github.com/SloughJE/keto_cta_analysis_check)
+[https://github.com/SloughJE/keto-cta-audit](https://github.com/SloughJE/keto-cta-audit)
 
 
 
@@ -1378,14 +1378,14 @@ There isn't one standard R² (beyond ordinary linear regression)
 :::
 ::: {.incremental}
 
-- **Model dependence & collinearity:** ApoB, LDL‐C, non‐HDL correlate → partial $R^2$ unstable.
-- **Small samples:** partial $R^2$ can be very noisy
-- **Mixed model families:** GLM/mixed/hurdle lack a single standard $R^2$ 
+- **Model dependence & collinearity:** ApoB, LDL‐C, non‐HDL correlate → partial R²unstable.
+- **Small samples:** partial R² can be very noisy
+- **Mixed model families:** GLM/mixed/hurdle lack a single standard R² 
 :::
 ::: {.incremental}
 
 - **Plaque progression convention:** report $\beta$/OR with 95% CI and p-values.
-- **Clinical interpretability:** "Δ outcome per 10 mg/dL ApoB" > "% residual variance."
+- **Clinical interpretability:** "Δ outcome per 10 mg/dL ApoB" (not R²)
 :::
 
 ::: {.fragment}
@@ -1394,6 +1394,12 @@ There isn't one standard R² (beyond ordinary linear regression)
 
 :::
 
+::: {.fragment}
+
+In this study, models violate OLS assumptions: R² can be high or low for the wrong reasons, misrepresenting model adequacy.
+
+
+:::
 :::
 
 
