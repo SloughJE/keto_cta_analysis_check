@@ -1405,6 +1405,25 @@ In this study, models violate OLS assumptions: R² can be high or low for the wr
 
 ---
 
+## Weakest model choice
+
+<br>
+
+:::{.incremental}
+
+
+- Among reasonable ways to test an ApoB~plaque association 
+
+  - with two timepoints, with this dataset
+
+<br>
+
+- ΔNCPV ∼ ApoB is the **weakest** plausible choice
+
+
+:::
+
+---
 
 ### Preprint vs Published: What Changed
 
@@ -1478,28 +1497,25 @@ Record of pre-print is unavailable. All links go to new version. It is available
 
 ---
 
+::: {.incremental}
 
 1. Claims and visuals contradict the data
 
-::: {.fragment}
 
 2. Multiple conclusions lack supporting analyses/results
 
-:::
-::: {.fragment}
 
 3. Some metrics are nonstandard or conceptually unsound
 
-:::
-::: {.fragment}
 
-4. Despite "corroborated" claim, model assumptions were violated. Many misspecified models 
+4. "Assumptions corroborated". Model assumptions were violated. Many misspecified models 
 
-:::
 
-::: {.fragment}
+5. Plaque doesn't predict (or beget) plaque. Baseline predicts follow-up.
 
-5. Baseline-adjusted regression (ANCOVA) is the clinically relevant analysis
+6. ΔNCPV ∼ ApoB is the **weakest** plausible model choice
+
+7. ANCOVA is the clinically relevant analysis
 
 :::
 
