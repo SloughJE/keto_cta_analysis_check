@@ -512,7 +512,7 @@ Figures 2D–2F are Δ-TPS (outcome) panels (vs ΔApoB, ApoB, CAC_bl)
 
 ::: {.fragment}
 
-Table 3 has no Δ-TPS models
+Table 3 Model Results has **no Δ-TPS** models
 
 No Δ-TPS ~ LDL-C, LDL-C exposure, or ApoB model results anywhere.
 
@@ -529,7 +529,7 @@ No Δ-TPS ~ LDL-C, LDL-C exposure, or ApoB model results anywhere.
 ::: {.column width="45%"}
 
 
-::: {.smaller_table}
+::: {.smaller2}
 
 ::: {.fragment}
 
@@ -541,11 +541,15 @@ No Δ-TPS ~ LDL-C, LDL-C exposure, or ApoB model results anywhere.
 ::: {.fragment}
 
 <br>
-<br>
 
 $\Delta \text{TPS} \sim \text{CAC}_{\text{baseline}}$
 
+
+
 :::
+:::
+::: {.smaller_table}
+
 ::: {.fragment}
 
 ```{r echo=FALSE, message=FALSE, results='asis'}
@@ -568,19 +572,15 @@ data.frame(
 
 :::
 
+
+:::
+::: {.smaller2}
+
 ::: {.fragment}
 
 <br>
 
 **CAC is not associated with $\Delta$TPS**
-
-:::
-
-::: {.fragment}
-
-<br>
-
-*Zero inflation*
 
 :::
 
@@ -606,7 +606,7 @@ data.frame(
 
 :::
 
-::: {.smaller_caption}
+::: {.caption_gray}
 
 Changes in Total Plaque Score vs Coronary Artery Calcium
 
@@ -1378,7 +1378,7 @@ There isn't one standard R² (beyond ordinary linear regression)
 :::
 ::: {.incremental}
 
-- **Model dependence & collinearity:** ApoB, LDL‐C, non‐HDL correlate → partial R²unstable.
+- **Model dependence & collinearity:** ApoB, LDL‐C, non‐HDL correlate → partial R² unstable.
 - **Small samples:** partial R² can be very noisy
 - **Mixed model families:** GLM/mixed/hurdle lack a single standard R² 
 :::
@@ -1499,17 +1499,14 @@ Record of pre-print is unavailable. All links go to new version. It is available
 
 ::: {.incremental}
 
-1. Claims and visuals contradict the data
-
+1. Claims and charts contradict the data
 
 2. Multiple conclusions lack supporting analyses/results
 
-
 3. Some metrics are nonstandard or conceptually unsound
 
-
-4. "Assumptions corroborated". Model assumptions were violated. Many misspecified models 
-
+4. "Assumptions corroborated".   
+  **— FALSE**. Model assumptions were violated.
 
 5. Plaque doesn't predict (or beget) plaque. Baseline predicts follow-up.
 
@@ -1522,9 +1519,56 @@ Record of pre-print is unavailable. All links go to new version. It is available
 
 ---
 
+
+:::{style="text-align:center;"}
+:::{.smaller}
+
+$\Delta$NCPV ~ $\Delta$ApoB &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $\Delta$NCPV ~ ApoB
+:::
+<img src="assets/Figure2AB.png" style="width:60%;display:block;margin:0rem auto 0;">
+:::
+
+:::{.fragment}
+
+:::{.smaller2}
+
+:::{style="text-align:center;"}
+:::{.smaller2}
+$\Delta$NCPV ~ $\Delta$ApoB: $\beta$ = 0.01, P Value = 0.91 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;$\Delta$NCPV ~ ApoB: **$\beta$ = 0.06**, P Value = 0.33
+
+<br>
+:::
+:::
+
+:::
+
+:::{.fragment}
+
+:::{.smaller2}
+
+This analysis failed to detect an effect; the estimate is imprecise and compatible with zero to small positive effects.
+
+The interval still allows clinically non-trivial increases.
+
+In other words: inconclusive.
+
+:::
+:::
+:::
+
+:::{.fragment}
+::: {.caption_gray}
+
+They do not report CI of $\beta$.
+
+:::
+:::
+
+---
+
 #### Miscellaneous issues
 
-::: {.smaller_large_table}
+::: {.smaller_misc_table}
 | Location | Study Text | Issue  |
 |:--|:--|:--|
 | **Figure 1 caption** | "...the shaded area represents the IQR (9.3-47.0 mm³)..." | **Imprecise.** The quoted IQR is the ΔNCPV IQR; shaded band is  **25th–75th percentile band** at baseline and 1-year. |
@@ -1537,9 +1581,11 @@ Record of pre-print is unavailable. All links go to new version. It is available
 | **Table 1 Baseline Characteristics** | Baseline table provided. | **No follow-up characteristics table** |
 | **multiple** | "changes in baseline levels" | Baseline doesn’t change.  |
 | **Software statement** | "using R 4.0.3 (2020)… with the last available version for Sept 2024." | Unclear what version was used. |
-| **Central illustration (quote)** | "Neither total exposure nor changes in baseline levels of ApoB and mg/dL were associated with changes in plaque. Conversely, baseline plaque but ApoB was not associated…" | Incoherent/grammatical errors |
+| **Central Illustration (quote)** | "Neither total exposure nor changes in baseline levels of ApoB and mg/dL were associated with changes in plaque. Conversely, baseline plaque but ApoB was not associated…" | Incoherent/grammatical errors |
 | Main text (Results/Discussion) | "…baseline values magnify their **percentual** changes…"| percent change or percentage-point change |
-
+| Central Illustration | shows $\Delta$TPS ~ ApoB as main chart | Why? This isn't the primary outcome. Model results not reported |
+| "Prediction" vs "Association | Study interchangably uses Prediction and Association | Prediction ≠ Association in statistics. Prediction needs out-of-sample validation |
+| Change on Change Regressions | $\Delta$NVPC ~ $\Delta$ApoB | I cannot understand why they would even test this. |
 :::
 
 

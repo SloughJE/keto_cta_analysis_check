@@ -4,7 +4,8 @@
 .smaller_large_table { font-size: 40%; }
 .smaller_caption { font-size: 45%; }
 .larger_title { font-size: 150%; }
-
+.caption_gray { color: #999; font-size: 45%; }
+.smaller_misc_table { font-size: 35%; }
 
 .card {
   background-color: #1e1e1e;
