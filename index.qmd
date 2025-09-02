@@ -519,6 +519,12 @@ No Δ-TPS ~ LDL-C, LDL-C exposure, or ApoB model results anywhere.
 :::
 :::
 
+:::{.notes}
+
+$\Delta$TPS IS MAIN CHART IN THEIR CENTRAL ILLUSTRATION
+
+:::
+
 
 ---
 
@@ -614,6 +620,12 @@ Changes in Total Plaque Score vs Coronary Artery Calcium
 regresses y~x, and the shaded area represents the standard error. 
 
 :::
+:::
+
+:::{.notes}
+
+$\Delta$TPS IS MAIN CHART IN THEIR CENTRAL ILLUSTRATION
+
 :::
 
 ---
@@ -1460,7 +1472,7 @@ $\Delta$NCPV ~ $\Delta$ApoB: $\beta$ = 0.01, P Value = 0.91 &emsp;&emsp;&emsp;&e
 :::
 :::{.fragment}
 
-This analysis failed to detect an effect; the estimate is imprecise and compatible with zero to small **positive effects**.
+This analysis failed to detect an effect; the estimate is imprecise and compatible with zero to **small positive effects**.
 
 The CI still allows clinically non-trivial increases.
 
