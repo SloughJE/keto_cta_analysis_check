@@ -1425,6 +1425,111 @@ In this study, models violate OLS assumptions: R² can be high or low for the wr
 
 ---
 
+
+:::{style="text-align:center;"}
+:::{.smaller}
+
+$\Delta$NCPV ~ $\Delta$ApoB &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $\Delta$NCPV ~ ApoB
+:::
+<img src="assets/Figure2AB.png" style="width:60%;display:block;margin:0rem auto 0;">
+:::
+
+:::{.fragment}
+
+:::{.smaller2}
+
+:::{style="text-align:center;"}
+:::{.smaller2}
+$\Delta$NCPV ~ $\Delta$ApoB: $\beta$ = 0.01, P Value = 0.91 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;$\Delta$NCPV ~ ApoB: **$\beta$ = 0.06**, P Value = 0.33
+
+:::
+:::
+
+:::
+
+:::{.smaller2}
+
+:::{.fragment}
+
+"changes in and baseline levels of ApoB were not associated with changes in NCPV"
+
+:::{.smaller_misc_table}
+
+<br>
+:::
+:::
+:::{.fragment}
+
+This analysis failed to detect an effect; the estimate is imprecise and compatible with zero to small **positive effects**.
+
+The CI still allows clinically non-trivial increases.
+
+In other words: inconclusive.
+
+:::
+:::
+:::
+
+:::{.fragment}
+::: {.caption_gray}
+
+They do not report CI of $\beta$.
+
+:::
+:::
+
+
+# Conclusions
+
+---
+
+::: {.incremental}
+
+1. Claims and charts contradict the data
+
+2. Multiple conclusions lack supporting analyses/results
+
+3. Some metrics are nonstandard or conceptually unsound
+
+4. "Assumptions corroborated".   
+  **— FALSE**. Model assumptions were violated.
+
+5. Plaque doesn't predict (or beget) plaque. Baseline predicts follow-up.
+
+6. ΔNCPV ∼ ApoB is the **weakest** plausible model choice
+
+7. ANCOVA is the clinically relevant analysis
+
+:::
+
+---
+
+:::{.smaller_misc_table}
+**Miscellaneous issues**
+:::
+
+::: {.smaller_misc_table}
+| Location | Study Text | Issue  |
+|:--|:--|:--|
+| **Figure 1 caption** | "...the shaded area represents the IQR (9.3-47.0 mm³)..." | **Imprecise.** The quoted IQR is the ΔNCPV IQR; shaded band is  **25th–75th percentile band** at baseline and 1-year. |
+| **Figures 2D–F Caption** | "(D to F) Change in ApoB, baseline ApoB, and baseline CAC vs **NCPV**." | Axes/legend appear to be **TPS**, not NCPV → **label/data mismatch** |
+| **Table 3 caption** | “R² = squared correlation coefficient (explained variability).” | Reports **negative values**, must be adjusted R² |
+| **Table 3 ** | β = 0.18 | No reporting of CIs for β. |
+| **KD Duration** Table 1 vs Table 3 | KD duration mean **1,642.7 days (≈4.5 y)** vs caption “LDL-C exposure … **mean 5.7 y**.” | **Inconsistent durations.** |
+| **KD Duration** Abstract vs Table 1 | LDL-C exposure median **1,302 d (984–1,754)** vs KD duration median **1,427 d (1,002–1,938)**. | Metrics conflated. **exposure should be in units** like **mg/dL·days**, not days. |
+| **Table 1 (Total cholesterol)** | Median **338**, IQR **(301–337)**. | **Impossible IQR** (Q3 < median) |
+| **Follow-up Characteristics?** | Baseline table provided. | No follow-up characteristics table. ApoB significantly changed in 1 year. Did LDL? Are participants still "LMHR"? |
+| **multiple** | "changes in baseline levels" | Baseline doesn’t change.  |
+| **Software statement** | "using R 4.0.3 (2020)… with the last available version for Sept 2024." | Unclear what version was used. |
+| Central Illustration | shows $\Delta$TPS ~ ApoB as main chart | Why? Not primary outcome. TPS model results not reported |
+| Central Illustration (quote) | "Neither total exposure nor changes in baseline levels of ApoB and mg/dL were associated with changes in plaque. Conversely, baseline plaque but ApoB was not associated…" | Incoherent/grammatical errors |
+| Main text (Results/Discussion) | "…baseline values magnify their **percentual** changes…"| percent change or percentage-point change |
+| "Prediction" vs "Association | Study interchangably uses Prediction and Association | Prediction ≠ Association in statistics. Prediction needs out-of-sample validation |
+| Change on Change Regressions | $\Delta$NVPC ~ $\Delta$ApoB | I cannot understand why they would even test this. |
+:::
+
+---
+
 ### Preprint vs Published: What Changed
 
 ::: {.smaller_table}
@@ -1491,103 +1596,6 @@ Record of pre-print is unavailable. All links go to new version. It is available
 
 :::
 :::
-
-
-# Conclusions
-
----
-
-::: {.incremental}
-
-1. Claims and charts contradict the data
-
-2. Multiple conclusions lack supporting analyses/results
-
-3. Some metrics are nonstandard or conceptually unsound
-
-4. "Assumptions corroborated".   
-  **— FALSE**. Model assumptions were violated.
-
-5. Plaque doesn't predict (or beget) plaque. Baseline predicts follow-up.
-
-6. ΔNCPV ∼ ApoB is the **weakest** plausible model choice
-
-7. ANCOVA is the clinically relevant analysis
-
-:::
-
-
----
-
-
-:::{style="text-align:center;"}
-:::{.smaller}
-
-$\Delta$NCPV ~ $\Delta$ApoB &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $\Delta$NCPV ~ ApoB
-:::
-<img src="assets/Figure2AB.png" style="width:60%;display:block;margin:0rem auto 0;">
-:::
-
-:::{.fragment}
-
-:::{.smaller2}
-
-:::{style="text-align:center;"}
-:::{.smaller2}
-$\Delta$NCPV ~ $\Delta$ApoB: $\beta$ = 0.01, P Value = 0.91 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;$\Delta$NCPV ~ ApoB: **$\beta$ = 0.06**, P Value = 0.33
-
-<br>
-:::
-:::
-
-:::
-
-:::{.fragment}
-
-:::{.smaller2}
-
-This analysis failed to detect an effect; the estimate is imprecise and compatible with zero to small positive effects.
-
-The interval still allows clinically non-trivial increases.
-
-In other words: inconclusive.
-
-:::
-:::
-:::
-
-:::{.fragment}
-::: {.caption_gray}
-
-They do not report CI of $\beta$.
-
-:::
-:::
-
----
-
-#### Miscellaneous issues
-
-::: {.smaller_misc_table}
-| Location | Study Text | Issue  |
-|:--|:--|:--|
-| **Figure 1 caption** | "...the shaded area represents the IQR (9.3-47.0 mm³)..." | **Imprecise.** The quoted IQR is the ΔNCPV IQR; shaded band is  **25th–75th percentile band** at baseline and 1-year. |
-| **Figures 2D–F Caption** | "(D to F) Change in ApoB, baseline ApoB, and baseline CAC vs **NCPV**." | Axes/legend appear to be **TPS**, not NCPV → **label/data mismatch** |
-| **Table 3 caption** | “R² = squared correlation coefficient (explained variability).” | Reports **negative values**, must be adjusted R² |
-| **Table 3 ** | β = 0.18 | No reporting of CIs for β. |
-| **KD Duration** Table 1 vs Table 3 | KD duration mean **1,642.7 days (≈4.5 y)** vs caption “LDL-C exposure … **mean 5.7 y**.” | **Inconsistent durations.** |
-| **KD Duration** Abstract vs Table 1 | LDL-C exposure median **1,302 d (984–1,754)** vs KD duration median **1,427 d (1,002–1,938)**. | Metrics conflated. **exposure should be in units** like **mg/dL·days**, not days. |
-| **Table 1 (Total cholesterol)** | Median **338**, IQR **(301–337)**. | **Impossible IQR** (Q3 < median) |
-| **Table 1 Baseline Characteristics** | Baseline table provided. | **No follow-up characteristics table** |
-| **multiple** | "changes in baseline levels" | Baseline doesn’t change.  |
-| **Software statement** | "using R 4.0.3 (2020)… with the last available version for Sept 2024." | Unclear what version was used. |
-| **Central Illustration (quote)** | "Neither total exposure nor changes in baseline levels of ApoB and mg/dL were associated with changes in plaque. Conversely, baseline plaque but ApoB was not associated…" | Incoherent/grammatical errors |
-| Main text (Results/Discussion) | "…baseline values magnify their **percentual** changes…"| percent change or percentage-point change |
-| Central Illustration | shows $\Delta$TPS ~ ApoB as main chart | Why? This isn't the primary outcome. Model results not reported |
-| "Prediction" vs "Association | Study interchangably uses Prediction and Association | Prediction ≠ Association in statistics. Prediction needs out-of-sample validation |
-| Change on Change Regressions | $\Delta$NVPC ~ $\Delta$ApoB | I cannot understand why they would even test this. |
-:::
-
 
 # Appendix: Plaque Metrics 
 
