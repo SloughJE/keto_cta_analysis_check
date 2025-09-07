@@ -1633,20 +1633,18 @@ They do not report CI of $\beta$.
 
 ::: {.incremental}
 
-1. Claims and charts contradict the data
+1. Claims and charts contradict the data.
 
-2. Multiple conclusions lack supporting analyses/results
+2. Multiple conclusions lack supporting analyses/results.
 
-3. Some metrics are nonstandard or conceptually unsound
+3. Some metrics are nonstandard or conceptually unsound.
 
 4. "Assumptions corroborated".   
   **— FALSE**. Model assumptions were violated.
 
-5. Plaque doesn't predict (or beget) plaque. Baseline predicts follow-up.
+5. The model results are invalid.
 
-6. ΔNCPV ∼ ApoB is the **weakest** plausible model choice
-
-7. ANCOVA is the clinically relevant analysis
+6. Proper and relevant analysis is baseline-adjusted ANCOVA.
 
 :::
 
