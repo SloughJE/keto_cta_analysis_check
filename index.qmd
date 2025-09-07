@@ -316,18 +316,20 @@ Objective tests show all 4 models failed at least 2 tests each.
 
 ::: {.notes}
 
+- Under heteroscedasticity, the estimated standard errors are incorrect. Because p-values depend on those standard errors, the reported values may be too small or too large, leading to incorrect conclusions about significance.
+
+- Under non-normal residuals, the validity of p-values depends on sample size. small N = unreliable, large N = approximately valid dut to Central Limit Theorem. We in gray zone with N=100.
+
+- A violation of linearity is more serious than heteroscedasticity or non-normality. Inference is invalid, because you’re estimating and testing the wrong model.
+
+
+
 - RESET test for linearity
 
-- Breusch–Pagan test for Constant Variance (heterskedasticity)
+- Breusch–Pagan test for Constant Variance (heterskedasticity) of residuals
 
 - Shapiro–Wilk test for normal residuals
 
-Calling residual plot evaluation "subjective" is evasive.
-Visual checks are interpretive, but these assumptions **objectively** testable with **quantifiable** methods.
-
-Robust Linear Regression mainly down-weights outliers
-
-It does not deal with non-linearity, heteroskedasticity and non-normality of residuals (directly, it can help sometimes...but)
 
 
 :::
@@ -1053,7 +1055,7 @@ All conclusions based on independent univariable change score models
 
 ::: {.fragment}
 
-[Consensus](https://www.fharrell.com/post/errmed/#change-from-baseline) in [biostatistics](https://onlinelibrary.wiley.com/doi/10.1002/sim.2682): use [baseline-adjusted regression,](https://pubmed.ncbi.nlm.nih.gov/16526009/) [ANCOVA style model](https://pmc.ncbi.nlm.nih.gov/articles/PMC1121605): [follow-up](https://europepmc.org/article/pmc/pmc9557845) ~ baseline + covariates for pre/post analyses.
+[Consensus](https://www.fharrell.com/post/errmed/#change-from-baseline) in [biostatistics](https://onlinelibrary.wiley.com/doi/10.1002/sim.2682): use [baseline-adjusted regression,](https://pubmed.ncbi.nlm.nih.gov/16526009/) [ANCOVA style model](https://pmc.ncbi.nlm.nih.gov/articles/PMC1121605): [follow-up](https://europepmc.org/article/pmc/pmc9557845) ~ baseline + covariates for analyses.
 
 `NCPV_follow-up ~ NCPV_baseline + ApoB_baseline + age + sex`
 
@@ -1109,7 +1111,7 @@ It doesn’t tell an individual with given baseline/risk profile what their 1-ye
 
 ::: {.fragment}
 
-**Question**: Among people with the same starting plaque, age, sex, and BP, do those with higher ApoB tend to have more plaque in 1 year?
+**Question**: Among people with the same starting plaque, age, and sex, do those with higher ApoB tend to have more plaque in 1 year?
 
 :::
 ::: {.fragment}
@@ -1123,15 +1125,6 @@ It doesn’t tell an individual with given baseline/risk profile what their 1-ye
 
 :::
 
-::: {.fragment}
-
-::: {.smaller_caption}
-<br>
-:::
-
-Optionally test ApoB × NCPV_baseline to allow baseline-dependent progression.
-
-:::
 :::
 
 
@@ -1142,6 +1135,9 @@ Optionally test ApoB × NCPV_baseline to allow baseline-dependent progression.
 - Baseline differences distort change: without conditioning on where people start, floor/ceiling and regression-to-the-mean effects can swamp signal.
 
 - Observational confounding remains: unadjusted models can’t separate ApoB from other correlated risks or behaviors.
+
+- Optionally test ApoB × NCPV_baseline to allow baseline-dependent progression.
+
 
 :::
 
@@ -1310,6 +1306,21 @@ knitr::kable(
 
 :::
 
+:::{.notes}
+
+Left panel:
+
+- β = 0.251
+- CI = (0.200, 0.302) → width = 0.302 − 0.200 = 0.102
+- Relative width = 0.102 ÷ 0.251 ≈ 0.406
+
+Right panel:
+
+- β = 1.251
+- CI = (1.200, 1.302) → width = 0.102
+- Relative width = 0.102 ÷ 1.251 ≈ 0.082
+
+:::
 
 ---
 
@@ -1400,6 +1411,22 @@ knitr::kable(
 
 :::
 
+::: {.notes}
+
+Left panel:
+
+- β = 5.483
+- CI = (4.224, 6.741) → width = 6.741 − 4.224 = 2.517
+- Relative width = 2.517 ÷ 5.483 ≈ 0.459
+
+Right panel:
+
+- β = 26.569
+- CI = (23.864, 29.273) → width = 29.273 − 23.864 = 5.409
+- Relative width = 5.409 ÷ 26.569 ≈ 0.204
+
+:::
+
 ---
 
 
@@ -1425,7 +1452,7 @@ But consider the [Partial R²](https://online.stat.psu.edu/stat462/node/138/)
 
 - R² is the **fraction of total** variance explained by the **model** 
 
-- **Baseline R²**: % of variation explained baseline-only model, very high due to test-retest reliability
+- **Baseline R²**: % of variation explained baseline-only model, very high due to serial (auto)correlation
 
 - **Partial R²**: % of the **remaining** variation explained by another covariate(s) (e.g., ApoB)
 
@@ -1441,33 +1468,31 @@ If baseline explains a lot, a small R² can still be a large share of what’s e
 
 :::
 
-::: {.fragment}
-
-
-
-
-`NCPV_follow-up ~ NCPV_baseline + ApoB`
 
 ::: {.incremental}
 
-- **Baseline R² ≈ 0.90:** 90% of follow-up NCPV variance is explained by **baseline NCPV**.
-- **Residual R² after baseline: 10%**  (for risk factors + measurement error + noise)
-- **ApoB effect:** ΔR² ≈ 0.03 ⇒ Partial R² (ApoB | baseline) = 0.03 / 0.10 = 0.30  
-- ApoB explains 30% of the variance remaining after baseline.
+- **Baseline R² ≈ 0.96:** 96% of follow-up NCPV variance is explained by **baseline NCPV**.
+- **Residual R² after baseline: 4%**  (for risk factors + measurement error + noise)
+- **ApoB effect:** ΔR² ≈ 0.02 ⇒ Partial R² (ApoB | baseline) = 0.02 / 0.04 = 0.50 
+- ApoB explains 50% of the variance remaining after baseline.
 
 :::
 ::: {.fragment}
 
-A near-zero univariable slope (β≈0.07, R²=0.05) does not imply no association. Once baseline is accounted for, ApoB could explain a large fraction of the remaining variation. 
-
-:::
-
+"Plaque predicts plaque; ApoB does not" is a consequence of study design and model choice.
 
 
 :::
 :::
 
 ::: {.notes}
+
+- Baseline accounts for nearly all of the variation in follow-up..
+- ApoB or LDL is almost guaranteed to look null.
+- The "signal" left for anything else to explain in NCPV_final is **~4%**.
+- You might need a huge ApoB effect, longer follow-up, more timepoints, more participants, to detect anything.
+- Univariable ApoB nulls are underpowered and non-informative.
+
 
 In addition to all the other problems:
 
@@ -1485,74 +1510,6 @@ In addition to all the other problems:
 
 :::
 
----
-
-### Baseline Explains 96% of Variation
-
-::: {.columns}
-
-::: {.column width="55%"}
-::: {.smaller_table}
-
-
-`NCPV_follow-up ~ NCPV_baseline`
-
-univariable lm: **R² = 0.96**
-
-GLS (REML) model: weighted **R² = 0.93**
-
-::: {.incremental}
-
-- Baseline almost perfectly predicts follow-up.
-- ApoB or LDL is almost guaranteed to look null.
-- The "signal" left for anything else to explain in NCPV_final is **~4%**.
-- You’d need a huge ApoB effect, or much longer follow-up, more timepoints (), to detect anything.
-- Univariable ApoB nulls are underpowered and non-informative.
-
-:::
-
-:::{.fragment}
-
-"Plaque predicts plaque; ApoB does not" is a consequence of study design and model choice.
-
-
-:::
-:::
-:::
-
-::: {.column width="45%"}
-
-::: {.screen-only}
-
-::: {.r-stack}
-
-::: {.fragment .current-visible}
-
-::: {.img-wrap style="width:100%; text-align:center;"}
-![](figures/ncpv2.png){style="width:100%; height:auto;"}
-:::
-
-:::
-
-::: {.fragment .current-visible}
-![](figures/gls_fit_ncpv2_plot.png){style="width:100%; height:auto;"}
-
-:::
-:::
-:::
-:::
-
-:::
-
-:::{.notes}
-
-GLS: Generalized Least Squares (as opposed to Ordinary Least Squares)
-
-REML = Restricted maximum likelihood
-
-Most groups handle the ‘baseline dominates’ problem by (i) analyzing follow-up while explicitly adjusting for where each person started, (ii) also reporting a simple clinical endpoint like the share who regress vs progress, (iii) using size-neutral measures or transforms (e.g., PAV, √CAC) so results aren’t driven by starting size, (iv) comparing the same lesions across scans with models that account for multiple lesions per patient, and (v) standardizing scan protocols and, when possible, extending follow-up or adding a third scan so there’s real change left to detect.
-
-:::
 
 ---
 
@@ -1569,7 +1526,7 @@ There isn't one standard R² (beyond ordinary linear regression)
 :::
 ::: {.incremental}
 
-- **Model dependence & collinearity:** ApoB, LDL‐C, non‐HDL correlate → partial R² unstable.
+- **Model dependence & collinearity:** partial R² unstable.
 - **Small samples:** partial R² can be very noisy
 - **Mixed model families:** GLM/mixed/hurdle lack a single standard R² 
 :::
