@@ -1601,18 +1601,20 @@ $\Delta$NCPV ~ $\Delta$ApoB: $\beta$ = 0.01, P Value = 0.91 &emsp;&emsp;&emsp;&e
 
 "changes in and baseline levels of ApoB were not associated with changes in NCPV"
 
-:::{.smaller_misc_table}
-
-<br>
 :::
+
 :::
-:::{.fragment}
+:::{.smaller_table}
 
-This analysis failed to detect an effect; the estimate is imprecise and compatible with zero to **small positive effects**.
+:::{.incremental}
 
-The $\beta$ still allows clinically non-trivial increases.
+- Claim of "no association" is overstated. 
 
-In other words: inconclusive.
+- Slope of $\beta$ = 0.06 still allows clinically non-trivial increases.
+
+- Wide uncertainty? effects compatible with zero or clinically meaningful increases.
+
+- Correct interpretation: inconclusive, not null.
 
 :::
 :::
@@ -1627,6 +1629,8 @@ They do not report CI of $\beta$.
 :::
 
 :::{.notes}
+
+If we modeled this properly, it is entirely possible that the ApoB slope (beta) would be significant.
 
 - each dot on here is a person
 - a person who may now think that their high ApoB doesn't matter.
