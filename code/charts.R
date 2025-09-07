@@ -32,6 +32,15 @@ IQR(df$V2_Non_Calcified_Plaque_Volume, na.rm = TRUE)
 quantile(df$delta_NCPV, probs = c(0.25, 0.5, 0.75), na.rm = TRUE)
 IQR(df$delta_NCPV, na.rm = TRUE)
 
+quantile(df$V1_Percent_Atheroma_Volume, probs = c(0.25, 0.5, 0.75), na.rm = TRUE)
+IQR(df$V1_Percent_Atheroma_Volume, na.rm = TRUE)
+
+quantile(df$V2_Percent_Atheroma_Volume, probs = c(0.25, 0.5, 0.75), na.rm = TRUE)
+IQR(df$V2_Percent_Atheroma_Volume, na.rm = TRUE)
+
+range(df$V1_Percent_Atheroma_Volume)
+range(df$V2_Percent_Atheroma_Volume)
+
 
 # function for main chart
 
@@ -160,15 +169,14 @@ figure_2F = ggplot(df, aes(x = V1_CAC, y = delta_TPS)) +
 figure_2F
 
 #### Delta NCPV ~ baseline NCPV
-ggplot(df, aes(x = V1_CAC, y = delta_TPS)) +
+ggplot(df, aes(x = delta_NCPV, y = V1_Non_Calcified_Plaque_Volume)) +
   geom_point(alpha = 0.8, size = 1.6, na.rm = TRUE) +
   stat_smooth(method = "lm", formula = y ~ x,
               se = TRUE, level = 0.95,
               color = "red", fill = "grey70", linewidth = 1) +
   geom_hline(yintercept = 0, linetype = "dotted") +
   labs(x = "Baseline NCPV", y = "ΔNCPV", title = "Baseline NCPV vs ΔNCPV") +
-  #scale_y_continuous(breaks = -1:6, minor_breaks = NULL) +
-  #coord_cartesian(ylim = c(-1, 6)) +   # keeps points & fit intact
+
   theme_classic(base_size = 16) +
   theme(
     
@@ -213,7 +221,7 @@ ci  <- confint(fit, level = 0.95)
 b1   <- unname(coef(fit)["V1_Non_Calcified_Plaque_Volume"])
 ci_l <- ci["V1_Non_Calcified_Plaque_Volume", 1]
 ci_h <- ci["V1_Non_Calcified_Plaque_Volume", 2]
-r2   <- s$r.squared
+r2   <- s$adj.r.squared
 pval <- s$coefficients["V1_Non_Calcified_Plaque_Volume", "Pr(>|t|)"]
 
 # small helpers for pretty printing
@@ -233,7 +241,7 @@ ncpv2 <- ggplot(df, aes(x = V1_Non_Calcified_Plaque_Volume, y = V2_Non_Calcified
               se = TRUE, level = 0.95,
               color = "red", fill = "grey70", linewidth = 1) +
   geom_hline(yintercept = 0, linetype = "dotted") +
-  labs(x = "Baseline NCPV", y = "Follow-up NCPV", title = "Baseline NCPV vs Follow-up NCPV") +
+  labs(x = "Baseline NCPV", y = "Follow-up NCPV", title = "Follow-up NCPV vs Baseline NCPV") +
   theme_classic(base_size = 16) +
   theme(
     axis.text.y = element_text(face = "bold"),
@@ -251,7 +259,154 @@ print(ncpv2)
 
 save_png(ncpv2, "figures/ncpv2.png", width = 6, height = 6, dpi = 800)
 
+########################
+# delta NVPV ~ baseline NCPV
+# plot
+fit <- lm(delta_NCPV ~ V1_Non_Calcified_Plaque_Volume, data = df)
+s   <- summary(fit)
+ci  <- confint(fit, level = 0.95)
 
+# pull numbers
+b1   <- unname(coef(fit)["V1_Non_Calcified_Plaque_Volume"])
+ci_l <- ci["V1_Non_Calcified_Plaque_Volume", 1]
+ci_h <- ci["V1_Non_Calcified_Plaque_Volume", 2]
+r2   <- s$adj.r.squared
+pval <- s$coefficients["V1_Non_Calcified_Plaque_Volume", "Pr(>|t|)"]
+
+fmt   <- function(x, d = 3) formatC(x, format = "f", digits = d, drop0trailing = TRUE)
+fmt_p <- function(p) ifelse(p < 1e-4, "< 0.0001", formatC(p, format = "g", digits = 3))
+
+# label text: β, CI, R², p
+lab <- paste0(
+  "β = ", fmt(b1), ";  95% CI: (", fmt(ci_l), "–", fmt(ci_h), ")\n",
+  "R", "\u00B2", " = ", fmt(r2), ",  p ", fmt_p(pval)
+)
+ncpv2_delta <- ggplot(df, aes(x = V1_Non_Calcified_Plaque_Volume, y = delta_NCPV)) +
+  geom_point(alpha = 0.8, size = 1.6, na.rm = TRUE) +
+  stat_smooth(method = "lm", formula = y ~ x,
+              se = TRUE, level = 0.95,
+              color = "red", fill = "grey70", linewidth = 1) +
+  geom_hline(yintercept = 0, linetype = "dotted") +
+  labs(x = "Baseline NCPV", y = "ΔNCPV", title = "ΔNCPV vs Baseline NCPV") +
+  theme_classic(base_size = 16) +
+  theme(
+    axis.text.y = element_text(face = "bold"),
+    axis.text.x = element_text(face = "bold"),
+    plot.title  = element_text(face = "bold")
+  ) +
+  annotate("label",
+           x = -Inf, y = Inf, label = lab,
+           hjust = -0.05, vjust = 1.1, size = 4.2,
+           label.size = 0, lineheight = 1.05) +
+  coord_cartesian(clip = "off")
+
+print(ncpv2_delta)
+
+
+save_png(ncpv2_delta, "figures/ncpv2_delta.png", width = 6, height = 6, dpi = 800)
+
+###################
+###########
+# fit
+####  NCPV_2 ~ baseline NCPV
+# put of % scale
+df$V1_Percent_Atheroma_Volume_pct = df$V1_Percent_Atheroma_Volume*100
+
+fit <- lm(V2_Non_Calcified_Plaque_Volume ~ V1_Percent_Atheroma_Volume_pct, data = df)
+s   <- summary(fit)
+ci  <- confint(fit, level = 0.95)
+
+# pull numbers
+b1   <- unname(coef(fit)["V1_Percent_Atheroma_Volume_pct"])
+ci_l <- ci["V1_Percent_Atheroma_Volume_pct", 1]
+ci_h <- ci["V1_Percent_Atheroma_Volume_pct", 2]
+r2   <- s$adj.r.squared
+pval <- s$coefficients["V1_Percent_Atheroma_Volume_pct", "Pr(>|t|)"]
+
+# small helpers for pretty printing
+fmt   <- function(x, d = 3) formatC(x, format = "f", digits = d, drop0trailing = TRUE)
+fmt_p <- function(p) ifelse(p < 1e-4, "< 0.0001", formatC(p, format = "g", digits = 3))
+
+# label text: β, CI, R², p
+lab <- paste0(
+  "β = ", fmt(b1), ";  95% CI: (", fmt(ci_l), "–", fmt(ci_h), ")\n",
+  "R", "\u00B2", " = ", fmt(r2), ",  p ", fmt_p(pval)
+)
+
+# plot
+ncpv2_PAV <- ggplot(df, aes(x = V1_Percent_Atheroma_Volume_pct, y = V2_Non_Calcified_Plaque_Volume)) +
+  geom_point(alpha = 0.8, size = 1.6, na.rm = TRUE) +
+  stat_smooth(method = "lm", formula = y ~ x,
+              se = TRUE, level = 0.95,
+              color = "red", fill = "grey70", linewidth = 1) +
+  geom_hline(yintercept = 0, linetype = "dotted") +
+  labs(x = "Baseline PAV", y = "Follow-up NCPV", title = "Follow-up NCPV vs Baseline PAV") +
+  theme_classic(base_size = 16) +
+  theme(
+    axis.text.y = element_text(face = "bold"),
+    axis.text.x = element_text(face = "bold"),
+    plot.title  = element_text(face = "bold")
+  ) +
+  annotate("label",
+           x = -Inf, y = Inf, label = lab,
+           hjust = -0.05, vjust = 1.1, size = 4.2,
+           label.size = 0, lineheight = 1.05) +
+  coord_cartesian(clip = "off")
+
+print(ncpv2_PAV)
+
+
+save_png(ncpv2_PAV, "figures/ncpv2_PAV.png", width = 6, height = 6, dpi = 800)
+
+########################
+# delta NVPV ~ baseline V1_Percent_Atheroma_Volume_pct
+# plot
+fit <- lm(delta_NCPV ~ V1_Percent_Atheroma_Volume_pct, data = df)
+s   <- summary(fit)
+ci  <- confint(fit, level = 0.95)
+
+# pull numbers
+b1   <- unname(coef(fit)["V1_Percent_Atheroma_Volume_pct"])
+ci_l <- ci["V1_Percent_Atheroma_Volume_pct", 1]
+ci_h <- ci["V1_Percent_Atheroma_Volume_pct", 2]
+r2   <- s$adj.r.squared
+pval <- s$coefficients["V1_Percent_Atheroma_Volume_pct", "Pr(>|t|)"]
+
+fmt   <- function(x, d = 3) formatC(x, format = "f", digits = d, drop0trailing = TRUE)
+fmt_p <- function(p) ifelse(p < 1e-4, "< 0.0001", formatC(p, format = "g", digits = 3))
+
+# label text: β, CI, R², p
+lab <- paste0(
+  "β = ", fmt(b1), ";  95% CI: (", fmt(ci_l), "–", fmt(ci_h), ")\n",
+  "R", "\u00B2", " = ", fmt(r2), ",  p ", fmt_p(pval)
+)
+ncpv_delta_pav <- ggplot(df, aes(x = V1_Percent_Atheroma_Volume_pct, y = delta_NCPV)) +
+  geom_point(alpha = 0.8, size = 1.6, na.rm = TRUE) +
+  stat_smooth(method = "lm", formula = y ~ x,
+              se = TRUE, level = 0.95,
+              color = "red", fill = "grey70", linewidth = 1) +
+  geom_hline(yintercept = 0, linetype = "dotted") +
+  labs(x = "Baseline PAV", y = "ΔNCPV", title = "ΔNCPV vs Baseline PAV") +
+  theme_classic(base_size = 16) +
+  theme(
+    axis.text.y = element_text(face = "bold"),
+    axis.text.x = element_text(face = "bold"),
+    plot.title  = element_text(face = "bold")
+  ) +
+  annotate("label",
+           x = -Inf, y = Inf, label = lab,
+           hjust = -0.05, vjust = 1.1, size = 4.2,
+           label.size = 0, lineheight = 1.05) +
+  coord_cartesian(clip = "off")
+
+print(ncpv_delta_pav)
+
+
+save_png(ncpv_delta_pav, "figures/ncpv_delta_pav.png", width = 6, height = 6, dpi = 800)
+
+######################
+
+######## below is just super exploratory for kicks
 #### proportional growth? ie more plaque = even more plaque
 
 fit_log <- lm(log1p(V2_Non_Calcified_Plaque_Volume) ~ log1p(V1_Non_Calcified_Plaque_Volume), data=df)

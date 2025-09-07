@@ -212,7 +212,19 @@ summary(m_tps_cac)
 confint(m_tps_cac)["V1_CAC", ] # not significant
 
 
+#####
+# models for delta / follow-up comparison:
 
+m_ncpv2_ncpv1 <- lm(V2_Non_Calcified_Plaque_Volume ~ V1_Non_Calcified_Plaque_Volume, data = df)
+m_delta_ncpv_ncpv1 <- lm(delta_NCPV ~ V1_Non_Calcified_Plaque_Volume, data = df)
+
+df$V1_Percent_Atheroma_Volume_pct = df$V1_Percent_Atheroma_Volume*100
+
+m_ncpv2_pav1 <- lm(V2_Non_Calcified_Plaque_Volume ~ V1_Percent_Atheroma_Volume_pct, data = df)
+m_delta_ncpv_pav1 <- lm(delta_NCPV ~ V1_Percent_Atheroma_Volume_pct, data = df)
+
+
+######################################
 # Part 1: Logistic model for P(ΔTPS = 0)
 m_zero <- glm(I(delta_TPS == 0) ~ V1_CAC, 
               data = df, family = binomial)

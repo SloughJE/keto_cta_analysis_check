@@ -1223,6 +1223,185 @@ Make ANCOVA primary; use Δ+Baseline as sensitivity. Annualize or adjust for sca
 
 ---
 
+### ΔNCPV vs Follow-up NCPV
+
+::: {.columns}
+
+::: {.column width="47%"}
+
+![](figures/ncpv2_delta.png){width=90% }
+
+
+::: {.smaller_table}
+
+::: {.fragment}
+
+
+```{r echo=FALSE, message=FALSE, results='asis'}
+
+b   <- coef(m_delta_ncpv_ncpv1)['V1_Non_Calcified_Plaque_Volume']
+ci  <- confint(m_delta_ncpv_ncpv1)['V1_Non_Calcified_Plaque_Volume', ]
+p   <- summary(m_delta_ncpv_ncpv1)$coefficients['V1_Non_Calcified_Plaque_Volume', 4]
+r2a <- summary(m_delta_ncpv_ncpv1)$adj.r.squared
+
+knitr::kable(
+  data.frame(
+    `β (95% CI)` = sprintf("%.3f (%.3f, %.3f)", b, ci[1], ci[2]),
+    `P Value`    = format.pval(p, digits = 3, eps = 0.001),
+    `R² adj`     = sprintf("%.3f", r2a),
+    check.names  = FALSE
+  ),
+  format = "html",
+  align = "l",
+  table.attr = 'style="margin-left:0; margin-right:auto;"'
+)
+
+```
+
+
+
+
+:::
+
+:::
+:::
+
+::: {.column width="6%"}
+
+:::
+::: {.column width="47%"}
+
+::: {.smaller_table}
+
+::: {.fragment}
+
+![](figures/ncpv2.png){width=90%}
+
+
+```{r echo=FALSE, message=FALSE, results='asis'}
+
+
+b   <- coef(m_ncpv2_ncpv1)['V1_Non_Calcified_Plaque_Volume']
+ci  <- confint(m_ncpv2_ncpv1)['V1_Non_Calcified_Plaque_Volume', ]
+p   <- summary(m_ncpv2_ncpv1)$coefficients['V1_Non_Calcified_Plaque_Volume', 4]
+r2a <- summary(m_ncpv2_ncpv1)$adj.r.squared
+
+knitr::kable(
+  data.frame(
+    `β (95% CI)` = sprintf("%.3f (%.3f, %.3f)", b, ci[1], ci[2]),
+    `P Value`    = format.pval(p, digits = 3, eps = 0.001),
+    `R² adj`     = sprintf("%.3f", r2a),
+    check.names  = FALSE
+  ),
+  format = "html",
+  align = "l",
+  table.attr = 'style="margin-left:0; margin-right:auto;"'
+)
+
+
+```
+
+
+:::
+:::
+
+:::
+
+
+:::
+
+
+---
+
+### ΔNCPV vs Follow-up NCPV
+
+::: {.columns}
+
+::: {.column width="47%"}
+
+![](figures/ncpv_delta_pav.png){width=90% }
+
+
+::: {.smaller_table}
+
+::: {.fragment}
+
+
+```{r echo=FALSE, message=FALSE, results='asis'}
+
+b   <- coef(m_delta_ncpv_pav1)['V1_Percent_Atheroma_Volume_pct']
+ci  <- confint(m_delta_ncpv_pav1)['V1_Percent_Atheroma_Volume_pct', ]
+p   <- summary(m_delta_ncpv_pav1)$coefficients['V1_Percent_Atheroma_Volume_pct', 4]
+r2a <- summary(m_delta_ncpv_pav1)$adj.r.squared
+
+knitr::kable(
+  data.frame(
+    `β (95% CI)` = sprintf("%.3f (%.3f, %.3f)", b, ci[1], ci[2]),
+    `P Value`    = format.pval(p, digits = 3, eps = 0.001),
+    `R² adj`     = sprintf("%.3f", r2a),
+    check.names  = FALSE
+  ),
+  format = "html",
+  align = "l",
+  table.attr = 'style="margin-left:0; margin-right:auto;"'
+)
+
+```
+
+
+
+
+:::
+
+:::
+:::
+
+::: {.column width="6%"}
+
+:::
+::: {.column width="47%"}
+
+::: {.smaller_table}
+
+::: {.fragment}
+
+![](figures/ncpv2_PAV.png){width=90%}
+
+
+```{r echo=FALSE, message=FALSE, results='asis'}
+
+
+b   <- coef(m_ncpv2_pav1)['V1_Percent_Atheroma_Volume_pct']
+ci  <- confint(m_ncpv2_pav1)['V1_Percent_Atheroma_Volume_pct', ]
+p   <- summary(m_ncpv2_pav1)$coefficients['V1_Percent_Atheroma_Volume_pct', 4]
+r2a <- summary(m_ncpv2_pav1)$adj.r.squared
+
+knitr::kable(
+  data.frame(
+    `β (95% CI)` = sprintf("%.3f (%.3f, %.3f)", b, ci[1], ci[2]),
+    `P Value`    = format.pval(p, digits = 3, eps = 0.001),
+    `R² adj`     = sprintf("%.3f", r2a),
+    check.names  = FALSE
+  ),
+  format = "html",
+  align = "l",
+  table.attr = 'style="margin-left:0; margin-right:auto;"'
+)
+
+
+```
+
+
+:::
+:::
+
+:::
+
+
+:::
+
+---
+
 
 ### Low R² = No Association!
 
