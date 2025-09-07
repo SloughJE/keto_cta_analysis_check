@@ -1610,7 +1610,7 @@ $\Delta$NCPV ~ $\Delta$ApoB: $\beta$ = 0.01, P Value = 0.91 &emsp;&emsp;&emsp;&e
 
 This analysis failed to detect an effect; the estimate is imprecise and compatible with zero to **small positive effects**.
 
-The CI still allows clinically non-trivial increases.
+The $\beta$ still allows clinically non-trivial increases.
 
 In other words: inconclusive.
 
@@ -1626,6 +1626,12 @@ They do not report CI of $\beta$.
 :::
 :::
 
+:::{.notes}
+
+- each dot on here is a person
+- a person who may now think that their high ApoB doesn't matter.
+
+:::
 
 # Conclusions
 
