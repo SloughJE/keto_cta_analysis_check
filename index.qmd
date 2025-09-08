@@ -15,10 +15,14 @@ format:
 ## Dataset of Plaque Metrics
 
 ::: {.smaller}
+::: {.fragment}
 
 [Longitudinal Data From the KETO-CTA Study: Plaque Predicts Plaque, ApoB Does Not](https://www.jacc.org/doi/10.1016/j.jacadv.2025.101686)
 
+:::
 <br>
+
+::: {.fragment}
 
 Plaque Data released by organization funding the study:
 
@@ -26,16 +30,28 @@ Plaque Data released by organization funding the study:
 
 No cholesterol (ApoB), demographic or other clinical data
 
+:::
+::: {.fragment}
+
 <br>
 
 All code, figures, data, studies available at:
 
 [https://github.com/SloughJE/keto-cta-audit](https://github.com/SloughJE/keto-cta-audit)
 
-
+:::
 
 :::
 
+::: {.notes}
+
+- Observational study
+- 100 lean, metabolically healthy individuals (except high LDL), "LMHR"
+- plaque measured using Coronary Computed Tomography Angiography (CCTA)
+- neither high baseline ApoB/LDL-C nor changes in these markers predicted coronary plaque progression over one year
+- risk of atherosclerosis progression appeared tied more to existing plaque burden than lipid levels alone
+
+:::
 
 ## Incorrect Figure 1B
 
