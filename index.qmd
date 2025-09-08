@@ -1675,7 +1675,7 @@ In this study, models violate OLS assumptions: R² can be high or low for the wr
 
 $\Delta$NCPV ~ $\Delta$ApoB &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $\Delta$NCPV ~ ApoB
 :::
-<img src="assets/Figure2AB.png" style="width:60%;display:block;margin:0rem auto 0;">
+<img src="assets/Figure2AB.png" style="width:65%;display:block;margin:0rem auto 0;">
 :::
 
 :::{.fragment}
@@ -1712,22 +1712,21 @@ $\Delta$NCPV ~ $\Delta$ApoB: $\beta$ = 0.01, P Value = 0.91 &emsp;&emsp;&emsp;&e
 
 - Correct interpretation: inconclusive, not null.
 
-:::
-:::
-:::
+- They do not report CI of $\beta$.
 
-:::{.fragment}
-::: {.caption_gray}
-
-They do not report CI of $\beta$.
-
+:::
 :::
 :::
 
 :::{.notes}
 
+- is this a similar case in those charts comparing $\Delta$NCPV vs Follow-up NCPV?
+
+- note the change in ApoB. Some reduced by a lot. I wonder about the LDL? How many are still "LMHR"?
+
 - each dot on here is a person
 - a person who may now think that their high ApoB doesn't matter.
+
 
 If we modeled this properly, it is entirely possible that the ApoB slope (beta) would be significant.
 
