@@ -584,7 +584,7 @@ p   <- summary(m_tps_cac)$coefficients['V1_CAC', 4]
 r2a <- summary(m_tps_cac)$adj.r.squared
 
 data.frame(
-  `β (95% CI)` = sprintf("%.3f (%.3f, %.3f)", b, ci[1], ci[2]),
+  `β (95% CI)` = sprintf("%.3f (%.4f, %.4f)", b, ci[1], ci[2]),
   `P Value` = format.pval(p, digits = 3, eps = 0.001),
   `R² adj` = sprintf("%.3f", r2a),
   check.names = FALSE
