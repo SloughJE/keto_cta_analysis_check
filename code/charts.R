@@ -404,6 +404,99 @@ print(ncpv_delta_pav)
 
 save_png(ncpv_delta_pav, "figures/ncpv_delta_pav.png", width = 6, height = 6, dpi = 800)
 
+
+
+########################
+# delta NVPV ~ baseline V1_CAC
+# plot
+fit <- lm(delta_NCPV ~ V1_CAC, data = df)
+s   <- summary(fit)
+ci  <- confint(fit, level = 0.95)
+
+# pull numbers
+b1   <- unname(coef(fit)["V1_CAC"])
+ci_l <- ci["V1_CAC", 1]
+ci_h <- ci["V1_CAC", 2]
+r2   <- s$adj.r.squared
+pval <- s$coefficients["V1_CAC", "Pr(>|t|)"]
+
+fmt   <- function(x, d = 3) formatC(x, format = "f", digits = d, drop0trailing = TRUE)
+fmt_p <- function(p) ifelse(p < 1e-4, "< 0.0001", formatC(p, format = "g", digits = 3))
+
+# label text: β, CI, R², p
+lab <- paste0(
+  "β = ", fmt(b1), ";  95% CI: (", fmt(ci_l), "–", fmt(ci_h), ")\n",
+  "R", "\u00B2", " = ", fmt(r2), ",  p ", fmt_p(pval)
+)
+ncpv_delta_cac <- ggplot(df, aes(x = V1_CAC, y = delta_NCPV)) +
+  geom_point(alpha = 0.5, size = 1.6, na.rm = TRUE) +
+  stat_smooth(method = "lm", formula = y ~ x,
+              se = TRUE, level = 0.95,
+              color = "red", fill = "grey70", linewidth = 1) +
+  geom_hline(yintercept = 0, linetype = "dotted") +
+  labs(x = "Baseline CAC", y = "ΔNCPV", title = "ΔNCPV vs Baseline CAC") +
+  theme_classic(base_size = 16) +
+  theme(
+    axis.text.y = element_text(face = "bold"),
+    axis.text.x = element_text(face = "bold"),
+    plot.title  = element_text(face = "bold")
+  ) +
+  annotate("label",
+           x = -Inf, y = Inf, label = lab,
+           hjust = -0.05, vjust = 1.1, size = 4.2,
+           label.size = 0, lineheight = 1.05) +
+  coord_cartesian(clip = "off")
+
+print(ncpv_delta_cac)
+
+save_png(ncpv_delta_cac, "figures/ncpv_delta_cac.png", width = 6, height = 6, dpi = 800)
+
+##########################
+# follow up NCPV ~ CAC
+
+fit <- lm(V2_Non_Calcified_Plaque_Volume ~ V1_CAC, data = df)
+s   <- summary(fit)
+ci  <- confint(fit, level = 0.95)
+
+# pull numbers
+b1   <- unname(coef(fit)["V1_CAC"])
+ci_l <- ci["V1_CAC", 1]
+ci_h <- ci["V1_CAC", 2]
+r2   <- s$adj.r.squared
+pval <- s$coefficients["V1_CAC", "Pr(>|t|)"]
+
+fmt   <- function(x, d = 3) formatC(x, format = "f", digits = d, drop0trailing = TRUE)
+fmt_p <- function(p) ifelse(p < 1e-4, "< 0.0001", formatC(p, format = "g", digits = 3))
+
+# label text: β, CI, R², p
+lab <- paste0(
+  "β = ", fmt(b1), ";  95% CI: (", fmt(ci_l), "–", fmt(ci_h), ")\n",
+  "R", "\u00B2", " = ", fmt(r2), ",  p ", fmt_p(pval)
+)
+ncpv2_cac <- ggplot(df, aes(x = V1_CAC, y = V2_Non_Calcified_Plaque_Volume)) +
+  geom_point(alpha = 0.5, size = 1.6, na.rm = TRUE) +
+  stat_smooth(method = "lm", formula = y ~ x,
+              se = TRUE, level = 0.95,
+              color = "red", fill = "grey70", linewidth = 1) +
+  geom_hline(yintercept = 0, linetype = "dotted") +
+  labs(x = "Baseline CAC", y = "Follow-up NCPV", title = "Follow-up NCPV vs Baseline CAC") +
+  theme_classic(base_size = 16) +
+  theme(
+    axis.text.y = element_text(face = "bold"),
+    axis.text.x = element_text(face = "bold"),
+    plot.title  = element_text(face = "bold")
+  ) +
+  annotate("label",
+           x = -Inf, y = Inf, label = lab,
+           hjust = -0.05, vjust = 1.1, size = 4.2,
+           label.size = 0, lineheight = 1.05) +
+  coord_cartesian(clip = "off")
+
+print(ncpv2_cac)
+
+save_png(ncpv2_cac, "figures/ncpv2_cac.png", width = 6, height = 6, dpi = 800)
+
+
 ######################
 
 ######## below is just super exploratory for kicks

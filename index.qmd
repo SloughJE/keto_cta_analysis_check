@@ -1308,6 +1308,8 @@ knitr::kable(
 
 :::{.notes}
 
+- Showing the difference between $\Delta$, change score, as outcome vs follow-up
+
 Left panel:
 
 - β = 0.251
@@ -1429,6 +1431,100 @@ Right panel:
 
 ---
 
+### ΔNCPV vs Follow-up NCPV
+
+::: {.columns}
+
+::: {.column width="47%"}
+
+![](figures/ncpv_delta_cac.png){width=90% }
+
+
+::: {.smaller_table}
+
+::: {.fragment}
+
+
+```{r echo=FALSE, message=FALSE, results='asis'}
+
+b   <- coef(m_delta_ncpv_cac)['V1_CAC']
+ci  <- confint(m_delta_ncpv_cac)['V1_CAC', ]
+p   <- summary(m_delta_ncpv_cac)$coefficients['V1_CAC', 4]
+r2a <- summary(m_delta_ncpv_cac)$adj.r.squared
+
+knitr::kable(
+  data.frame(
+    `β (95% CI)` = sprintf("%.3f (%.3f, %.3f)", b, ci[1], ci[2]),
+    `P Value`    = format.pval(p, digits = 3, eps = 0.001),
+    `R² adj`     = sprintf("%.3f", r2a),
+    check.names  = FALSE
+  ),
+  format = "html",
+  align = "l",
+  table.attr = 'style="margin-left:0; margin-right:auto;"'
+)
+
+```
+
+
+
+
+:::
+
+:::
+:::
+
+::: {.column width="6%"}
+
+:::
+::: {.column width="47%"}
+
+::: {.smaller_table}
+
+::: {.fragment}
+
+![](figures/ncpv2_cac.png){width=90%}
+
+
+```{r echo=FALSE, message=FALSE, results='asis'}
+
+
+b   <- coef(m_ncpv2_cac)['V1_CAC']
+ci  <- confint(m_ncpv2_cac)['V1_CAC', ]
+p   <- summary(m_ncpv2_cac)$coefficients['V1_CAC', 4]
+r2a <- summary(m_ncpv2_cac)$adj.r.squared
+
+knitr::kable(
+  data.frame(
+    `β (95% CI)` = sprintf("%.3f (%.3f, %.3f)", b, ci[1], ci[2]),
+    `P Value`    = format.pval(p, digits = 3, eps = 0.001),
+    `R² adj`     = sprintf("%.3f", r2a),
+    check.names  = FALSE
+  ),
+  format = "html",
+  align = "l",
+  table.attr = 'style="margin-left:0; margin-right:auto;"'
+)
+
+
+```
+
+
+:::
+:::
+
+:::
+
+
+:::
+
+::: {.notes}
+
+How can anyone look at this chart and think, yeah, a linear model is the way to go!
+
+:::
+
+---
 
 ### Low R² = No Association!
 
@@ -1630,10 +1726,12 @@ They do not report CI of $\beta$.
 
 :::{.notes}
 
-If we modeled this properly, it is entirely possible that the ApoB slope (beta) would be significant.
-
 - each dot on here is a person
 - a person who may now think that their high ApoB doesn't matter.
+
+If we modeled this properly, it is entirely possible that the ApoB slope (beta) would be significant.
+
+
 
 :::
 
