@@ -37,7 +37,7 @@ No cholesterol (ApoB), demographic or other clinical data
 
 All code, figures, data, studies available at:
 
-[https://github.com/SloughJE/keto_cta_analysis_check]([https://github.com/SloughJE/keto_cta_analysis_check)
+[https://github.com/SloughJE/keto_cta_analysis_check](https://github.com/SloughJE/keto_cta_analysis_check)
 
 :::
 

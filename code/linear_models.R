@@ -227,24 +227,6 @@ m_ncpv2_cac <- lm(V2_Non_Calcified_Plaque_Volume ~ V1_CAC, data = df)
 m_delta_ncpv_cac <- lm(delta_NCPV ~ V1_CAC, data = df)
 
 
-###########
-# test follow-up baseline models:
-
-sh   <- shapiro.test(residuals(m_ncpv2_ncpv1))
-sh
-bp   <- bptest(m_ncpv2_ncpv1)
-bp
-rst  <- resettest(m_ncpv2_ncpv1, power = 2:3, type = "fitted")
-rst
-
-sh   <- shapiro.test(residuals(m_ncpv2_pav1))
-sh
-bp   <- bptest(m_ncpv2_pav1)
-bp
-rst  <- resettest(m_ncpv2_pav1, power = 2:3, type = "fitted")
-rst
-
-
 ######################################
 # Part 1: Logistic model for P(ΔTPS = 0)
 m_zero <- glm(I(delta_TPS == 0) ~ V1_CAC, 
