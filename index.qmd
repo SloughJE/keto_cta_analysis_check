@@ -26,7 +26,7 @@ format:
 
 Plaque Data released by organization funding the study:
 
-[https://citizensciencefoundation.org/keto-cta/](https://citizensciencefoundation.org/keto-cta/)
+[https://github.com/SloughJE/keto_cta_analysis_check](https://github.com/SloughJE/keto_cta_analysis_check)
 
 No cholesterol (ApoB), demographic or other clinical data
 
