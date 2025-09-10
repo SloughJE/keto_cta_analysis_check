@@ -18,7 +18,7 @@ models requiring non-plaque variables could not be examined.
 
 ## Directory structure
 ```text
-repo-root/
+
 ├── index.qmd                 # Slide deck (Quarto, Reveal.js)
 ├── index.html                # Rendered slides (self-contained)
 ├── styles.css                # Slide styles
