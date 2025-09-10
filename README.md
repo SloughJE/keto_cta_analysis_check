@@ -13,7 +13,7 @@ models requiring non-plaque variables could not be examined.
 ## Very brief summary of the analysis
 - Recreates key figures from the public dataset and compares them to the paper; several panels/captions do not match the data.
 - Objective diagnostics (RESET, Breusch–Pagan, Shapiro–Wilk) show violations of linear-model assumptions used in the paper; robust regression does not fix nonlinearity/heteroskedasticity.
-- Some stated “no association” conclusions (e.g., TPS vs CAC) are not reproduced; reliance on univariable change-score models is fragile.
+- Some stated “association” conclusions (e.g., TPS vs CAC) are not reproduced; reliance on univariable change-score models is fragile.
 - Baseline-adjusted models (ANCOVA) are shown as the appropriate framework for plaque progression.
 
 ## Directory structure
