@@ -30,7 +30,7 @@ assumption_report <- function(formula, data, label = NULL) {
   # tests
   sh   <- shapiro.test(residuals(m))
   bp   <- bptest(m)
-  rst  <- resettest(m, power = 2:3, type = "fitted")
+  rst  <- resettest(m, power = 2:3, type = "fitted", vcov. = vcovHC(m, type = "HC3")) # 
   
   # influence diagnostics
   cd   <- cooks.distance(m)
@@ -164,7 +164,7 @@ gt_tbl <- assumption_summary %>%
   )
 
 gtsave(gt_tbl, "figures/LM_assumptions.png", vwidth = 1400, vheight = 900, expand = 0)
-
+gt_tbl
 #############
 
 
