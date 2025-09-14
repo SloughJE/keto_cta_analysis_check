@@ -222,7 +222,7 @@ regresses y~x, and the shaded area represents the standard error.
 ## Linear Model Assumptions 
 
 
-::: {.smaller}
+::: {.smaller2}
 
 
 4 Simple Linear Regression Assumptions
@@ -239,8 +239,6 @@ regresses y~x, and the shaded area represents the standard error.
 
 :::
 
-<br>
-
 ::: {.fragment}
 
 These linear assumptions are **quantifiable** and **objectively testable**.
@@ -250,6 +248,15 @@ These linear assumptions are **quantifiable** and **objectively testable**.
 
 - If the assumptions don’t hold, statistical significance and uncertainty estimates aren’t trustworthy
 - Results may be invalid
+
+:::
+
+::: {.fragment}
+
+Visual checks are standard first step; sometimes preferable in very small or very large samples.
+
+Here I focus on the tests because they give a clear yes/no answer.     
+With n = 100, they’re generally reliable and well-calibrated, not overly sensitive.
 
 :::
 :::
@@ -407,9 +414,9 @@ Objective tests show all 4 models failed at least 2 tests each.
 
 :::{.incremental}
 
-- Visual checks are interpretive, but these assumptions **objectively** testable with **quantifiable** methods.
+- Visual checks are interpretive, but these assumptions are objectively testable with quantifiable methods.
 
-- This is Statistics 101.
+- Just show the diagnostics.
 
 
 :::
@@ -465,6 +472,84 @@ The two violations, non-normality and heteroskedasticity, are largely driven by 
 ![](figures/diagnostics/check__NCPV_CAC_bl.png){style="width:100%; height:auto;"}
 
 :::
+:::
+:::
+:::
+
+---
+
+::: {.columns}
+
+::: {.column width="25%"}
+
+<br>
+<br>
+
+**`check_model` output**:
+
+
+:::
+
+::: {.column width="75%"}
+
+
+::: {.img-wrap style="width:75%; float:center;"}
+
+![](figures/diagnostics/check__NCPV_PAV_bl.png){style="width:100%; height:auto;"}
+
+:::
+:::
+
+:::
+
+---
+
+::: {.columns}
+
+::: {.column width="25%"}
+
+<br>
+<br>
+
+**`check_model` output**:
+
+
+:::
+
+::: {.column width="75%"}
+
+
+::: {.img-wrap style="width:75%; float:center;"}
+
+![](figures/diagnostics/check__NCPV_NCPV_bl.png){style="width:100%; height:auto;"}
+
+
+:::
+:::
+:::
+
+---
+
+::: {.columns}
+
+::: {.column width="25%"}
+
+<br>
+<br>
+
+**`check_model` output**:
+
+
+:::
+
+::: {.column width="75%"}
+
+
+::: {.img-wrap style="width:75%; float:center;"}
+
+![](figures/diagnostics/check__NCPV_TPS_bl.png){style="width:100%; height:auto;"}
+
+
 :::
 :::
 :::
