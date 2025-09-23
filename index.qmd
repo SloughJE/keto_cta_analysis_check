@@ -1625,6 +1625,101 @@ How can anyone look at this chart and think, yeah, a linear model is the way to 
 
 :::
 
+
+---
+
+### ΔNCPV vs Follow-up NCPV
+
+::: {.columns}
+
+::: {.column width="47%"}
+
+![](figures/ncpv_delta_tps.png){width=90% }
+
+
+::: {.smaller_table}
+
+::: {.fragment}
+
+
+```{r echo=FALSE, message=FALSE, results='asis'}
+
+b   <- coef(m_delta_ncpv_tps)['V1_Total_Plaque_Score']
+ci  <- confint(m_delta_ncpv_tps)['V1_Total_Plaque_Score', ]
+p   <- summary(m_delta_ncpv_tps)$coefficients['V1_Total_Plaque_Score', 4]
+r2a <- summary(m_delta_ncpv_tps)$adj.r.squared
+
+knitr::kable(
+  data.frame(
+    `β (95% CI)` = sprintf("%.3f (%.3f, %.3f)", b, ci[1], ci[2]),
+    `P Value`    = format.pval(p, digits = 3, eps = 0.001),
+    `R² adj`     = sprintf("%.3f", r2a),
+    check.names  = FALSE
+  ),
+  format = "html",
+  align = "l",
+  table.attr = 'style="margin-left:0; margin-right:auto;"'
+)
+
+```
+
+
+
+
+:::
+
+:::
+:::
+
+::: {.column width="6%"}
+
+:::
+::: {.column width="47%"}
+
+::: {.smaller_table}
+
+::: {.fragment}
+
+![](figures/ncpv2_tps.png){width=90%}
+
+
+```{r echo=FALSE, message=FALSE, results='asis'}
+
+
+b   <- coef(m_ncpv2_tps)['V1_Total_Plaque_Score']
+ci  <- confint(m_ncpv2_tps)['V1_Total_Plaque_Score', ]
+p   <- summary(m_ncpv2_tps)$coefficients['V1_Total_Plaque_Score', 4]
+r2a <- summary(m_ncpv2_tps)$adj.r.squared
+
+knitr::kable(
+  data.frame(
+    `β (95% CI)` = sprintf("%.3f (%.3f, %.3f)", b, ci[1], ci[2]),
+    `P Value`    = format.pval(p, digits = 3, eps = 0.001),
+    `R² adj`     = sprintf("%.3f", r2a),
+    check.names  = FALSE
+  ),
+  format = "html",
+  align = "l",
+  table.attr = 'style="margin-left:0; margin-right:auto;"'
+)
+
+
+```
+
+
+:::
+:::
+
+:::
+
+
+:::
+
+::: {.notes}
+
+
+:::
+
 ---
 
 ### Low R² = No Association!

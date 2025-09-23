@@ -226,6 +226,8 @@ m_delta_ncpv_pav1 <- lm(delta_NCPV ~ V1_Percent_Atheroma_Volume_pct, data = df)
 m_ncpv2_cac <- lm(V2_Non_Calcified_Plaque_Volume ~ V1_CAC, data = df)
 m_delta_ncpv_cac <- lm(delta_NCPV ~ V1_CAC, data = df)
 
+m_ncpv2_tps <- lm(V2_Non_Calcified_Plaque_Volume ~ V1_Total_Plaque_Score, data = df)
+m_delta_ncpv_tps <- lm(delta_NCPV ~ V1_Total_Plaque_Score, data = df)
 
 ######################################
 # Part 1: Logistic model for P(ΔTPS = 0)

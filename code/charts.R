@@ -497,6 +497,98 @@ print(ncpv2_cac)
 save_png(ncpv2_cac, "figures/ncpv2_cac.png", width = 6, height = 6, dpi = 800)
 
 
+
+########################
+# delta NVPV ~ baseline V1_TPS
+# plot
+fit <- lm(delta_NCPV ~ V1_Total_Plaque_Score, data = df)
+s   <- summary(fit)
+ci  <- confint(fit, level = 0.95)
+
+# pull numbers
+b1   <- unname(coef(fit)["V1_Total_Plaque_Score"])
+ci_l <- ci["V1_Total_Plaque_Score", 1]
+ci_h <- ci["V1_Total_Plaque_Score", 2]
+r2   <- s$adj.r.squared
+pval <- s$coefficients["V1_Total_Plaque_Score", "Pr(>|t|)"]
+
+fmt   <- function(x, d = 3) formatC(x, format = "f", digits = d, drop0trailing = TRUE)
+fmt_p <- function(p) ifelse(p < 1e-4, "< 0.0001", formatC(p, format = "g", digits = 3))
+
+# label text: β, CI, R², p
+lab <- paste0(
+  "β = ", fmt(b1), ";  95% CI: (", fmt(ci_l), "–", fmt(ci_h), ")\n",
+  "R", "\u00B2", " = ", fmt(r2), ",  p ", fmt_p(pval)
+)
+ncpv_delta_tps <- ggplot(df, aes(x = V1_Total_Plaque_Score, y = delta_NCPV)) +
+  geom_point(alpha = 0.5, size = 1.6, na.rm = TRUE) +
+  stat_smooth(method = "lm", formula = y ~ x,
+              se = TRUE, level = 0.95,
+              color = "red", fill = "grey70", linewidth = 1) +
+  geom_hline(yintercept = 0, linetype = "dotted") +
+  labs(x = "Baseline TPS", y = "ΔNCPV", title = "ΔNCPV vs Baseline TPS") +
+  theme_classic(base_size = 16) +
+  theme(
+    axis.text.y = element_text(face = "bold"),
+    axis.text.x = element_text(face = "bold"),
+    plot.title  = element_text(face = "bold")
+  ) +
+  annotate("label",
+           x = -Inf, y = Inf, label = lab,
+           hjust = -0.05, vjust = 1.1, size = 4.2,
+           label.size = 0, lineheight = 1.05) +
+  coord_cartesian(clip = "off")
+
+print(ncpv_delta_tps)
+
+save_png(ncpv_delta_tps, "figures/ncpv_delta_tps.png", width = 6, height = 6, dpi = 800)
+
+##########################
+# follow up NCPV ~ V1_Total_Plaque_Score
+
+fit <- lm(V2_Non_Calcified_Plaque_Volume ~ V1_Total_Plaque_Score, data = df)
+s   <- summary(fit)
+ci  <- confint(fit, level = 0.95)
+
+# pull numbers
+b1   <- unname(coef(fit)["V1_Total_Plaque_Score"])
+ci_l <- ci["V1_Total_Plaque_Score", 1]
+ci_h <- ci["V1_Total_Plaque_Score", 2]
+r2   <- s$adj.r.squared
+pval <- s$coefficients["V1_Total_Plaque_Score", "Pr(>|t|)"]
+
+fmt   <- function(x, d = 3) formatC(x, format = "f", digits = d, drop0trailing = TRUE)
+fmt_p <- function(p) ifelse(p < 1e-4, "< 0.0001", formatC(p, format = "g", digits = 3))
+
+# label text: β, CI, R², p
+lab <- paste0(
+  "β = ", fmt(b1), ";  95% CI: (", fmt(ci_l), "–", fmt(ci_h), ")\n",
+  "R", "\u00B2", " = ", fmt(r2), ",  p ", fmt_p(pval)
+)
+ncpv2_tps <- ggplot(df, aes(x = V1_Total_Plaque_Score, y = V2_Non_Calcified_Plaque_Volume)) +
+  geom_point(alpha = 0.5, size = 1.6, na.rm = TRUE) +
+  stat_smooth(method = "lm", formula = y ~ x,
+              se = TRUE, level = 0.95,
+              color = "red", fill = "grey70", linewidth = 1) +
+  geom_hline(yintercept = 0, linetype = "dotted") +
+  labs(x = "Baseline TPS", y = "Follow-up NCPV", title = "Follow-up NCPV vs Baseline TPS") +
+  theme_classic(base_size = 16) +
+  theme(
+    axis.text.y = element_text(face = "bold"),
+    axis.text.x = element_text(face = "bold"),
+    plot.title  = element_text(face = "bold")
+  ) +
+  annotate("label",
+           x = -Inf, y = Inf, label = lab,
+           hjust = -0.05, vjust = 1.1, size = 4.2,
+           label.size = 0, lineheight = 1.05) +
+  coord_cartesian(clip = "off")
+
+print(ncpv2_tps)
+
+save_png(ncpv2_tps, "figures/ncpv2_tps.png", width = 6, height = 6, dpi = 800)
+
+
 ######################
 
 ######## below is just super exploratory for kicks
