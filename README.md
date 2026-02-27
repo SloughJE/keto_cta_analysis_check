@@ -42,4 +42,4 @@ models requiring non-plaque variables could not be examined.
 └── keto_cta_data_analysis.Rproj
 ```
 
-## [YouTube Video](https://youtu.be/Ys0gQuj8ZU8?si=0sV0ZKKqBv-0vO3O)
+## [YouTube Video](https://www.youtube.com/watch?v=AE8VGcyhfnM)
